@@ -34,26 +34,14 @@
 
 ## 1. Problem and stakeholder
 
-One paragraph. Who is the specific person, institution, or policy body that would care about the answer, and what decision does the answer inform? Generic "policymakers" is not a stakeholder; "the Ministry of Petroleum and Natural Gas deciding whether to extend PMUY subsidies in FY 2026-27" is.
-
 The Pradhan Mantri Ujjwala Yojana (PMUY), launched in May 2016, subsidises LPG connections for women from poor households. In 2025 the Ministry of Petroleum and Natural Gas approved an additional 25 lakh connections under Ujjwala 2.0 and extended refill subsidies. The Ministry's FY 2026-27 budget memorandum requires a quantitative statement on whether the scheme has caused faster clean-fuel adoption in the states most dependent on solid fuel before the rollout. Our charter targets that specific decision point and packages the evidence into a reproducible policy-facing analysis that a Ministry analyst could actually inspect and reuse.
-
----
 
 ## 2. Main outcome variable
 
-The single number your project centres on. State:
-
-- **Name** of the variable
-- **Unit** (percentage, Rs/month, points, deaths per 1000, etc.)
-- **Source table/column/field**
-- **Population / panel** (which rows: which years, which geographies, which people)
-
-Only one main outcome. Secondary outcomes go under "Scope limits" as things you *may* report but will not be graded on.
-
-*Write here:*
-
----
+- **Name** : share of households using clean cooking fuel (LPG, electricity, biogas, or natural gas as primary)
+- **Unit** : percentage points, 0–100
+- **Source**: NFHS-4 (2015-16) and NFHS-5 (2019-21) state-level household files; variable HV226 recoded into a clean-fuel binary, aggregated by state-round using sample weights.
+- **Population / panel**: 28 Indian states (excluding UTs for comparability), two rounds; 56 state-round observations.
 
 ## 3. Main quantitative success threshold
 
