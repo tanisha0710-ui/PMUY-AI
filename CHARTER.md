@@ -26,21 +26,17 @@
 
 | Field | Value |
 |---|---|
-| Team members | _(names, 2–3 people)_ |
-| Project type | _(predictive / causal / descriptive — pick one)_ |
-| Estimated hours per person | _(be honest; 40–60 is typical)_ |
+| Team members | Tanisha Aggarwal, Neha Rana, Jaswathi Lalitha R |
+| Project type | Causal |
+| Estimated hours per person | 55 |
 | Charter version | v1 |
-| Date | _(YYYY-MM-DD)_ |
-
-**Project type notes.** Predictive = you are trying to forecast or predict a quantity. Causal = you are trying to estimate the effect of a policy or intervention. Descriptive = you are measuring patterns or disparities without making a causal claim. The success threshold looks different for each type, so pick the one that fits your main question.
-
----
+| Date | 2026-04-24 |
 
 ## 1. Problem and stakeholder
 
 One paragraph. Who is the specific person, institution, or policy body that would care about the answer, and what decision does the answer inform? Generic "policymakers" is not a stakeholder; "the Ministry of Petroleum and Natural Gas deciding whether to extend PMUY subsidies in FY 2026-27" is.
 
-*Write here:*
+The Pradhan Mantri Ujjwala Yojana (PMUY), launched in May 2016, subsidises LPG connections for women from poor households. In 2025 the Ministry of Petroleum and Natural Gas approved an additional 25 lakh connections under Ujjwala 2.0 and extended refill subsidies. The Ministry's FY 2026-27 budget memorandum requires a quantitative statement on whether the scheme has caused faster clean-fuel adoption in the states most dependent on solid fuel before the rollout. Our charter targets that specific decision point and packages the evidence into a reproducible policy-facing analysis that a Ministry analyst could actually inspect and reuse.
 
 ---
 
