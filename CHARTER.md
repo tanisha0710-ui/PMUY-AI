@@ -26,7 +26,7 @@
 
 | Field | Value |
 |---|---|
-| Team members | _(names, 2–3 people)_ |
+| Team members | Madhav Kumar, Vikas Chaurasiya |
 | Project type | _(predictive / causal / descriptive — pick one)_ |
 | Estimated hours per person | _(be honest; 40–60 is typical)_ |
 | Charter version | v1 |
