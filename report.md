@@ -5,9 +5,14 @@ Use this as the default shape. Keep it tight. The report should match what the c
 ## 1. Question
 
 What question did you ask, who cares about the answer, and what decision does it inform?
-Can we forecast India's next-season Minimum Support Price (MSP) for wheat and paddy more accurately than a naïve random-walk model, using cost-push variables (inflation, fuel prices) alongside lagged MSP?
+Which manufacturing industries and states were hit hardest by COVID —
+and which recovered fastest?  
+Did labour-intensive industries suffer more than capital-intensive ones?
 
-The answer informs the Commission for Agricultural Costs and Prices (CACP) as it prepares its MSP recommendation to the CCEA ahead of each Kharif and Rabi season. A reliable forecast helps the committee assess whether the current policy trajectory remains credible relative to input costs.
+This question is **novel** because:
+1. It combines sectoral and geographic analysis in a single unified framework
+2. It introduces a **recovery archetype classification** using unsupervised ML (K-Means)
+3. It uses a **predictive ML model** (Random Forest) to identify factory-level structural features that drove resilience — going beyond descriptive before-after comparisons
 
 ## 2. Charter Summary
 
@@ -19,38 +24,20 @@ The answer informs the Commission for Agricultural Costs and Prices (CACP) as it
 ## 3. Data
 
 List the main sources you used. Say how you accessed them. If a source changed or failed, say what you did instead.
-Three sources, all from Government of India open portals, committed to `data/`:
 
-**MSP historical series** — CACP / Ministry of Agriculture & Farmers Welfare. Annual announced MSP for wheat (Rabi) and paddy common variety (Kharif), 1990–2025, national level. Licence: Government of India Open Data Licence (GODL).
-
-**CPI-AL** — Labour Bureau, Ministry of Labour & Employment. Consumer Price Index for Agricultural Labourers, spliced series base 1986-87=100, 1990–2024. Licence: GODL.
-
-**HSD diesel retail price** — Petroleum Planning and Analysis Cell (PPAC). Annual average retail price of High Speed Diesel, 1990–2024. Licence: Government of India open access. One-time manual download; committed to `data/diesel_prices.csv` with licence note.
-
-No source changed or failed during the project. All three probes confirmed at `artifacts/probes/`.
+**Annual Survey of Industries (ASI)**, Ministry of Statistics & PI, GoI
+  - Years: 2018-19, 2019-20, 2020-21, 2021-22
+  - Blocks used: A (factory identifiers, NIC code, state), J (GVA, output), H (employment, wages)
+  - Access: [mospi.gov.in](https://mospi.gov.in/web/asi) — publicly available
 
 
 ## 4. Method
 
 Explain the baseline first. Then explain the main analysis. Keep it readable. If you used a causal design, state the assumptions. If you used a predictive model, state the evaluation split. If you used a descriptive design, state the comparison structure and sample discipline.
-### Baseline
-
-The random-walk baseline sets the forecast for year *t* equal to the announced MSP in year *t−1*. This is the most natural naïve forecast given that MSP increases are always positive but vary in size from year to year. We computed it on the 2019–2024 hold-out period (6 observations per crop, 12 total).
-
-**Baseline RMSE: 98.6 INR/quintal** (wheat: 97.4, paddy: 99.8).
-
-### Main model
-
-We trained a Ridge regression on all years before 2019 (training set) and evaluated on 2019–2024 (hold-out). The feature set contains:
-
-- MSP lagged one year (strongest predictor — MSP is autocorrelated)
-- MSP lagged two years (captures trend curvature)
-- CPI-AL lagged one year (agricultural wage inflation, the dominant cost-push input to CACP's C₂ cost methodology)
-- HSD diesel price lagged one year (transport and mechanisation cost proxy)
-
-We standardised features using a `StandardScaler` inside a `sklearn Pipeline` and used Ridge with alpha=10 to regularise against multicollinearity between the two MSP lags and CPI-AL.
-
-**Evaluation split:** train 1992–2018 (54 obs), hold-out 2019–2024 (12 obs). No data from the hold-out period entered model training.
+1. **Descriptive before-after**: % change in GVA and employment 2019-20 → 2020-21 → 2021-22
+2. **Capital intensity classification**: GVA per worker (2019-20) as threshold for labour vs capital-intensive
+3. **K-Means clustering** (k=4): cluster industries into recovery archetypes
+4. **Random Forest regression**: predict factory-level GVA recovery from structural pre-COVID features
 
 ## 5. Result
 
