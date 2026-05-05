@@ -1,19 +1,18 @@
 {
   "milestone_date": "2026-05-05",
   "project": "PMUY Clean-Fuel Adoption — Causal DiD Analysis",
-  "team": ["<name1>", "<name2>", "<name3>"],
+  "team": ["Neha Rana", "Jaswathi Lalitha R", "Tanisha Aggarwal"],
   "status": "milestone",
 
   "completed": [
     "Charter drafted and submitted (CHARTER.md)",
-    "Raw NFHS-4 and NFHS-5 household microdata loaded and merged (1,235,092 obs after exclusions)",
+    "Raw NFHS-4 and NFHS-5 household microdata loaded and merged 1,238,208 obs)",
     "Outcome variable constructed: clean_fuel binary from hv226",
     "Sample weights, covariates, and dummy variables engineered",
     "Median split on NFHS-4 weighted state clean-fuel share (52.3 pp) → high_exposure flag",
     "Descriptive summary table produced (4 group × period cells)",
-    "Three regression specs run: basic DiD, DiD + controls, TWFE + controls",
     "Baseline metric computed and written to outputs/baseline_metric.json",
-    "Data probe notebook created (notebooks/00_probe.ipynb)"
+     "Data probe notebook created (notebooks/00_probe.ipynb)"
   ],
 
   "remaining_for_final": [
