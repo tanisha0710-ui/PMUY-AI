@@ -111,7 +111,7 @@ The Difference-in-Differences design assumes that treatment (low baseline states
 We will incorporate NFHS-3 (2005–06) as an additional pre-policy period to construct a longer pre-trend. We will estimate an event-study specification and visually test whether treatment and control states exhibit parallel trends prior to PMUY implementation. If pre-trends diverge, we will report both the baseline DiD results and the extended specification, clearly noting limitations in causal interpretation.
 
 **Risk 2:** The binary high/low split (≈17–18 states per group) may produce standard errors too wide to reject the null at conventional levels.  
-**Fallback:** Pre-commit an alternative continuous-treatment specification — β · (1 − baseline_clean_share) × post — and report both the binary-split and the continuous-treatment estimates.  
+**Fallback:** Pre-commit an alternative continuous-treatment specification — β · (1 − baseline_clean_share) × post and report both the binary-split and the continuous-treatment estimates.  
 
 
 ---
