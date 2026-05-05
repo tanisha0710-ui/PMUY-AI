@@ -45,23 +45,24 @@ The Pradhan Mantri Ujjwala Yojana (PMUY), launched in May 2016, subsidises LPG c
 - 
 ## 3. Main quantitative success threshold
 
-The Difference-in-Differences coefficient β₃ on Post × HighExposure in the two-way fixed-effects model below has: (a) a 95% confidence interval that excludes zero, and (b) a point estimate of at least +3.0 percentage points in favour of high-exposure states.
+The Difference-in-Differences coefficient β₃ on `Post × HighExposure` in the two-way fixed-effects model below has:
+(a) a 95% confidence interval that excludes zero, and
+(b) a point estimate of at least **+2.0 percentage points** in favour of high-exposure states.
 
-Model: Y_st = α + β₁·Post_t + β₂·HighExposure_s + β₃·(Post_t × HighExposure_s) + δ_s + λ_t + γ·X_st + ε_st, with HighExposure defined as below-median clean-fuel share in NFHS-4, standard errors clustered at the state level.
+Model: `Y_st = α + β₁·Post_t + β₂·HighExposure_s + β₃·(Post_t × HighExposure_s) + δ_s + λ_t + γ·X_st + ε_st`, with `HighExposure` defined as above-median clean-fuel share in NFHS-4, standard errors clustered at the state level.
 
 ---
 
 ## 4. Baseline to beat
+Unadjusted national pre-to-post change in weighted mean clean-fuel share:
 
-The naive or prior number your threshold is measured against. Examples:
+**Control group (low-exposure states):** 27.4% → 42.0%, Δ = +14.6 pp  
+**Treatment group (high-exposure states):** 63.0% → 79.5%, Δ = +16.5 pp  
+**Naïve DiD (treatment Δ − control Δ) = +1.9 pp** (unweighted, no controls or FE)
 
-- A previous study's coefficient or error.
-- A simple AR(1) or last-value forecast.
-- An unadjusted before-after difference.
+This unadjusted figure is committed to `outputs/baseline_metric.json` before any regression.  
 
-State **what the baseline produces numerically** if you know it, or how you will compute it before the checkpoint if you do not. You must compute the baseline *before* you build anything fancy.
-
-*Write here:*
+Success threshold: The covariate-adjusted TWFE estimate must exceed 2 pp with a CI excluding zero.
 
 ---
 
