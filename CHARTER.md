@@ -80,7 +80,7 @@ States that fell above the NFHS-4 median in clean-fuel access (high-exposure sta
 
 **Variables used:** hv226 (cooking fuel), hv005 (sample weight ÷ 1,000,000), hv024 (state), hv025 (urban/rural), hv206 (electricity), hv219 (sex of head), hv220 (age of head), hv009 (household size), hv201 (water source), hv204 (water time), hv213 (floor material), hv270 (wealth index), sh34 (religion), sh36 (caste), hv106_01 (education of head), plus constructed survey and post flags.  
 
-**Licence:** DHS data use agreement (non-commercial research); CSV committed to `data/` with licence note.  
+**Licence:** DHS data use agreement (non-commercial research).  
 
 **Access:**  direct CSV load — https://drive.google.com/file/d/1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ/view?usp=sharing 
 
