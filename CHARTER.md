@@ -30,30 +30,24 @@
 | Project type | Causal |
 | Estimated hours per person | 55 |
 | Charter version | v1 |
-| Date | 2026-04-24 |
+| Date | 2026-05-05 |
 
 ## 1. Problem and stakeholder
 
-The Pradhan Mantri Ujjwala Yojana (PMUY), launched in May 2016, subsidises LPG connections for women from poor households. In 2025 the Ministry of Petroleum and Natural Gas approved an additional 25 lakh connections under Ujjwala 2.0 and extended refill subsidies. The Ministry's FY 2026-27 budget memorandum requires a quantitative statement on whether the scheme has caused faster clean-fuel adoption in the states most dependent on solid fuel before the rollout. Our charter targets that specific decision point and packages the evidence into a reproducible policy-facing analysis that a Ministry analyst could actually inspect and reuse.
+The Pradhan Mantri Ujjwala Yojana (PMUY), launched in May 2016, subsidises LPG connections for women from poor households. In 2025 the Ministry of Petroleum and Natural Gas approved an additional 25 lakh connections under Ujjwala 2.0 and extended refill subsidies. The Ministry's FY 2026-27 budget memorandum requires a quantitative statement on whether the scheme has caused faster clean-fuel adoption in the states most dependent on solid fuel before the rollout. Our research idea targets that specific decision point and packages the evidence into a reproducible policy-facing analysis that a Ministry analyst could actually inspect and reuse.
 
 ## 2. Main outcome variable
 
-- **Name** : share of households using clean cooking fuel (LPG, electricity, biogas, or natural gas as primary)
+- **Name** : Clean-cooking-fuel adoption (binary indicator)
 - **Unit** : percentage points, 0–100
-- **Source**: NFHS-4 (2015-16) and NFHS-5 (2019-21) state-level household files; variable HV226 recoded into a clean-fuel binary, aggregated by state-round using sample weights.
-- **Population / panel**: 28 Indian states (excluding UTs for comparability), two rounds; 56 state-round observations.
-
+- **Source**: NFHS-4 (2015-16) and NFHS-5 (2019-21) household-level survey files; variable hv226 recoded into a binary clean_fuel = 1 if hv226 ∈ {lpg, natural gas, electricity, biogas}; 0 otherwise. Households reporting "no food cooked in house" are dropped.
+- **Population / panel**: 1,235,952 households across 35 states/UTs, two survey rounds (survey = 4 pre-policy, survey = 5 post-policy); post = 1 for NFHS-5, 0 for NFHS-4.
+- 
 ## 3. Main quantitative success threshold
 
-A single numeric bar. Your project is a success if the delivered metric crosses this bar, and a failure if it does not. Pick one form:
+The Difference-in-Differences coefficient β₃ on Post × HighExposure in the two-way fixed-effects model below has: (a) a 95% confidence interval that excludes zero, and (b) a point estimate of at least +3.0 percentage points in favour of high-exposure states.
 
-- **Predictive:** "Out-of-sample [metric] on [held-out slice] is at most X, versus baseline Y."
-- **Causal:** "Point estimate of [parameter] has 95% CI excluding zero, and |estimate| ≥ X [unit]."
-- **Descriptive:** "Produce stratified estimates of [outcome] across [N ≥ __] strata, each with sample size ≥ __ and documented standard error."
-
-If you cannot write a number, you do not yet have a project — you have a topic. Go back to Section 2.
-
-*Write here:*
+Model: Y_st = α + β₁·Post_t + β₂·HighExposure_s + β₃·(Post_t × HighExposure_s) + δ_s + λ_t + γ·X_st + ε_st, with HighExposure defined as below-median clean-fuel share in NFHS-4, standard errors clustered at the state level.
 
 ---
 
