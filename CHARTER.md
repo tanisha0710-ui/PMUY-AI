@@ -76,7 +76,7 @@ States that fell above the NFHS-4 median in clean-fuel access (high-exposure sta
 
 **Primary — NFHS household microdata (pooled NFHS-4 and NFHS-5):**
 
-**Source:** DHS Program / IIPS; loaded as `nr.csv` (combined, cleaned panel, 1,238,208 rows before exclusions)  
+**Source:** DHS Program (NFHS data taken from DHS) ( which was loaded as combined, cleaned panel, 1,238,208 rows before exclusions)  
 
 **Variables used:** hv226 (cooking fuel), hv005 (sample weight ÷ 1,000,000), hv024 (state), hv025 (urban/rural), hv206 (electricity), hv219 (sex of head), hv220 (age of head), hv009 (household size), hv201 (water source), hv204 (water time), hv213 (floor material), hv270 (wealth index), sh34 (religion), sh36 (caste), hv106_01 (education of head), plus constructed survey and post flags.  
 
@@ -84,32 +84,35 @@ States that fell above the NFHS-4 median in clean-fuel access (high-exposure sta
 
 **Access:**  direct CSV load — https://drive.google.com/file/d/1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ/view?usp=sharing 
 
+**Treatment intensity cross-check — PPAC state-wise PMUY connections:**
+
+**Landing page:** https://ppac.gov.in/consumption/state-wise-pmuy-data  
+The `.xlsx` filename is timestamp-versioned and re-scraped at pipeline runtime; backup at https://www.data.gov.in/resource/stateut-wise-number-pradhan-mantri-ujjwala-yojana-pmuy-connections-2018-2023 (free instant API key).  
+Used only to validate the high/low exposure split; not a primary outcome source.
+
 ---
 
 ## 7. Scope limits
 
-Bullet list of things you are **not** claiming and **not** responsible for. Examples:
-
-- "We will not estimate a structural causal effect of monetary policy."
-- "We will not harmonise district boundaries across NFHS rounds; analysis is at state level."
-- "We will not ship a mobile version of the app."
-
-This section protects you at grading time. If you clearly say "we are not doing X," you will not be graded on X.
-
-*Write here:*
+- We will not claim structural causal identification beyond the parallel-trends assumption. Event-study plots are diagnostic.  
+- We will not analyse refill intensity, health outcomes (respiratory, blood pressure), or LPG consumption volumes as primary outcomes.  
+- We will not disaggregate to district level or harmonise district boundaries across rounds; analysis is at state/UT level.
+- The wealth-quintile and caste breakdowns are descriptive summaries, not causal estimates.  
 
 ---
 
 ## 8. Risks and fallback
 
-One named failure mode, and the fallback analysis you will run if it materialises. Examples:
+**Risk: Parallel trends assumption may not hold**
 
-- "If the 2022-23 PPAC data is not released by the checkpoint, we will use the FY 2021-22 panel and document the truncation."
-- "If DiD parallel-trends fails visually, we fall back to a state-fixed-effects panel regression with year trends and report both."
+The Difference-in-Differences design assumes that treatment (low baseline states) and control (high baseline states) would have followed similar trends in clean fuel adoption in the absence of PMUY. With only one pre-policy period (NFHS-4), this assumption cannot be directly validated.
 
-One risk is enough. Two is fine. Zero means you have not thought hard enough.
+**Fallback:**
+We will incorporate NFHS-3 (2005–06) as an additional pre-policy period to construct a longer pre-trend. We will estimate an event-study specification and visually test whether treatment and control states exhibit parallel trends prior to PMUY implementation. If pre-trends diverge, we will report both the baseline DiD results and the extended specification, clearly noting limitations in causal interpretation.
 
-*Write here:*
+**Risk 2:** The binary high/low split (≈17–18 states per group) may produce standard errors too wide to reject the null at conventional levels.  
+**Fallback:** Pre-commit an alternative continuous-treatment specification — β · (1 − baseline_clean_share) × post — and report both the binary-split and the continuous-treatment estimates.  
+
 
 ---
 
