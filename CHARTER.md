@@ -42,7 +42,7 @@ The Pradhan Mantri Ujjwala Yojana (PMUY), launched in May 2016, subsidises LPG c
 - **Unit** : percentage points, 0–100
 - **Source**: NFHS-4 (2015-16) and NFHS-5 (2019-21) household-level survey files; variable hv226 recoded into a binary clean_fuel = 1 if hv226 ∈ {lpg, natural gas, electricity, biogas}; 0 otherwise. Households reporting "no food cooked in house" are dropped.
 - **Population / panel**: 1,235,952 households across 35 states/UTs, two survey rounds (survey = 4 pre-policy, survey = 5 post-policy); post = 1 for NFHS-5, 0 for NFHS-4.
-- 
+  
 ## 3. Main quantitative success threshold
 
 The Difference-in-Differences coefficient β₃ on `Post × HighExposure` in the two-way fixed-effects model below has:
@@ -68,24 +68,21 @@ Success threshold: The covariate-adjusted TWFE estimate must exceed 2 pp with a 
 
 ## 5. Falsifiable hypothesis
 
-One sentence the data can prove wrong. A sign, a threshold, or a rank ordering. Not "we will analyse X" — "X will be greater than Y by at least Z".
-
-*Write here:*
+States that fell above the NFHS-4 median in clean-fuel access (high-exposure states) experienced a larger increase in clean-fuel adoption between NFHS-4 and NFHS-5 than states below the median, by at least **2 percentage points** after controlling for state fixed effects, time fixed effects, and household-level covariates (urbanicity, electricity access, household size, head's age, and sex of head). If β̂₃ < 2 pp or its 95% CI crosses zero, the hypothesis is rejected.
 
 ---
 
 ## 6. Data sources and access plan
 
-For each source:
+**Primary — NFHS household microdata (pooled NFHS-4 and NFHS-5):**
 
-- **Name and URL/API endpoint**
-- **Licence or permission to use**
-- **Access method** (direct download, API call, authenticated portal)
-- **A 10-line script or notebook cell** that fetches one row and prints it
+**Source:** DHS Program / IIPS; loaded as `nr.csv` (combined, cleaned panel, 1,238,208 rows before exclusions)  
 
-If any source requires manual scraping, permissions, or a login you do not yet have, flag it here with a mitigation plan.
+**Variables used:** hv226 (cooking fuel), hv005 (sample weight ÷ 1,000,000), hv024 (state), hv025 (urban/rural), hv206 (electricity), hv219 (sex of head), hv220 (age of head), hv009 (household size), hv201 (water source), hv204 (water time), hv213 (floor material), hv270 (wealth index), sh34 (religion), sh36 (caste), hv106_01 (education of head), plus constructed survey and post flags.  
 
-*Write here:*
+**Licence:** DHS data use agreement (non-commercial research); CSV committed to `data/` with licence note.  
+
+**Access:**  direct CSV load — https://drive.google.com/file/d/1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ/view?usp=sharing 
 
 ---
 
