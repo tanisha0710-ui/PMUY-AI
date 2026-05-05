@@ -1,7 +1,15 @@
-{
-  "metric_name": "replace_me_baseline",
-  "value": 0.0,
-  "unit": "replace_me_unit",
-  "notes": "Template value. Replace this with your real baseline before the milestone.",
-  "is_template": true
+ {
+  "metric_name": "naive_did_pp",
+  "description": "Unadjusted DiD: treatment group pre-post change minus control group pre-post change, weighted means, no covariates or fixed effects",
+  "treatment_pre":  63.0,
+  "treatment_post": 79.5,
+  "treatment_delta": 16.5,
+  "control_pre":  27.4,
+  "control_post": 42.0,
+  "control_delta": 14.6,
+  "value": 1.9,
+  "unit": "percentage points",
+  "threshold": 2.0,
+  "passed": false,
+  "note": "Baseline intentionally naive — no controls, no FE. The adjusted TWFE estimate in primary_metric.json is the graded deliverable."
 }
