@@ -58,38 +58,12 @@ In practical terms, an average error of 56.5 INR/quintal on a current MSP of app
 
 Point to the figures, tables, regressions, or diagnostics that support the result.
 
-**Figure 1** (`outputs/figures/fig1_msp_history.png`): MSP time-series for wheat and paddy, 1992–2025. Shows the clear upward trend and the acceleration in annual increments post-2008, which motivates including CPI-AL and diesel as cost-push covariates.
 
-**Figure 2** (`outputs/figures/fig2_predictions.png`): Actual vs Ridge-predicted MSP in the 2019–2024 hold-out period, separately for wheat and paddy. The model tracks the trend closely; the largest error occurs in 2023 (paddy) where CACP awarded a higher-than-cost-justified hike ahead of the 2024 general election.
-
-**Figure 3** (`outputs/figures/fig3_rmse_comparison.png`): Bar chart comparing baseline RMSE (98.6), ridge RMSE (56.5), and the threshold (120). The model is clearly below the threshold.
-
-**Prediction table** (`outputs/prediction_table.json`): year-by-year actual vs predicted for both crops in the hold-out period.
-
-Using the full dataset (1992–2025) to re-train the Ridge model, the out-of-sample forecast for the next season is:
-
-| Crop | Forecast MSP 2026 |
-|---|---|
-| Wheat | INR 2,318/quintal |
-| Paddy | INR 2,339/quintal |
-
-These compare to announced 2025 MSPs of INR 2,425/quintal (wheat) and INR 2,369/quintal (paddy). The model predicts relatively modest increments, consistent with a stabilising CPI-AL and flat diesel prices in 2024.
 
 
 ## 7. Limits
 
-What can this project say with confidence, and what can it not say?
-**What this project can say with confidence:**
-- A simple Ridge model with cost-push covariates outperforms the random-walk benchmark on out-of-sample data from 2019–2024.
-- Lagged MSP is the strongest single predictor; CPI-AL and diesel add meaningful signal.
-- The model's average error of ~2.5% is operationally useful for a planning exercise.
-
-**What this project cannot say:**
-- The model does not capture political economy factors (election proximity, farmer protest pressure) that drove above-model hikes in 2018 and 2023.
-- MSP is a policy variable, not a market price; large discretionary hikes can make any cost-push model look wrong in any given year.
-- The forecast applies only at the national level; it says nothing about which states will see higher or lower mandi prices relative to MSP.
-- Causal claims (e.g., "raising MSP by X increases farmer income by Y") are out of scope.
-
+What can this project say with confidence, and what can it not say
 
 
 ## 8. If The Result Was Null Or Weak
