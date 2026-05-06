@@ -49,7 +49,7 @@ def build_milestone_manifest() -> dict:
  
         "sources": [
             {
-                "name": pmuy_data.csv ",
+                "name": pmuy_data.csv",
                 "file": "https://drive.google.com/file/d/1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ/view",
                 "rows_raw": 1238208,
                 "rows_after_exclusions": 1235952,
