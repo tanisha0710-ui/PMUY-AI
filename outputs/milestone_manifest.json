@@ -1,16 +1,16 @@
 {
   "milestone_date": "2026-05-06",
-  "project": "PMUY Clean-Fuel Adoption \u2014 Causal DiD Analysis (ECO 6810)",
+  "project": "The Impact of PMUY on Clean Fuel Adoption: A Difference-in-Differences Analysis Using NFHS-4 and NFHS-5 Data",
   "team": [
     "Tanisha Aggarwal",
     "Neha Rana",
     "Jaswathi Lalitha R"
   ],
-  "charter_locked": true,
+  "charter_locked": false,
   "status": "milestone",
   "sources": [
     {
-      "name": "NFHS-4+5 household panel ",
+      "name": "pmuy_data.csv",
       "file": "https://drive.google.com/file/d/1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ/view",
       "rows_raw": 1238208,
       "rows_after_exclusions": 1235952,
@@ -19,7 +19,7 @@
       "states_uts": 35,
       "clean_fuel_mean_unweighted": 0.4565,
       "status": "verified",
-      "probe_artifact": "artifacts/probes/probe_nfhs.py",
+      "probe_artifact": "artifacts/probes/replace_me_probe.md",
       "note": "Merged NFHS-4 and NFHS-5 household microdata. Primary outcome source."
     },
     {
@@ -27,7 +27,6 @@
       "url": "https://ppac.gov.in/consumption/state-wise-pmuy-data",
       "backup": "https://www.data.gov.in/resource/stateut-wise-number-pradhan-mantri-ujjwala-yojana-pmuy-connections-2018-2023",
       "status": "verified",
-      "probe_artifact": "artifacts/probes/probe_ppac.py",
       "note": "Used only to validate high/low exposure split. Not a primary outcome source."
     }
   ],
@@ -86,15 +85,9 @@
   "baseline_metric": {
     "file": "outputs/baseline_metric.json",
     "value_pp": -2.0,
-    "threshold_rule": "|value| >= 2.0 pp",
-    "passed": true,
     "status": "written"
   },
-  "primary_metric_schema_ready": true,
-  "primary_metric": {
-    "file": "outputs/primary_metric.json",
-    "status": "pending \u2014 run `uv run main.py` (without --milestone) to compute TWFE"
-  },
+  "primary_metric_schema_ready": false,
   "completed": [
     "Charter approved (CHARTER.md) \u2014 threshold |\u03b2\u0302\u2083| >= 2.0 pp, CI excludes zero",
     "NFHS-4+5 panel loaded (1,238,208 raw rows; 1,235,952 after exclusions)",
@@ -105,8 +98,7 @@
     "Treatment: high_exposure=1 for 17 low-access states below NFHS-4 median (52.3 pp)",
     "Descriptive 2x2 summary table produced (4 group x period cells)",
     "Naive DiD baseline: -2.0 pp written to outputs/baseline_metric.json",
-    "Data probe: artifacts/probes/probe_nfhs.py",
-    "PPAC probe: artifacts/probes/probe_ppac.py"
+    "Data probe: artifacts/probes/replace_me_probe.py"
   ],
   "remaining_for_final": [
     "TWFE coefficient \u2192 outputs/primary_metric.json (run: uv run main.py)",
@@ -115,5 +107,6 @@
     "report.md with results tables and event-study figure",
     "AI_USAGE_LOG.md"
   ],
-  "run_command": "uv run main.py --milestone"
+  "run_command": "uv run main.py --milestone",
+  "template_warning": "This scaffold runs, but it is not submission-ready until you replace the placeholders."
 }
