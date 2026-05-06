@@ -106,7 +106,7 @@ artifacts/probes/replace_me_probe.md
 ---
 
 Note- We have attached the pdf for codes and output
-(colab) under folder Notebook with file - Test_Repo.ipynb-Colab.pdf
+(colab) under folder Notebook with file - [Test_Repo.ipynb-Colab.pdf](https://github.com/tanisha0710-ui/PMUY-AI/blob/6505fcfece0ba40429b04b6f9d138b946582e56b/notebooks/Test_Repo.ipynb%20-%20Colab.pdf)
 
 ## Team
 
