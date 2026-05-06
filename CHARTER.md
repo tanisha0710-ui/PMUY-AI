@@ -129,9 +129,9 @@ print(row.to_string())
 
 | Block | File | Columns used | Purpose |
 |-------|------|-------------|---------|
-| A | blkA{year}.csv | A1 (DSL/state), A5 (NIC), MULT | Factory ID, industry, state, weight |
-| J | blkJ{year}.csv | J112 (output), J113 (GVA) | Financial outcomes |
-| H | blkH{year}.csv | H14 (workers), H16 (wages) | Employment outcomes |
+| A | blkA{2021-22}.csv | A1 (DSL/state), A5 (NIC), MULT | Factory ID, industry, state, weight |
+| J | blkJ{2020-21}.csv | J112 (output), J113 (GVA) | Financial outcomes |
+| H | blkH{2019-20}.csv | H14 (workers), H16 (wages) | Employment outcomes |
 
 ---
 
