@@ -56,8 +56,9 @@ Model: `Y_st = α + β₁·Post_t + β₂·HighExposure_s + β₃·(Post_t × Hi
 ## 4. Baseline to beat
 Unadjusted national pre-to-post change in weighted mean clean-fuel share:
 
-**Control group (low-exposure states): ** 63.0% → 79.5%, Δ = +16.6 pp   
-**Treatment group (high-exposure states): ** 27.4% → 42.0%, Δ = +14.6 pp 
+**Control group (low-exposure states):** 63.0% → 79.5%, Δ = +16.6 pp   
+**Treatment group (high-exposure states):** 27.4% → 42.0%, Δ = +14.6 pp 
+
 **Naïve DiD (treatment Δ − control Δ) = -2.0 pp** (unweighted, no controls or FE)
 
 This unadjusted figure is committed to `outputs/baseline_metric.json` before any regression.  
