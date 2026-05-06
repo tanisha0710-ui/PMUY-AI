@@ -142,15 +142,15 @@ Bullet list of things you are **not** claiming and **not** responsible for. Exam
 - "We will not estimate a structural causal effect of monetary policy."
 - "We will not harmonise district boundaries across NFHS rounds; analysis is at state level."
 - "We will not ship a mobile version of the app."
-
-This section protects you at grading time. If you clearly say "we are not doing X," you will not be graded on X.
-
-*We will not estimate a causal effect of MSP on farmer incomes or crop area allocation — this is a predictive exercise only.
-We will not produce sub-national (state-level) MSP forecasts; MSP is a single national-level price and our model operates at that level.
-We will not harmonise or re-weight CPI-AL across base-year revisions (1986–87 vs 2012 base); we will use the spliced official series as published.
-We will not model political economy determinants of MSP (election cycles, party in power), though we note these may matter empirically.
-We will not forecast MSPs for crops other than wheat and paddy (common); all other CACP-covered crops are out of scope.
-We will not build a real-time dashboard or deploy any web application.
+We will not estimate causal effects of COVID-19 using structural or quasi-experimental econometric techniques (e.g., IV, DiD with identification claims). The analysis will remain descriptive and correlational.
+We will not construct firm-level or plant-level panel datasets beyond what is directly available in the ASI; the analysis will be conducted at the industry–state level.
+We will not harmonise industry classifications across all ASI rounds beyond standard NIC matching; minor inconsistencies may remain.
+We will not account for unobserved informal sector activity, as ASI covers only the formal manufacturing sector.
+We will not perform real-time or high-frequency analysis; the study relies on annual ASI data and available secondary datasets.
+We will not build predictive or machine learning models for forecasting recovery; the focus is on retrospective analysis.
+We will not conduct primary surveys or collect new data; the project relies entirely on secondary data sources.
+We will not provide policy prescriptions with causal claims; any policy discussion will be indicative and based on observed patterns.
+We will not develop a production-level dashboard or web application; outputs will be limited to analytical tables, charts, and a written report.
 
 *
 
