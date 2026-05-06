@@ -27,35 +27,29 @@
 | Field | Value |
 |---|---|
 | Team members | Madhav Kumar, Vikas Chaurasiya |
-| Project type | predictive |
+| Project type | Descriptive |
 | Estimated hours per person | 50 hours |
 | Charter version | v1 |
 | Date | _(YYYY-MM-DD)_ |
 
-**Project type notes.** Predictive = you are trying to forecast or predict a quantity. Causal = you are trying to estimate the effect of a policy or intervention. Descriptive = you are measuring patterns or disparities without making a causal claim. The success threshold looks different for each type, so pick the one that fits your main question.
+**Project type notes.** This is a descriptive project. We measure how GVA and employment changed across manufacturing industries and states during the COVID shock year (2020-21) and the recovery year (2021-22), and test whether labour-intensive industries experienced larger drops than capital-intensive ones. We are not claiming a causal effect of any policy or building a forecasting model for future values. The Random Forest component is used for variable importance and pattern discovery — not for out-of-sample prediction of future GVA.
 
 ---
 
 ## 1. Problem and stakeholder
 
-One paragraph. Who is the specific person, institution, or policy body that would care about the answer, and what decision does the answer inform? Generic "policymakers" is not a stakeholder; "the Ministry of Petroleum and Natural Gas deciding whether to extend PMUY subsidies in FY 2026-27" is.
+One paragraph. Who is the specific person, institution, or policy body that would care about the answer, and what decision does the answer inform? 
 
-*The Commission for Agricultural Costs and Prices (CACP), which advises the Cabinet Committee on Economic Affairs (CCEA) on MSP revision ahead of each crop season, must decide how much to raise the MSP for wheat and paddy (rice) for the upcoming marketing year. Setting the MSP too low relative to open-market prices renders the procurement floor irrelevant and exposes farmers to income shocks; setting it too high creates unsustainable procurement obligations for the Food Corporation of India (FCI) and inflates food subsidies. Our project gives the CACP a data-driven point forecast of the next-season MSP for wheat and paddy, benchmarked against open-market mandi prices from AgMarkNet, so the committee can assess whether the current policy trajectory is likely to keep MSP within a credible range of actual farm-gate prices.*
+The Ministry of Commerce and Industry's Department for Promotion of Industry and Internal Trade (DPIIT), which administers sector-specific relief and industrial revival packages, needs to know which registered manufacturing industries suffered the deepest GVA and employment losses during COVID-19 and which have failed to recover to their pre-pandemic baseline by 2021-22. Without factory-level evidence disaggregated by sector and state, DPIIT risks allocating post-COVID revival funds uniformly across industries that actually had very different shock-and-recovery trajectories. For example, if Printing and Leather remain 15–20% below their 2019-20 GVA baseline in 2021-22 while Basic Metals and Pharma have surged past it, a uniform subsidy scheme would be both wasteful and insufficient. This project uses four waves of ASI micro-data to produce the disaggregated, multiplier-weighted evidence DPIIT needs to target sector-specific support in any future shock.
 
 ---
 
 ## 2. Main outcome variable
 
-The single number your project centres on. State:
-
-- **Announced Minimum Support Price (MSP)** of the variable
-- **INR per quintal (100 kg)** (percentage, Rs/month, points, deaths per 1000, etc.)
-- **CACP / Ministry of Agriculture & Farmers Welfare annual MSP press releases, archived on data.gov.in and the CACP website; specifically the table "MSP for Foodgrains (Fair Average Quality)" under the column for wheat (Rabi) and common paddy (Kharif)**
-- **Wheat and paddy (common variety), crop-year panel 1975–76 to 2024–25 (approximately 50 annual observations per crop); national level (India-wide single announced price, no sub-national variation)** (which rows: which years, which geographies, which people)
-
-Only one main outcome. Secondary outcomes go under "Scope limits" as things you *may* report but will not be graded on.
-
-*Secondary outcome (not graded): spread between the MSP forecast and the AgMarkNet average mandi price for the same crop and season.*
+- **Name:** GVA drop percentage during the COVID shock year
+- **Unit:** Percentage points (%)
+- **Source:** ASI Block J, column J113 (net value added, ₹ thousands) aggregated by NIC 2-digit industry code, multiplied by the factory-level sampling weight (Block A, column MULT)
+- **Population / panel:** All registered factories in India's ASI across 24 NIC 2-digit manufacturing industries, for the transition 2019-20 → 2020-21 (the primary COVID shock year). Secondary outcome is GVA recovery percentage (2020-21 → 2021-22). Both are reported for each of the 24 industries and for major states.
 
 ---
 
@@ -69,8 +63,11 @@ A single numeric bar. Your project is a success if the delivered metric crosses 
 
 If you cannot write a number, you do not yet have a project — you have a topic. Go back to Section 2.
 
-***Predictive**:Out-of-sample Root Mean Squared Error (RMSE) on the held-out slice 2019–20 to 2024–25 (6 observations per crop, 12 total) is at most INR 120 per quintal, versus a naïve last-value (random-walk) baseline of approximately INR 380 per quintal.
-The threshold of INR 120/quintal corresponds to roughly 5% of the current wheat MSP (≈ INR 2,425/quintal for 2025–26), which is the order of magnitude within which CACP recommendations have historically deviated from actual government decisions.*
+**Project type: Descriptive**
+
+> Produce multiplier-weighted GVA drop and recovery estimates for all N ≥ 20 industry strata, each with a factory sample size ≥ 300 (minimum observed: 339), with the difference in mean GVA drop between Labour-Intensive and Capital-Intensive industry groups documented with a 95% confidence interval that excludes zero.
+
+Concretely: the project succeeds if we can report that the Labour-Intensive group's mean GVA drop is at least 2 percentage points worse than the Capital-Intensive group's mean GVA drop, with a CI that does not cross zero. Our current estimate from the full data is −4.97% vs −1.36%, a gap of **−3.61 pp** — the threshold of 2 pp is deliberately conservative to account for specification choices.
 
 ---
 
@@ -82,10 +79,11 @@ The naive or prior number your threshold is measured against. Examples:
 - A simple AR(1) or last-value forecast.
 - An unadjusted before-after difference.
 
-State **what the baseline produces numerically** if you know it, or how you will compute it before the checkpoint if you do not. You must compute the baseline *before* you build anything fancy.
+The naive baseline is the **aggregate national GVA change with no industry split**: −1.83% for 2020-21 vs 2019-20. Under this baseline, all 24 industries are assumed to have experienced the same −1.83% drop — i.e., capital intensity carries zero explanatory power.
 
-*A naïve last-value (random-walk) forecast: the forecast for year t is simply the announced MSP in year t−1. Because MSP increases have been monotonically positive but variable in size (ranging from INR 50 to INR 500/quintal per year), the random-walk baseline produces large errors in high-hike years.
-Using the 2019–20 to 2024–25 hold-out period on publicly available historical MSP series, we estimate the random-walk RMSE at approximately INR 380/quintal for wheat and INR 420/quintal for paddy. We will compute the exact baseline programmatically in scripts/baseline.py before building any model, and the value will be written to outputs/baseline_metric.json.*
+Our project beats this baseline if the industry-stratified estimates show meaningful dispersion (standard deviation of GVA drops across industries >> 0) and if the Labour vs Capital-Intensive gap is statistically distinguishable from zero.
+
+We will compute this baseline formally before building any ML component: run a one-sample t-test of each industry's GVA drop against the national mean of −1.83%, and report which industries lie outside a ±2 pp band around the national mean.
 
 ---
 
@@ -93,7 +91,7 @@ Using the 2019–20 to 2024–25 hold-out period on publicly available historica
 
 One sentence the data can prove wrong. A sign, a threshold, or a rank ordering. Not "we will analyse X" — "X will be greater than Y by at least Z".
 
-*A ridge-regression model trained on lagged MSP, CPI-AL (Consumer Price Index – Agricultural Labourers), diesel price, and production volume will produce an out-of-sample RMSE of at most INR 120/quintal on the 2019–20 to 2024–25 held-out slice — at least 65% lower than the random-walk baseline RMSE.
+*Labour-intensive manufacturing industries (GVA per worker below the cross-industry median in 2019-20) will show a mean GVA drop in 2020-21 that is at least 2 percentage points larger in magnitude than capital-intensive industries, measured using multiplier-weighted ASI data.
 *
 
 ---
@@ -107,53 +105,33 @@ For each source:
 - **Access method** (direct download, API call, authenticated portal)
 - **A 10-line script or notebook cell** that fetches one row and prints it
 
-If any source requires manual scraping, permissions, or a login you do not yet have, flag it here with a mitigation plan.
+**Source:** Annual Survey of Industries (ASI), Ministry of Statistics & Programme Implementation, Government of India.  
+**URL:** https://mospi.gov.in/web/asi → Unit Level Data → CSV  
+**Licence:** Public government data, freely downloadable, no registration required.  
+**Access method:** Direct download of four zip files (one per survey year: 2018-19, 2019-20, 2020-21, 2021-22). Each zip contains block-level CSVs.
 
-*Source 1 — Historical MSP Series (CACP / data.gov.in)
+**Verification script — fetches one row from Block J and prints it:**
 
-URL: https://www.data.gov.in/keywords/MSP and CACP annual reports at https://cacp.dacnet.nic.in
-Licence: Government of India Open Data Licence (GODL) — free to use with attribution
-Access: Direct CSV download; no authentication required
-Fetch snippet:
+```python
+import zipfile, pandas as pd, io
 
-pythonimport requests, pandas as pd
-url = "https://data.gov.in/resource/minimum-support-price-msp-foodgrains/download"
-df = pd.read_csv(url, nrows=1)
-print(df.iloc[0])
-If the API endpoint is unavailable, the static CSV committed under data/msp_historical.csv (scraped once and version-controlled) serves as the fallback.
+zpath = "data/ASI_DATA_2019_20_CSV.zip"
+with zipfile.ZipFile(zpath) as z:
+    with z.open("ASI_DATA_2019_20_CSV/blkJ201920.csv") as f:
+        row = pd.read_csv(f, nrows=1)
+print(row.to_string())
+# Expected output: one row with columns AJ01, J11, J112, J113, ...
+```
 
-Source 2 — AgMarkNet Wholesale Mandi Prices
+**No scraping, login, or permissions required.** All four zip files are already downloaded and committed under `data/` (zip format only — raw CSVs are gitignored due to file size).
 
-URL: https://agmarknet.gov.in (commodity-wise state-level daily prices)
-Licence: Ministry of Agriculture & Farmers Welfare — open access
-Access: HTTP GET requests with crop/state/year parameters; no API key required
-Fetch snippet:
+**Blocks used:**
 
-pythonimport requests
-params = {"commodity": "Wheat", "state": "All", "year": "2024"}
-r = requests.get("https://agmarknet.gov.in/SearchAndReport/CommodityWiseDailyReport.aspx",
-                 params=params, timeout=30)
-print(r.text[:500])   # first row of HTML table
-Scraping mitigation: if the portal blocks automated access, we will use the pre-downloaded annual summary CSVs committed under data/agmarknet/.
-
-Source 3 — CPI-Agricultural Labourers (CPI-AL)
-
-URL: https://data.gov.in (search: "Consumer Price Index Agricultural Labourers")
-Licence: GODL
-Access: Direct CSV download
-Fetch snippet:
-
-pythonimport requests, pandas as pd
-url = "https://data.gov.in/resource/consumer-price-index-agricultural-labourers/download"
-df = pd.read_csv(url, nrows=1)
-print(df.iloc[0])
-
-Source 4 — HSD (Diesel) Retail Prices
-
-URL: PPAC (Petroleum Planning and Analysis Cell): https://ppac.gov.in/content/212_1_PricesPetroleum.aspx
-Licence: Government of India — open access
-Access: Direct download of monthly price tables (Excel/PDF); committed to data/diesel_prices.csv after one-time manual download
-Flag: PPAC does not expose a programmatic API; the one-time download is documented in scripts/fetch_diesel.py with a comment noting the manual step.*
+| Block | File | Columns used | Purpose |
+|-------|------|-------------|---------|
+| A | blkA{year}.csv | A1 (DSL/state), A5 (NIC), MULT | Factory ID, industry, state, weight |
+| J | blkJ{year}.csv | J112 (output), J113 (GVA) | Financial outcomes |
+| H | blkH{year}.csv | H14 (workers), H16 (wages) | Employment outcomes |
 
 ---
 
@@ -186,11 +164,18 @@ One named failure mode, and the fallback analysis you will run if it materialise
 - "If DiD parallel-trends fails visually, we fall back to a state-fixed-effects panel regression with year trends and report both."
 
 One risk is enough. Two is fine. Zero means you have not thought hard enough.
+**Risk 1 — State code identification fails for major states**
 
-*Risk 1: AgMarkNet blocks automated scraping before the checkpoint, leaving us without open-market price data to validate the MSP–mandi spread.
-Fallback: We will fall back to the USDA FAS AgMarkNet-sourced price series (publicly available in GAIN reports as CSVs/PDFs) and manually extract the national monthly average prices for wheat and paddy. Analysis will proceed on the MSP-only predictive task, and the mandi spread will be reported as a qualitative observation rather than a computed metric.
-Risk 2: The ridge-regression model fails to beat the INR 120/quintal RMSE threshold because MSP increments in 2022–23 and 2023–24 were politically driven outliers not captured by cost-push variables.
-Fallback: We will report both the ridge model and a simple AR(2) model with a CPI-AL covariate, clearly label which one clears the threshold (if either does), and document the shortfall honestly in the final report. The outputs/primary_metric.json will record "passed": false if the threshold is not met.*
+The ASI anonymises factory-level state identifiers in the public CSV. We infer state from the first two digits of the factory DSL code, which follows a standard state-prefix scheme. However, if multiple large states (e.g. Maharashtra, Tamil Nadu, Gujarat) share overlapping DSL prefix ranges in a given year, our state-level estimates will be unreliable.
+
+*Fallback:* If state-level analysis is infeasible for more than 3 major states, we drop the state section entirely and restrict our claims to the industry-level analysis, which uses NIC codes from Block A column A5 and is not affected by this issue. Industry-level results are the primary contribution; state results are secondary.
+
+**Risk 2 — GVA figures are implausible for some industries in one wave**
+
+If a single year's Block J data for an industry shows a >90% spike or collapse inconsistent with the other three years, it likely reflects a data entry or aggregation anomaly rather than a real economic event.
+
+*Fallback:* Flag the industry, report results with and without it, and note the anomaly in the limitations section. We will not impute or smooth the values.
+
 
 ---
 
