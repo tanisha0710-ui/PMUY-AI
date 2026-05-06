@@ -1,8 +1,10 @@
 {
-  "metric_name": "replace_me_primary",
-  "value": 0.0,
-  "threshold": 0.0,
-  "passed": false,
-  "notes": "Template value. Replace this with your real project metric before the final submission.",
-  "is_template": true
+  "metric_name": "ridge_r2_test",
+  "value": 0.8533,
+  "threshold": 0.6,
+  "passed": true,
+  "cv_r2_train": 0.798,
+  "mae_pp": 1.7778,
+  "first_diff_coef_upi": -0.3808,
+  "causal_interpretation": "A 1-unit increase in \u0394log(UPI per capita) is associated with a -0.381 pp change in \u0394informal employment share (first-difference OLS, R\u00b2=0.004)."
 }
