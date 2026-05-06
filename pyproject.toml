@@ -1,113 +1,13 @@
-"""
-main.py
--------
-ECO 6810 Final Project — reproducible entry point.
+[project]
+name = "eco6810-project-template"
+version = "0.1.0"
+description = "Starter scaffold for the ECO6810 final project"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "requests>=2.31",
+]
 
-Project: Does UPI Transaction Volume Predict Informal Sector Employment
-         in Indian States? A Machine Learning Panel Approach (2020–2024)
-
-Team: [Your names here]
-Run : python main.py   (or: uv run main.py)
-"""
-
-import json, os, sys
-sys.path.insert(0, ".")
-
-from project_code.data_loader import save_data
-from project_code.analysis    import run_full_pipeline
-from project_code.visualize   import make_all_figures
-
-os.makedirs("outputs", exist_ok=True)
-os.makedirs("data", exist_ok=True)
-
-print("=" * 60)
-print("ECO 6810 Final Project")
-print("UPI Penetration & Informal Employment in Indian States")
-print("=" * 60)
-
-# ── 1. Data ──────────────────────────────────────────────────────────────────
-print("\n[1/4] Building dataset...")
-df = save_data("data")
-
-# ── 2. Analysis ──────────────────────────────────────────────────────────────
-print("\n[2/4] Running models...")
-baseline, primary, coef_df, fd_result, train, test, model, scaler = run_full_pipeline(df)
-
-print(f"  Baseline R² (state mean)  : {baseline['value']:.4f}")
-print(f"  Ridge R²  (out-of-sample) : {primary['value']:.4f}  (threshold: {primary['threshold']:.2f})")
-print(f"  First-diff coef (UPI→inf) : {fd_result['coef_d_log_upi_pc']:.4f}")
-
-# ── 3. Figures ───────────────────────────────────────────────────────────────
-print("\n[3/4] Generating figures...")
-make_all_figures(df, train, test, model, scaler, coef_df)
-
-# ── 4. JSON outputs ──────────────────────────────────────────────────────────
-print("\n[4/4] Writing output JSON files...")
-
-baseline_out = {
-    "metric_name": baseline["metric_name"],
-    "value": baseline["value"],
-    "unit": baseline["unit"]
-}
-with open("outputs/baseline_metric.json", "w") as f:
-    json.dump(baseline_out, f, indent=2)
-
-primary_out = {
-    "metric_name": primary["metric_name"],
-    "value": primary["value"],
-    "threshold": primary["threshold"],
-    "passed": primary["passed"],
-    "cv_r2_train": primary["cv_r2_train"],
-    "mae_pp": primary["mae"],
-    "first_diff_coef_upi": fd_result["coef_d_log_upi_pc"],
-    "causal_interpretation": fd_result["interpretation"]
-}
-with open("outputs/primary_metric.json", "w") as f:
-    json.dump(primary_out, f, indent=2)
-
-manifest = {
-    "charter_locked": True,
-    "project_title": "Does UPI Transaction Volume Predict Informal Sector Employment in Indian States?",
-    "project_type": "Predictive + Causal check",
-    "main_question": "Can lagged UPI transaction volume predict the informal employment share across Indian states?",
-    "sources": [
-        {
-            "name": "NPCI UPI Statistics (calibrated synthetic panel)",
-            "status": "ok",
-            "probe_artifact": "artifacts/probes/probe_upi_data.json"
-        },
-        {
-            "name": "PLFS Annual Reports 2020-23 (informal share by state)",
-            "status": "ok",
-            "probe_artifact": "artifacts/probes/probe_plfs_data.json"
-        }
-    ],
-    "baseline_ready": True,
-    "primary_metric_schema_ready": primary["passed"],
-    "run_command": "python main.py",
-    "outputs": [
-        "outputs/baseline_metric.json",
-        "outputs/primary_metric.json",
-        "outputs/fig1_upi_trends.png",
-        "outputs/fig2_scatter_upi_informal.png",
-        "outputs/fig3_model_performance.png",
-        "outputs/fig4_fd_upi_effect.png",
-        "outputs/fig5_state_heatmap.png"
-    ]
-}
-with open("outputs/milestone_manifest.json", "w") as f:
-    json.dump(manifest, f, indent=2)
-
-# Save coefficient table
-coef_df.to_csv("outputs/ridge_coefficients.csv", index=False)
-
-print("\n  outputs/baseline_metric.json   ✓")
-print("  outputs/primary_metric.json    ✓")
-print("  outputs/milestone_manifest.json ✓")
-print("  outputs/ridge_coefficients.csv  ✓")
-print("\n" + "=" * 60)
-print(f"PRIMARY METRIC  Ridge R² = {primary['value']:.4f}  |  Passed: {primary['passed']}")
-print(f"BASELINE        State-mean R² = {baseline['value']:.4f}")
-print(f"CAUSAL CHECK    Δlog(UPI) coef = {fd_result['coef_d_log_upi_pc']:.4f} pp")
-print("=" * 60)
-print("\nDone. See outputs/ for all results.")
+[tool.uv]
+dev-dependencies = []
