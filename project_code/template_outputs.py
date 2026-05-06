@@ -52,8 +52,8 @@ def build_primary_metric() -> dict:
  
         "sources": [
             {
-                "name": "NFHS-4+5 household panel (nr.csv)",
-                "file": "data/nr.csv",
+                "name": "NFHS-4+5 household panel ",
+                "file": "https://drive.google.com/file/d/1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ/view",
                 "rows_raw": 1238208,
                 "rows_after_exclusions": 1235952,
                 "nfhs4_obs": 600328,
