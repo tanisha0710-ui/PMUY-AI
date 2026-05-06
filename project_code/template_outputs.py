@@ -42,7 +42,7 @@ def build_primary_metric() -> dict:
     }
 
 
- def build_milestone_manifest() -> dict:
+def build_milestone_manifest() -> dict:
     return {
         "milestone_date": "2026-05-06",
         "project": "PMUY Clean-Fuel Adoption — Causal DiD Analysis (ECO 6810)",
