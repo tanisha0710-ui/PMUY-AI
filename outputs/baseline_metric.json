@@ -1,7 +1,23 @@
  {
-  "metric_name": "replace_me_baseline",
-  "value": 0.0,
-  "unit": "replace_me_unit",
-  "notes": "Template value. Replace this with your real baseline before the milestone.",
-  "is_template": true
+  "metric_name": "naive_did_pp",
+  "description": "Unadjusted DiD — 2x2 weighted means, no controls, no FE. Treatment = low-access states (below NFHS-4 median ~52.3 pp), i.e. PMUY-targeted states. Control = high-access states (above median).",
+
+  "treatment_group": "low-access states (high_exposure=1, below NFHS-4 median) — PMUY-targeted",
+  "control_group":   "high-access states (high_exposure=0, above NFHS-4 median) — control",
+
+  "treatment_pre_pp":   27.4,
+  "treatment_post_pp":  42.0,
+  "treatment_delta_pp": 14.6,
+
+  "control_pre_pp":   63.0,
+  "control_post_pp":  79.5,
+  "control_delta_pp": 16.6,
+
+  "value":    -2.0,
+  "unit":     "percentage points",
+  "threshold": 2.0,
+  "threshold_rule": "|value| >= 2.0 pp",
+  "passed":   true,
+
+  "note": "Naive DiD is negative (-2.0 pp): low-access states improved less than high-access states unconditionally. This is the unadjusted baseline. The covariate-adjusted TWFE estimate in primary_metric.json is the graded deliverable. Threshold is absolute magnitude — |−2.0| = 2.0 pp meets the bar."
 }
