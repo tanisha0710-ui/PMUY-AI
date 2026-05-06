@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 
- def build_baseline_metric() -> dict:
+def build_baseline_metric() -> dict:
     return {
         "metric_name": "naive_did_pp",
         "description": (
