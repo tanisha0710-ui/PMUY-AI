@@ -17,7 +17,8 @@ Loaded successfully in Colab:
 Shape: (1238208, 19)[before exclusion of the Households reporting "no food cooked in house"]
 Rows: 1,235,952 [after exclusion] 
 
-Columns include: - **hhid**: household ID  
+Columns include: 
+- **hhid**: household ID  
 - **hv005**: sample weight / 1,000,000  
 - **hv009**: household size  
 - **hv024**: state  
