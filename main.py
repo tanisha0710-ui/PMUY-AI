@@ -1,120 +1,135 @@
-from __future__ import annotations
 import pandas as pd
 import numpy as np
+import zipfile
+import matplotlib.pyplot as plt
 from pathlib import Path
-import json
 
-# ─────────────────────────────
+# -----------------------------
 # PATHS
-# ─────────────────────────────
-ROOT = Path.cwd()
-DATA_DIR = ROOT / "data"
-OUTPUTS_DIR = ROOT / "outputs"
-OUTPUTS_DIR.mkdir(exist_ok=True)
+# -----------------------------
+DATA_DIR = Path("data")
+OUTPUT_DIR = Path("outputs")
+OUTPUT_DIR.mkdir(exist_ok=True)
 
-YEARS = ["2018_19", "2019_20", "2020_21", "2021_22"]
+FILES = {
+    "2018_19": "ASI_DATA_2018_19_CSV(2).zip",
+    "2019_20": "ASI_DATA_2019_20_CSV(2).zip",
+    "2020_21": "ASI_DATA_2020_21_CSV(2).zip",
+    "2021_22": "ASI_DATA_2021_22_CSV(2).zip",
+}
 
-# ─────────────────────────────
-# LOAD ASI BLOCKS
-# ─────────────────────────────
-def load_csv(path):
-    if not path.exists():
-        raise FileNotFoundError(f"Missing file: {path}")
-    # Explicitly exclude 'YR', 'BLK', and 'Unnamed' columns to prevent collisions
-    df = pd.read_csv(path, nrows=0)
-    exclude = {'YR', 'BLK'}
-    cols = [c for c in df.columns if c.upper() not in exclude and not c.startswith('Unnamed')]
-    df = pd.read_csv(path, usecols=cols)
-    df.columns = df.columns.str.strip().str.upper()
+# -----------------------------
+# HELPER
+# -----------------------------
+def find_file(z, keyword):
+    for name in z.namelist():
+        if keyword.lower() in name.lower():
+            return name
+    raise Exception(f"{keyword} not found")
+
+# -----------------------------
+# LOAD DATA
+# -----------------------------
+def load_year(year, file):
+    path = DATA_DIR / file
+
+    with zipfile.ZipFile(path) as z:
+        A = pd.read_csv(z.open(find_file(z, "blkA")))
+        J = pd.read_csv(z.open(find_file(z, "blkJ")))
+        H = pd.read_csv(z.open(find_file(z, "blkH")))
+
+    df = A.merge(J, on="AJ01").merge(H, on="AJ01")
+
+    df = df[["AJ01", "A5", "MULT", "J113", "H14"]]
+    df.columns = ["id", "industry", "weight", "gva", "workers"]
+
+    df["year"] = int(year.split("_")[0]) + 1
+
     return df
 
-def get_id_col(df):
-    # Priority ID columns for ASI data blocks
-    for c in ["DSL", "AJ01", "AH01", "ID"]:
-        if c in df.columns:
-            return c
-    # Fallback to the first column if none match
-    return df.columns[0]
-
-def load_year(year_str):
-    suf = year_str.replace('_', '')
-    year_folder = DATA_DIR / f"ASI_DATA_{year_str}_CSV"
-    
-    # Load blocks A (General), J (Output), H (Input/Labor)
-    A = load_csv(year_folder / f"blkA{suf}.csv")
-    J = load_csv(year_folder / f"blkJ{suf}.csv")
-    H = load_csv(year_folder / f"blkH{suf}.csv")
-
-    id_a, id_j, id_h = get_id_col(A), get_id_col(J), get_id_col(H)
-    
-    # Cast IDs to string to ensure safe merging
-    for d, k in [(A, id_a), (J, id_j), (H, id_h)]:
-        d[k] = d[k].astype(str).str.strip()
-
-    # Merge on the specific ID column found in each block
-    df = A.merge(J, left_on=id_a, right_on=id_j, suffixes=('', '_j'))
-    df = df.merge(H, left_on=id_a, right_on=id_h, suffixes=('', '_h'))
-
-    # Map standardized columns
-    col_map = {id_a: "id"}
-    if "A5" in df.columns: col_map["A5"] = "nic"
-    if "MULT" in df.columns: col_map["MULT"] = "weight"
-    if "J113" in df.columns: col_map["J113"] = "gva"
-    if "H14" in df.columns: col_map["H14"] = "workers"
-
-    df = df.rename(columns=col_map)
-    needed = ["id", "nic", "weight", "gva", "workers"]
-    
-    # Ensure all needed columns exist, fill with 0 if missing
-    for c in needed:
-        if c not in df.columns:
-            df[c] = 0
-            
-    df = df[needed].copy()
-    df["year"] = int(year_str.split("_")[0]) + 1
-    return df
-
-# ─────────────────────────────
-# PIPELINE
-# ─────────────────────────────
-def main():
-    print("Starting Pipeline...")
+# -----------------------------
+# BUILD PANEL
+# -----------------------------
+def build_panel():
     dfs = []
-    for y in YEARS:
-        print(f"Processing {y}...")
-        try:
-            dfs.append(load_year(y))
-        except Exception as e:
-            print(f"  Error on {y}: {e}")
-
-    if not dfs:
-        print("No data available for analysis.")
-        return
+    for y, f in FILES.items():
+        print(f"Loading {y}...")
+        dfs.append(load_year(y, f))
 
     df = pd.concat(dfs, ignore_index=True)
-    df["industry"] = df["nic"].astype(str).str.strip().str[:2]
 
-    # Convert columns to numeric
-    for c in ["gva", "weight"]:
-        df[c] = pd.to_numeric(df[c], errors='coerce').fillna(0)
-        
+    df["industry"] = df["industry"].astype(str).str[:2]
     df["wgva"] = df["gva"] * df["weight"]
-    agg = df.groupby(["industry", "year"])["wgva"].sum().reset_index()
-    pivot = agg.pivot(index="industry", columns="year", values="wgva")
-    
-    metrics = {}
-    years_present = pivot.columns.tolist()
-    # Simple average GVA growth/drop calculation between consecutive years
-    if 2020 in years_present and 2021 in years_present:
-        # (GVA_2021 - GVA_2020) / GVA_2020
-        change = ((pivot[2021] - pivot[2020]) / pivot[2020].replace(0, np.nan) * 100)
-        metrics["avg_gva_drop_pct"] = float(change.mean())
+    df["wwork"] = df["workers"] * df["weight"]
 
-    print("\nRESULTS:")
-    print(metrics)
-    with open(OUTPUTS_DIR / "primary_metric.json", "w") as f:
-        json.dump(metrics, f, indent=4)
-    print(f"Metrics saved to {OUTPUTS_DIR}")
+    return df
 
+# -----------------------------
+# ANALYSIS
+# -----------------------------
+def run_analysis(df):
+    agg = df.groupby(["industry", "year"]).agg(
+        gva=("wgva", "sum"),
+        workers=("wwork", "sum")
+    ).reset_index()
+
+    pivot = agg.pivot(index="industry", columns="year", values="gva")
+
+    pivot = pivot[[2020, 2021, 2022]]
+
+    pivot["drop_pct"] = (pivot[2021] - pivot[2020]) / pivot[2020] * 100
+    pivot["recovery_pct"] = (pivot[2022] - pivot[2021]) / pivot[2021] * 100
+
+    pivot = pivot.reset_index()
+
+    # Labour vs Capital
+    base = agg[agg["year"] == 2020].copy()
+    base["gva_per_worker"] = base["gva"] / base["workers"]
+
+    median_val = base["gva_per_worker"].median()
+
+    base["type"] = np.where(
+        base["gva_per_worker"] < median_val,
+        "Labour",
+        "Capital"
+    )
+
+    final = pivot.merge(base[["industry", "type"]], on="industry")
+
+    # Metrics
+    labour = final[final["type"] == "Labour"]["drop_pct"]
+    capital = final[final["type"] == "Capital"]["drop_pct"]
+
+    gap = labour.mean() - capital.mean()
+
+    print("\n===== RESULTS =====")
+    print(f"Labour Mean Drop: {labour.mean():.2f}")
+    print(f"Capital Mean Drop: {capital.mean():.2f}")
+    print(f"Gap: {gap:.2f}")
+
+    # Save table
+    final.to_csv(OUTPUT_DIR / "industry_results.csv", index=False)
+
+    # -----------------------------
+    # PLOTS
+    # -----------------------------
+    plt.figure(figsize=(10,6))
+    plt.bar(final["industry"], final["drop_pct"])
+    plt.xticks(rotation=90)
+    plt.title("GVA Drop by Industry (COVID)")
+    plt.tight_layout()
+    plt.savefig(OUTPUT_DIR / "gva_drop.png")
+    plt.show()
+
+    plt.figure()
+    plt.bar(["Labour", "Capital"], [labour.mean(), capital.mean()])
+    plt.title("Labour vs Capital Gap")
+    plt.savefig(OUTPUT_DIR / "gap.png")
+    plt.show()
+
+# -----------------------------
+# RUN
+# -----------------------------
 if __name__ == "__main__":
-    main()
+    df = build_panel()
+    run_analysis(df)
