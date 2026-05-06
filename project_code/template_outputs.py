@@ -25,6 +25,7 @@ def build_baseline_metric() -> dict:
             "The covariate-adjusted TWFE estimate in primary_metric.json is the graded deliverable. "
             "Threshold is absolute magnitude — |-2.0| = 2.0 pp which should be met in the main DiD estimate for the final project."
         ),
+        "is_template": True,
     }
 
 
@@ -43,7 +44,7 @@ def build_primary_metric() -> dict:
             "Will be replaced with TWFE coefficient in final submission. "
             "Run `uv run main.py` (without --milestone) to compute the real estimate."
         ),
-        "is_template": False,
+        "is_template": True,
     }
 
 
