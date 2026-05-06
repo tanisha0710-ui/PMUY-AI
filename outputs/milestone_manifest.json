@@ -1,30 +1,21 @@
 {
-  "charter_locked": true,
-  "project_title": "Does UPI Transaction Volume Predict Informal Sector Employment in Indian States?",
-  "project_type": "Predictive + Causal check",
-  "main_question": "Can lagged UPI transaction volume predict the informal employment share across Indian states?",
+  "charter_locked": false,
   "sources": [
     {
-      "name": "NPCI UPI Statistics (calibrated synthetic panel)",
-      "status": "ok",
-      "probe_artifact": "artifacts/probes/probe_upi_data.json"
+      "name": "ASI Manufacturing Data (2018-19 to 2021-22)",
+      "status": "available",
+      "probe_artifact": "artifacts/probes/asi_probe.md",
+      "note": "Contains industry-state level data on GVA, output, and employment for formal manufacturing sector."
     },
     {
-      "name": "PLFS Annual Reports 2020-23 (informal share by state)",
-      "status": "ok",
-      "probe_artifact": "artifacts/probes/probe_plfs_data.json"
+      "name": "CEA Monthly Renewable Generation Data",
+      "status": "available",
+      "probe_artifact": "artifacts/probes/cea_probe.md",
+      "note": "Provides plant-level renewable energy generation (solar and wind), used for sectoral comparison."
     }
   ],
   "baseline_ready": true,
   "primary_metric_schema_ready": true,
-  "run_command": "python main.py",
-  "outputs": [
-    "outputs/baseline_metric.json",
-    "outputs/primary_metric.json",
-    "outputs/fig1_upi_trends.png",
-    "outputs/fig2_scatter_upi_informal.png",
-    "outputs/fig3_model_performance.png",
-    "outputs/fig4_fd_upi_effect.png",
-    "outputs/fig5_state_heatmap.png"
-  ]
+  "run_command": "uv run main.py",
+  "template_warning": "This scaffold runs, but it is not submission-ready until all probes, cleaning scripts, and documentation are fully implemented."
 }
