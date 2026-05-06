@@ -1,15 +1,30 @@
 {
-  "charter_locked": false,
+  "charter_locked": true,
+  "project_title": "Does UPI Transaction Volume Predict Informal Sector Employment in Indian States?",
+  "project_type": "Predictive + Causal check",
+  "main_question": "Can lagged UPI transaction volume predict the informal employment share across Indian states?",
   "sources": [
     {
-      "name": "replace_me_source",
-      "status": "blocked",
-      "probe_artifact": "artifacts/probes/replace_me_probe.md",
-      "note": "Replace this with a real one-row or one-response source probe."
+      "name": "NPCI UPI Statistics (calibrated synthetic panel)",
+      "status": "ok",
+      "probe_artifact": "artifacts/probes/probe_upi_data.json"
+    },
+    {
+      "name": "PLFS Annual Reports 2020-23 (informal share by state)",
+      "status": "ok",
+      "probe_artifact": "artifacts/probes/probe_plfs_data.json"
     }
   ],
-  "baseline_ready": false,
+  "baseline_ready": true,
   "primary_metric_schema_ready": true,
-  "run_command": "uv run main.py",
-  "template_warning": "This scaffold runs, but it is not submission-ready until you replace the placeholders."
+  "run_command": "python main.py",
+  "outputs": [
+    "outputs/baseline_metric.json",
+    "outputs/primary_metric.json",
+    "outputs/fig1_upi_trends.png",
+    "outputs/fig2_scatter_upi_informal.png",
+    "outputs/fig3_model_performance.png",
+    "outputs/fig4_fd_upi_effect.png",
+    "outputs/fig5_state_heatmap.png"
+  ]
 }
