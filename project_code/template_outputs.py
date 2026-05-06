@@ -19,14 +19,11 @@ def build_baseline_metric() -> dict:
         "control_delta_pp": 16.6,
         "value":    -2.0,
         "unit":     "percentage points",
-        "threshold": 2.0,
-        "threshold_rule": "|value| >= 2.0 pp",
-        "passed":   True,
         "note": (
             "Naive DiD is negative (-2.0 pp): low-access states improved less than "
             "high-access states unconditionally. This is the unadjusted baseline. "
             "The covariate-adjusted TWFE estimate in primary_metric.json is the graded deliverable. "
-            "Threshold is absolute magnitude — |-2.0| = 2.0 pp meets the bar."
+            "Threshold is absolute magnitude — |-2.0| = 2.0 pp which should be met in the main DiD estimate for the final project."
         ),
     }
 
@@ -45,14 +42,14 @@ def build_primary_metric() -> dict:
 def build_milestone_manifest() -> dict:
     return {
         "milestone_date": "2026-05-06",
-        "project": "PMUY Clean-Fuel Adoption — Causal DiD Analysis (ECO 6810)",
+        "project": "The Impact of PMUY on Clean Fuel Adoption: A Difference-in-Differences Analysis Using NFHS-4 and NFHS-5 Data",
         "team": ["Tanisha Aggarwal", "Neha Rana", "Jaswathi Lalitha R"],
-        "charter_locked": True,
+        "charter_locked": False,
         "status": "milestone",
  
         "sources": [
             {
-                "name": "NFHS-4+5 household panel ",
+                "name": pmuy_data.csv ",
                 "file": "https://drive.google.com/file/d/1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ/view",
                 "rows_raw": 1238208,
                 "rows_after_exclusions": 1235952,
@@ -61,7 +58,7 @@ def build_milestone_manifest() -> dict:
                 "states_uts": 35,
                 "clean_fuel_mean_unweighted": 0.4565,
                 "status": "verified",
-                "probe_artifact": "artifacts/probes/probe_nfhs.py",
+                "probe_artifact": "artifacts/probes/replace_me_probe.md",
                 "note": "Merged NFHS-4 and NFHS-5 household microdata. Primary outcome source.",
             },
             {
@@ -69,7 +66,6 @@ def build_milestone_manifest() -> dict:
                 "url": "https://ppac.gov.in/consumption/state-wise-pmuy-data",
                 "backup": "https://www.data.gov.in/resource/stateut-wise-number-pradhan-mantri-ujjwala-yojana-pmuy-connections-2018-2023",
                 "status": "verified",
-                "probe_artifact": "artifacts/probes/probe_ppac.py",
                 "note": "Used only to validate high/low exposure split. Not a primary outcome source.",
             },
         ],
@@ -108,16 +104,11 @@ def build_milestone_manifest() -> dict:
         "baseline_metric": {
             "file": "outputs/baseline_metric.json",
             "value_pp": -2.0,
-            "threshold_rule": "|value| >= 2.0 pp",
-            "passed": True,
             "status": "written",
         },
  
-        "primary_metric_schema_ready": True,
-        "primary_metric": {
-            "file": "outputs/primary_metric.json",
-            "status": "pending — run `uv run main.py` (without --milestone) to compute TWFE",
-        },
+        "primary_metric_schema_ready": False,
+      
  
         "completed": [
             "Charter approved (CHARTER.md) — threshold |β̂₃| >= 2.0 pp, CI excludes zero",
@@ -130,9 +121,8 @@ def build_milestone_manifest() -> dict:
             "Treatment: high_exposure=1 for 17 low-access states below NFHS-4 median (52.3 pp)",
             "Descriptive 2x2 summary table produced (4 group x period cells)",
             "Naive DiD baseline: -2.0 pp written to outputs/baseline_metric.json",
-            "Data probe: artifacts/probes/probe_nfhs.py",
-            "PPAC probe: artifacts/probes/probe_ppac.py",
-        ],
+            "Data probe: artifacts/probes/replace_me_probe.py",
+             ],
  
         "remaining_for_final": [
             "TWFE coefficient → outputs/primary_metric.json (run: uv run main.py)",
@@ -143,4 +133,5 @@ def build_milestone_manifest() -> dict:
         ],
  
         "run_command": "uv run main.py --milestone",
+        "template_warning": "This scaffold runs, but it is not submission-ready until you replace the placeholders."
     }
