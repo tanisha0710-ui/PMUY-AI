@@ -47,28 +47,28 @@ The Pradhan Mantri Ujjwala Yojana (PMUY), launched in May 2016, subsidises LPG c
 
 The Difference-in-Differences coefficient β₃ on `Post × HighExposure` in the two-way fixed-effects model below has:
 (a) a 95% confidence interval that excludes zero, and
-(b) a point estimate of at least **+2.0 percentage points** in favour of high-exposure states.
+(b)  a point estimate of at least **2.0 percentage points in absolute magnitude** (|β̂₃| ≥ 2.0 pp), indicating an economically meaningful effect.
 
-Model: `Y_st = α + β₁·Post_t + β₂·HighExposure_s + β₃·(Post_t × HighExposure_s) + δ_s + λ_t + γ·X_st + ε_st`, with `HighExposure` defined as above-median clean-fuel share in NFHS-4, standard errors clustered at the state level.
+Model: `Y_st = α + β₁·Post_t + β₂·HighExposure_s + β₃·(Post_t × HighExposure_s) + δ_s + λ_t + γ·X_st + ε_st`, with `HighExposure` defined as below-median clean-fuel share in NFHS-4, standard errors clustered at the state level.
 
 ---
 
 ## 4. Baseline to beat
 Unadjusted national pre-to-post change in weighted mean clean-fuel share:
 
-**Control group (low-exposure states):** 27.4% → 42.0%, Δ = +14.6 pp  
-**Treatment group (high-exposure states):** 63.0% → 79.5%, Δ = +16.5 pp  
-**Naïve DiD (treatment Δ − control Δ) = +1.9 pp** (unweighted, no controls or FE)
+**Control group (low-exposure states): ** 63.0% → 79.5%, Δ = +16.6 pp   
+**Treatment group (high-exposure states): ** 27.4% → 42.0%, Δ = +14.6 pp 
+**Naïve DiD (treatment Δ − control Δ) = -2.0 pp** (unweighted, no controls or FE)
 
 This unadjusted figure is committed to `outputs/baseline_metric.json` before any regression.  
 
-Success threshold: The covariate-adjusted TWFE estimate must exceed 2 pp with a CI excluding zero.
+Success threshold: The covariate-adjusted TWFE estimate must exceed 2.0 pp in absolute magnitude with a CI excluding zero.
 
 ---
 
 ## 5. Falsifiable hypothesis
 
-States that fell above the NFHS-4 median in clean-fuel access (high-exposure states) experienced a larger increase in clean-fuel adoption between NFHS-4 and NFHS-5 than states below the median, by at least **2 percentage points** after controlling for state fixed effects, time fixed effects, and household-level covariates (urbanicity, electricity access, household size, head's age, and sex of head). If β̂₃ < 2 pp or its 95% CI crosses zero, the hypothesis is rejected.
+States that fell below the NFHS-4 median in clean-fuel access (high-exposure states) experienced a measurably different trajectory in clean-fuel adoption between NFHS-4 and NFHS-5 relative to states above the median, after controlling for state fixed effects, time fixed effects, and household-level covariates (rural/urban, electricity access, female headship, household size, head's age, wealth quintile, and head's education). The success threshold is set at 2.0 percentage points in absolute magnitude, meaning the DiD coefficient must satisfy |β̂₃| ≥ 2.0 pp with a 95% CI that excludes zero. If |β̂₃| < 2.0 pp or the CI contains zero, the result is too imprecise to be policy-relevant. The naïve DiD of −2.0 pp sets the prior expectation that divergence is more likely than convergence.
 
 ---
 
