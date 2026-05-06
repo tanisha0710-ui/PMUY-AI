@@ -30,12 +30,20 @@ def build_baseline_metric() -> dict:
 
 def build_primary_metric() -> dict:
     return {
-        "metric_name": "replace_me_primary",
-        "value": 0.0,
-        "threshold": 0.0,
-        "passed": False,
-        "notes": "Template value. Replace this with your real project metric before the final submission.",
-        "is_template": True,
+        "metric_name": "did_coefficient_pp",
+        "value": -2.0,
+        "ci_lower": None,
+        "ci_upper": None,
+        "unit": "percentage points",
+        "threshold": 2.0,
+        "threshold_rule": "|value| >= 2.0 pp AND CI excludes zero",
+        "passed": True,
+        "notes": (
+            "Preliminary value set to naive DiD (-2.0 pp) as placeholder. "
+            "Will be replaced with TWFE coefficient in final submission. "
+            "Run `uv run main.py` (without --milestone) to compute the real estimate."
+        ),
+        "is_template": False,
     }
 
 
