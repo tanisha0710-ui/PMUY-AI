@@ -1,5 +1,5 @@
  
-from _future_ import annotations
+from __future__ import annotations
 
 from pathlib import Path
 
@@ -10,7 +10,7 @@ from project_code.template_outputs import (
     build_primary_metric,
 )
 
-ROOT = Path(_file_).resolve().parent
+ROOT = Path(__file__).resolve().parent
 OUTPUTS_DIR = ROOT / "outputs"
 
 
@@ -29,5 +29,5 @@ def main() -> None:
     print("Replace the placeholder fields before you submit the milestone or the final project.")
 
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     main()
