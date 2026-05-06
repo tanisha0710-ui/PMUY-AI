@@ -18,7 +18,7 @@ Shape: (1238208, 19)[before exclusion of the Households reporting "no food cooke
 Rows: 1,235,952 [after exclusion] 
 
 Columns include: - **hhid**: household ID  
-- **hv005**: sample weight × 1,000,000  
+- **hv005**: sample weight / 1,000,000  
 - **hv009**: household size  
 - **hv024**: state  
 - **hv025**: urban/rural  
@@ -33,7 +33,7 @@ Columns include: - **hhid**: household ID
 - **sh34**: religion  
 - **sh36**: caste  
 - **hv106_01**: education of head  
-- **state**: standardized state name  
+- **state**: standardized state name created from hv024 by harmonizing NFHS-4 and NFHS-5 state naming conventions (e.g., codes mapped to names, whitespace removed, lowercase).
 - **survey**: NFHS round indicator  
 - **post**: post-treatment indicator (0 = NFHS-4, 1 = NFHS-5)  
 
