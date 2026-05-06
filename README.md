@@ -91,6 +91,7 @@ Running the pipeline generates:
 ```
 outputs/baseline_metric.json
 outputs/milestone_manifest.json
+outputs/primary_metric.json
 ```
 
 ---
