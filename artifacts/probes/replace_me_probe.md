@@ -1,10 +1,10 @@
 # Source Probe — NFHS-4 & NFHS-5 Household Panel
 
 ## Source name:
-NFHS-4 & NFHS-5 merged household dataset (panel.parquet)
+NFHS-4 & NFHS-5 merged household dataset (pmuy_data.csv)
 
 ## Access method:
-Downloaded via Google Drive using `gdown` in Colab
+The original NFHS-4 (2015-16) and NFHS-5 (2019-21) household recode files were obtained through registered access from the DHS Program website. From each survey, only the relevant variables for this analysis were extracted and filtered. The resulting cleaned dataset was then uploaded to Google Drive as pmuy_data.csv.csv, accessed in Colab via gdown or drive.mount(), and will be further processed for the DiD analysis
 
 ## URL or endpoint:
 https://drive.google.com/file/d/1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ/view
@@ -13,8 +13,9 @@ https://drive.google.com/file/d/1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ/view
 
 Loaded successfully in Colab:
 
-Rows: 1,235,952  
-Shape: (1238208, 19)[after exclusion of the Households reporting "no food cooked in house"]
+ 
+Shape: (1238208, 19)[before exclusion of the Households reporting "no food cooked in house"]
+Rows: 1,235,952 [after exclusion] 
 
 Columns include: - **hhid**: household ID  
 - **hv005**: sample weight × 1,000,000  
