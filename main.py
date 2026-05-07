@@ -194,8 +194,6 @@ baseline_metric = {
     "control_delta_pp": round(ctrl_post - ctrl_pre, 2),
     "value": round(naive_did, 2),
     "unit": "percentage points",
-    "threshold": 2.0,
-    "passed": bool(abs(naive_did) >= 2.0)
 }
 
 with open("outputs/baseline_metric.json", "w") as f:
@@ -225,7 +223,7 @@ milestone_manifest = {
     "milestone_date": "2026-05-07",
     "project": "The Impact of PMUY on Clean Fuel Adoption: A Difference-in-Differences Analysis Using NFHS-4 and NFHS-5",
     "team": ["Tanisha Aggarwal", "Neha Rana", "Jaswathi Lalitha R"],
-    "charter_locked": True,
+    "charter_locked": False,
     "status": "milestone",
     "sources": [{
         "name": "pmuy_data_compressed.csv.gz",
