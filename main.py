@@ -33,7 +33,7 @@ def download_data():
         print("✓ Download complete")
         return True
     except ImportError:
-        print("⚠️ gdown not installed. Installing...")
+        print("gdown not installed. Installing...")
         os.system("pip install gdown -q")
         import gdown
         url = f"https://drive.google.com/uc?id={FILE_ID}"
@@ -41,7 +41,7 @@ def download_data():
         print("✓ Download complete")
         return True
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f" Error: {e}")
         return False
 
 if not os.path.exists(OUTPUT_FILE):
@@ -173,8 +173,7 @@ baseline_metric = {
     "control_delta_pp": round(ctrl_delta, 1),
     "value": round(naive_did, 1),
     "unit": "percentage points",
-    "threshold": 2.0,
-    "passed": bool(abs(naive_did) >= 2.0)
+ 
 }
 
 with open('outputs/baseline_metric.json', 'w') as f:
@@ -189,7 +188,7 @@ milestone_manifest = {
     "milestone_date": "2026-05-07",
     "project": "The Impact of PMUY on Clean Fuel Adoption",
     "team": ["Tanisha Aggarwal", "Neha Rana", "Jaswathi Lalitha R"],
-    "charter_locked": True,
+    "charter_locked": False,
     "status": "milestone",
     "sources": [{
         "name": "pmuy_data.csv",
