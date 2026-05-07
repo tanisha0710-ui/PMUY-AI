@@ -8,7 +8,5 @@
   "control_post_pp": 79.5,
   "control_delta_pp": 16.6,
   "value": -2.0,
-  "unit": "percentage points",
-  "threshold": 2.0,
-  "passed": false
+  "unit": "percentage points"
 }
