@@ -50,5 +50,4 @@ First 5 rows:
 ## Notes:
 - Dataset merges NFHS-4 (2015–16) and NFHS-5 (2019–21)
 - Primary outcome variable `hv226` used to construct clean fuel indicator
-- Data is stored externally (Google Drive) due to large size (>100MB)
 - Successfully loaded and used to compute baseline DiD results (-2.0 pp)
