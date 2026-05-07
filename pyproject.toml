@@ -7,8 +7,7 @@ dependencies = [
     "numpy>=1.24",
     "pandas>=2.0",
     "requests>=2.31",
-    "gdown", 
+    "gdown>=5.0.0", 
 ]
 
-[tool.uv]
-dev-dependencies = []
+ 
