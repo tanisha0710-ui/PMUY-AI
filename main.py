@@ -15,7 +15,42 @@ Path("outputs").mkdir(exist_ok=True)
 print("=" * 80)
 print("PMUY CLEAN FUEL ADOPTION ANALYSIS")
 print("=" * 80)
+# ============================================================
+# DOWNLOAD DATA FROM GOOGLE DRIVE (if not already present)
+# ============================================================
 
+# Google Drive file ID for pmuy_data.csv
+FILE_ID = "1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ"
+OUTPUT_FILE = "pmuy_data.csv"
+
+def download_data():
+    """Download pmuy_data.csv from Google Drive using gdown"""
+    try:
+        import gdown
+        print(f"Downloading {OUTPUT_FILE} from Google Drive...")
+        url = f"https://drive.google.com/uc?id={FILE_ID}"
+        gdown.download(url, OUTPUT_FILE, quiet=False)
+        print("✓ Download complete")
+        return True
+    except ImportError:
+        print("⚠️ gdown not installed. Installing...")
+        os.system("pip install gdown -q")
+        import gdown
+        url = f"https://drive.google.com/uc?id={FILE_ID}"
+        gdown.download(url, OUTPUT_FILE, quiet=False)
+        print("✓ Download complete")
+        return True
+    except Exception as e:
+        print(f"❌ Error downloading file: {e}")
+        return False
+
+# Check if file exists locally, if not download
+if not os.path.exists(OUTPUT_FILE):
+    print(f"{OUTPUT_FILE} not found locally. Downloading from Google Drive...")
+    if not download_data():
+        raise FileNotFoundError(f"Could not download {OUTPUT_FILE}. Please check the file ID and your internet connection.")
+else:
+    print(f"✓ Found existing {OUTPUT_FILE} locally")
 # ============================================================
 # LOAD DATA (CORRECT PATH)
 # ============================================================
