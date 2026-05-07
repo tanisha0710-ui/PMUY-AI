@@ -5,6 +5,7 @@ ECO 6810 Final Project
 """
 
 import json
+import os 
 import numpy as np
 import pandas as pd
 from pathlib import Path
