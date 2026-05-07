@@ -24,7 +24,7 @@ print("=" * 80)
 FILE_ID = "1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ"
 OUTPUT_FILE = "pmuy_data.csv"
 
- def download_data():
+def download_data():
     """Download file from Google Drive using requests (no cache/cookies issue)"""
     print(f"Downloading {OUTPUT_FILE} from Google Drive...")
     
