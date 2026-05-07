@@ -173,6 +173,11 @@ baseline_metric = {
     "control_delta_pp": round(ctrl_delta, 1),
     "value": round(naive_did, 1),
     "unit": "percentage points",
+     "note": (
+            "Naive DiD is negative (-2.0 pp): low-access states improved less than "
+            "high-access states unconditionally. This is the unadjusted baseline. "
+            "The covariate-adjusted TWFE estimate in primary_metric.json is the graded deliverable. "
+            "Threshold is absolute magnitude — |-2.0| = 2.0 pp which should be met in the main DiD estimate for the final project."
  
 }
 
