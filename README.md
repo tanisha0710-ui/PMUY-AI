@@ -54,33 +54,35 @@ Steps used:
 
 1. Clone the repository:
 ```
-!git clone https://github.com/tanisha0710-ui/PMUY-AI.git
-%cd PMUY-AI
+%cd /content
+!rm -rf PMUY-AI-test
+!git clone https://github.com/tanisha0710-ui/PMUY-AI.git PMUY-AI-test
+%cd PMUY-AI-test
+
 ```
 
-2. Install dependencies:
+2. Install:
 ```
-!pip install pandas statsmodels pyarrow gdown
-```
-
-3. Download dataset from Google Drive:
-```
-!mkdir -p data
-!gdown --id 1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ -O data/panel.parquet
+!pip install uv -q
+!uv sync
 ```
 
-4. Run the pipeline:
-```
-!python main.py --milestone
-```
 
+3. Run the pipeline:
+```
+!uv run main.py
+```
+4. Check:
+```
+!echo "=== GREP CHECK ===" 
+!grep -r "replace_me\|is_template.*true\|blocked\|Template outputs written" \
+    --include="*.py" --include="*.md" --include="*.json" . \
+    || echo "CLEAN"
+```
 Note:
 - The dataset is stored externally due to size constraints (>100MB)
 - Colab was used for development, but the official reproducible command remains:
 
-```
-uv run main.py --milestone
-```
 
 ---
 
@@ -107,7 +109,11 @@ artifacts/probes/replace_me_probe.md
 ---
 
 Note- We have attached the pdf for codes and output
-(colab) under folder Notebook with file - [Test_Repo.ipynb-Colab.pdf](https://github.com/tanisha0710-ui/PMUY-AI/blob/c45f9f8cbbb0fa8b9d7da7fc924565d16d97073a/notebooks/Test_Repo.ipynb%20-%20Colab.pdf) . Also this pdf shows how we added the results fom Colab to Github
+(colab) under folder Notebook with file - [Test_Repo.ipynb-Colab.pdf] (https://github.com/tanisha0710-ui/PMUY-AI/blob/c45f9f8cbbb0fa8b9d7da7fc924565d16d97073a/notebooks/Test_Repo.ipynb%20-%20Colab.pdf) 
+Also this pdf shows how we added the results fom Colab to Github
+This is our old colab file {We have attached the pdf for codes and output
+(colab) under folder Notebook with file - [Test_Repo.ipynb-Colab.pdf] (https://github.com/tanisha0710-ui/PMUY-AI/blob/c45f9f8cbbb0fa8b9d7da7fc924565d16d97073a/notebooks/Test_Repo.ipynb%20-%20Colab.pdf)} 
+. Also this pdf shows how we added the results fom Colab to Github
 
 ## Team
 
