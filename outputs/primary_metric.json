@@ -3,7 +3,10 @@
   "value": null,
   "ci_lower": null,
   "ci_upper": null,
-  "unit": "percentage points",
+  "p_value": null,
   "threshold": 2.0,
-  "notes": "TWFE coefficient to be computed in final submission"
+  "passed": null,
+  "unit": "percentage points",
+  "status": "placeholder_for_final_submission",
+  "notes": "TWFE coefficient with state FE, time FE, controls, and state-clustered SEs to be computed in final submission"
 }
