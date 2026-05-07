@@ -33,7 +33,7 @@ def download_data():
         print("✓ Download complete")
         return True
     except ImportError:
-        print(" gdown not installed. Installing...")
+        print("⚠️ gdown not installed. Installing...")
         os.system("pip install gdown -q")
         import gdown
         url = f"https://drive.google.com/uc?id={FILE_ID}"
@@ -41,7 +41,7 @@ def download_data():
         print("✓ Download complete")
         return True
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"❌ Error: {e}")
         return False
 
 if not os.path.exists(OUTPUT_FILE):
@@ -83,7 +83,7 @@ print(f"✓ Clean fuel rate (weighted): {np.average(df['clean_fuel'], weights=df
 df['state'] = df['hv024'].str.lower().str.strip()
 
 # ============================================================
-# DEFINE TREATMENT (Based on NFHS-4 median) - THIS IS CRITICAL
+# DEFINE TREATMENT (Based on NFHS-4 median)
 # ============================================================
 
 print("\n" + "=" * 60)
@@ -98,7 +98,7 @@ state_nfhs4 = df[df['post'] == 0].groupby('state').apply(
 
 median_value = state_nfhs4.median()
 
-# CORRECT: Treatment = states BELOW median (low clean fuel, high solid fuel exposure)
+# Treatment = states BELOW median (low clean fuel, high solid fuel exposure)
 treatment_states = state_nfhs4[state_nfhs4 < median_value].index.tolist()
 df['high_exposure'] = df['state'].isin(treatment_states).astype(int)
 
@@ -107,7 +107,43 @@ print(f"Treatment states (below median, low clean fuel): {len(treatment_states)}
 print(f"Control states (above median, high clean fuel): {len(state_nfhs4) - len(treatment_states)}")
 
 # ============================================================
-# BASELINE METRIC (Naive DiD) - VERIFY THESE NUMBERS
+# CREATE CONTROL VARIABLES
+# ============================================================
+
+# Rural
+df['rural'] = (df['hv025'].str.lower() == 'rural').astype(int)
+
+# Electricity
+df['electricity'] = (df['hv206'].str.lower() == 'yes').astype(int)
+
+# Female head
+df['female_head'] = (df['hv219'].str.lower() == 'female').astype(int)
+
+# Improved water
+improved_water = ['piped into dwelling', 'piped to yard/plot', 'public tap/standpipe',
+                  'tube well or borehole', 'protected well', 'protected spring', 'rainwater']
+df['improved_water'] = df['hv201'].str.lower().fillna('').isin(improved_water).astype(int)
+
+# Improved floor
+unimproved_floors = ['mud/clay/earth', 'dung', 'sand', 'raw wood planks', 'palm, bamboo', 'stone']
+df['improved_floor'] = (~df['hv213'].str.lower().fillna('').isin(unimproved_floors)).astype(int)
+
+# Piped water
+piped_sources = ['piped into dwelling', 'piped to yard/plot']
+df['piped_water'] = df['hv201'].str.lower().fillna('').isin(piped_sources).astype(int)
+
+# Wealth quintile
+wealth_map = {'poorest': 1, 'poorer': 2, 'middle': 3, 'richer': 4, 'richest': 5}
+df['wealth_quintile'] = df['hv270'].astype(str).str.lower().map(wealth_map)
+df['rich'] = (df['wealth_quintile'] >= 4).astype(int)
+
+# Head higher education
+df['head_higher_edu'] = df['hv106_01'].str.lower().fillna('').isin(['secondary', 'higher']).astype(int)
+
+print("✓ Created binary control variables")
+
+# ============================================================
+# BASELINE METRIC (Naive DiD)
 # ============================================================
 
 def wmean_pct(sub):
@@ -129,7 +165,7 @@ print(f"Naive DiD: {naive_did:+.1f} pp")
 
 baseline_metric = {
     "metric_name": "naive_did_pp",
-    "description": "Unadjusted DiD — 2x2 weighted means, no controls, no FE.",
+    "description": "Unadjusted DiD — 2x2 weighted means, no controls, no FE. Treatment = states below median (low clean fuel). Control = states above median (high clean fuel).",
     "treatment_pre_pp": round(treat_pre, 1),
     "treatment_post_pp": round(treat_post, 1),
     "treatment_delta_pp": round(treat_post - treat_pre, 1),
@@ -139,7 +175,7 @@ baseline_metric = {
     "value": round(naive_did, 1),
     "unit": "percentage points",
     "threshold": 2.0,
-    "passed": abs(naive_did) >= 2.0
+    "passed": bool(abs(naive_did) >= 2.0)  # Convert to Python bool
 }
 
 with open('outputs/baseline_metric.json', 'w') as f:
@@ -159,7 +195,7 @@ milestone_manifest = {
     "sources": [{
         "name": "pmuy_data.csv",
         "file": "Downloaded from Google Drive via gdown",
-        "rows_after_exclusions": len(df),
+        "rows_after_exclusions": int(len(df)),
         "states_uts": int(df['state'].nunique()),
         "status": "verified"
     }],
@@ -180,7 +216,7 @@ with open('outputs/milestone_manifest.json', 'w') as f:
 print("✓ Wrote outputs/milestone_manifest.json")
 
 # ============================================================
-# PRIMARY METRIC (Placeholder)
+# PRIMARY METRIC (Placeholder for milestone)
 # ============================================================
 
 primary_metric = {
@@ -198,7 +234,7 @@ with open('outputs/primary_metric.json', 'w') as f:
 print("✓ Wrote outputs/primary_metric.json (placeholder)")
 
 print("\n" + "=" * 60)
-print("MILESTONE OUTPUTS WRITTEN SUCCESSFULLY")
+print("✅ MILESTONE OUTPUTS WRITTEN SUCCESSFULLY")
 print("=" * 60)
 print(f"   Baseline DiD: {naive_did:+.1f} pp")
 print(f"   Treatment states: {len(treatment_states)}")
