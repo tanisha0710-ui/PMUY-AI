@@ -9,7 +9,7 @@ import os
 import numpy as np
 import pandas as pd
 from pathlib import Path
-
+import requests
 Path("outputs").mkdir(exist_ok=True)
 
 print("=" * 80)
