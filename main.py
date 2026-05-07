@@ -60,7 +60,24 @@ print(f"✓ Loaded data from {OUTPUT_FILE}")
 print(f"  Shape: {df.shape}")
 
 # ============================================================
-# VERIFY post COLUMN MEANING
+# PREPARE WEIGHTS
+# ============================================================
+
+df['weight'] = df['hv005'] / 1_000_000
+
+# ============================================================
+# CREATE CLEAN FUEL BINARY (MUST BE BEFORE DEBUG)
+# ============================================================
+
+CLEAN_FUELS = ['electricity', 'lpg, natural gas', 'biogas']
+df = df[~df['hv226'].isin(['no food cooked in house'])]
+df['clean_fuel'] = df['hv226'].isin(CLEAN_FUELS).astype(int)
+df = df[df['clean_fuel'].notna()]
+
+print(f"✓ Clean fuel rate (weighted): {np.average(df['clean_fuel'], weights=df['weight'])*100:.2f}%")
+
+# ============================================================
+# DEBUG: VERIFY post COLUMN (NOW clean_fuel EXISTS)
 # ============================================================
 print("\n" + "=" * 60)
 print("VERIFYING post COLUMN")
@@ -70,34 +87,16 @@ print(f"\npost value counts:")
 print(df['post'].value_counts())
 print(f"\nClean fuel by post (unweighted):")
 print(df.groupby('post')['clean_fuel'].mean() * 100)
-print(f"\nSurvey by post:")
-print(df.groupby('post')['survey'].unique())
+print(f"\nClean fuel by post (weighted):")
+print(df.groupby('post').apply(lambda x: np.average(x['clean_fuel'], weights=x['weight']) * 100))
 
 # ============================================================
-# PREPARE WEIGHTS
+# USE EXISTING STATE COLUMN
 # ============================================================
 
-df['weight'] = df['hv005'] / 1_000_000
-
-# ============================================================
-# CREATE CLEAN FUEL BINARY
-# ============================================================
-
-CLEAN_FUELS = ['electricity', 'lpg, natural gas', 'biogas']
-df = df[~df['hv226'].isin(['no food cooked in house'])]
-df['clean_fuel'] = df['hv226'].isin(CLEAN_FUELS).astype(int)
-df = df[df['clean_fuel'].notna()]
-
-print(f"\n✓ Clean fuel rate (weighted): {np.average(df['clean_fuel'], weights=df['weight'])*100:.2f}%")
-
-# ============================================================
-# CHECK STATE COLUMN
-# ============================================================
-print("\n" + "=" * 60)
-print("CHECKING STATE COLUMN")
-print("=" * 60)
-print(f"Unique states: {df['state'].nunique()}")
-print(f"Sample states: {df['state'].unique()[:10]}")
+print(f"\n✓ Using existing 'state' column")
+print(f"  Unique states: {df['state'].nunique()}")
+print(f"  Sample states: {df['state'].unique()[:5]}")
 
 # ============================================================
 # DEFINE TREATMENT (Based on NFHS-4 median - post=0 is pre)
@@ -126,13 +125,8 @@ print(f"Control states (above median, high clean fuel): {len(state_nfhs4) - len(
 print(f"\nFirst 5 treatment states: {treatment_states[:5]}")
 print(f"First 5 control states: {[s for s in state_nfhs4.index if s not in treatment_states][:5]}")
 
-# Show baseline values for first few states
-print("\nState baseline clean fuel values (NFHS-4):")
-for state in list(treatment_states[:3]) + [s for s in state_nfhs4.index if s not in treatment_states][:3]:
-    print(f"  {state}: {state_nfhs4[state]:.1f}%")
-
 # ============================================================
-# BASELINE METRIC (Naive DiD) - Using post=0 as pre, post=1 as post
+# BASELINE METRIC (Naive DiD)
 # ============================================================
 
 def wmean_pct(sub):
@@ -163,6 +157,10 @@ naive_did = treat_delta - ctrl_delta
 print(f"\nTreatment change: {treat_delta:+.1f} pp")
 print(f"Control change: {ctrl_delta:+.1f} pp")
 print(f"Naive DiD: {naive_did:+.1f} pp")
+
+# ============================================================
+# CREATE BASELINE METRIC JSON (NO TEMPLATES)
+# ============================================================
 
 baseline_metric = {
     "metric_name": "naive_did_pp",
@@ -219,7 +217,7 @@ with open('outputs/milestone_manifest.json', 'w') as f:
 print("✓ Wrote outputs/milestone_manifest.json")
 
 # ============================================================
-# PRIMARY METRIC (Placeholder)
+# PRIMARY METRIC (Placeholder for milestone)
 # ============================================================
 
 primary_metric = {
@@ -242,3 +240,4 @@ print("=" * 60)
 print(f"   Baseline DiD: {naive_did:+.1f} pp")
 print(f"   Treatment states: {len(treatment_states)}")
 print(f"   Control states: {len(state_nfhs4) - len(treatment_states)}")
+print(f"   Median NFHS-4 clean fuel: {median_value:.1f}%")
