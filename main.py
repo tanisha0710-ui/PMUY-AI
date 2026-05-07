@@ -235,7 +235,7 @@ with open('outputs/primary_metric.json', 'w') as f:
 print("✓ Wrote outputs/primary_metric.json (placeholder)")
 
 print("\n" + "=" * 60)
-print("✅ MILESTONE OUTPUTS WRITTEN SUCCESSFULLY")
+print(" MILESTONE OUTPUTS WRITTEN SUCCESSFULLY")
 print("=" * 60)
 print(f"   Baseline DiD: {naive_did:+.1f} pp")
 print(f"   Treatment states: {len(treatment_states)}")
