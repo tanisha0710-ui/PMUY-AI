@@ -5,9 +5,9 @@ ECO 6810 Final Project
 """
 
 import json
-import os 
 import numpy as np
 import pandas as pd
+import os
 from pathlib import Path
 
 # Create outputs directory
@@ -16,6 +16,7 @@ Path("outputs").mkdir(exist_ok=True)
 print("=" * 80)
 print("PMUY CLEAN FUEL ADOPTION ANALYSIS")
 print("=" * 80)
+
 # ============================================================
 # DOWNLOAD DATA FROM GOOGLE DRIVE (if not already present)
 # ============================================================
@@ -34,7 +35,7 @@ def download_data():
         print("✓ Download complete")
         return True
     except ImportError:
-        print("⚠️ gdown not installed. Installing...")
+        print("gdown not installed. Installing...")
         os.system("pip install gdown -q")
         import gdown
         url = f"https://drive.google.com/uc?id={FILE_ID}"
@@ -42,7 +43,7 @@ def download_data():
         print("✓ Download complete")
         return True
     except Exception as e:
-        print(f"❌ Error downloading file: {e}")
+        print(f" Error downloading file: {e}")
         return False
 
 # Check if file exists locally, if not download
@@ -52,13 +53,13 @@ if not os.path.exists(OUTPUT_FILE):
         raise FileNotFoundError(f"Could not download {OUTPUT_FILE}. Please check the file ID and your internet connection.")
 else:
     print(f"✓ Found existing {OUTPUT_FILE} locally")
+
 # ============================================================
-# LOAD DATA (CORRECT PATH)
+# LOAD DATA
 # ============================================================
 
-# Load from the actual Google Drive path used in your notebook
-df = pd.read_csv('/content/drive/MyDrive/pmuy_data.csv')
-print(f"✓ Loaded data from /content/drive/MyDrive/pmuy_data.csv")
+df = pd.read_csv(OUTPUT_FILE)
+print(f"✓ Loaded data from {OUTPUT_FILE}")
 print(f"  Shape: {df.shape}")
 
 # ============================================================
@@ -180,7 +181,7 @@ baseline_metric = {
 
 with open('outputs/baseline_metric.json', 'w') as f:
     json.dump(baseline_metric, f, indent=2)
-print(f"\n✓ Wrote outputs/baseline_metric.json (value: {naive_did:.1f} pp)")
+print(f"\n Wrote outputs/baseline_metric.json (value: {naive_did:.1f} pp)")
 
 # ============================================================
 # MILESTONE MANIFEST
@@ -190,11 +191,12 @@ milestone_manifest = {
     "milestone_date": "2026-05-06",
     "project": "The Impact of PMUY on Clean Fuel Adoption",
     "team": ["Tanisha Aggarwal", "Neha Rana", "Jaswathi Lalitha R"],
-    "charter_locked": False,
+    "charter_locked": True,
     "status": "milestone",
     "sources": [{
         "name": "pmuy_data.csv",
-        "file": "/content/drive/MyDrive/pmuy_data.csv",
+        "file": "Downloaded from Google Drive via gdown",
+        "file_id": FILE_ID,
         "rows_after_exclusions": len(df),
         "states_uts": df['state'].nunique(),
         "status": "verified"
@@ -212,7 +214,7 @@ milestone_manifest = {
 
 with open('outputs/milestone_manifest.json', 'w') as f:
     json.dump(milestone_manifest, f, indent=2)
-print("✓ Wrote outputs/milestone_manifest.json")
+print(" Wrote outputs/milestone_manifest.json")
 
 # ============================================================
 # PRIMARY METRIC (Placeholder for milestone)
@@ -233,7 +235,7 @@ with open('outputs/primary_metric.json', 'w') as f:
 print("✓ Wrote outputs/primary_metric.json (placeholder)")
 
 print("\n" + "=" * 60)
-print("✅ MILESTONE OUTPUTS WRITTEN SUCCESSFULLY")
+print("MILESTONE OUTPUTS WRITTEN SUCCESSFULLY")
 print("=" * 60)
 print(f"   Baseline DiD: {naive_did:.1f} pp")
 print(f"   Treatment states: {len(treatment_states)}")
