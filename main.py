@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+ #!/usr/bin/env python3
 """
 PMUY Clean Fuel Adoption Analysis - Main Pipeline
 ECO 6810 Final Project
@@ -18,15 +18,13 @@ print("PMUY CLEAN FUEL ADOPTION ANALYSIS")
 print("=" * 80)
 
 # ============================================================
-# DOWNLOAD DATA FROM GOOGLE DRIVE (if not already present)
+# DOWNLOAD DATA FROM GOOGLE DRIVE
 # ============================================================
 
-# Google Drive file ID for pmuy_data.csv
 FILE_ID = "1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ"
 OUTPUT_FILE = "pmuy_data.csv"
 
 def download_data():
-    """Download pmuy_data.csv from Google Drive using gdown"""
     try:
         import gdown
         print(f"Downloading {OUTPUT_FILE} from Google Drive...")
@@ -43,16 +41,15 @@ def download_data():
         print("✓ Download complete")
         return True
     except Exception as e:
-        print(f" Error downloading file: {e}")
+        print(f"Error: {e}")
         return False
 
-# Check if file exists locally, if not download
 if not os.path.exists(OUTPUT_FILE):
-    print(f"{OUTPUT_FILE} not found locally. Downloading from Google Drive...")
+    print(f"{OUTPUT_FILE} not found. Downloading...")
     if not download_data():
-        raise FileNotFoundError(f"Could not download {OUTPUT_FILE}. Please check the file ID and your internet connection.")
+        raise FileNotFoundError("Could not download file")
 else:
-    print(f"✓ Found existing {OUTPUT_FILE} locally")
+    print(f"✓ Found existing {OUTPUT_FILE}")
 
 # ============================================================
 # LOAD DATA
@@ -67,73 +64,31 @@ print(f"  Shape: {df.shape}")
 # ============================================================
 
 df['weight'] = df['hv005'] / 1_000_000
-print(f"✓ Created weights (hv005 / 1,000,000)")
 
 # ============================================================
 # CREATE CLEAN FUEL BINARY
 # ============================================================
 
 CLEAN_FUELS = ['electricity', 'lpg, natural gas', 'biogas']
-
-# Step 1: Drop households that don't cook food
 df = df[~df['hv226'].isin(['no food cooked in house'])]
-
-# Step 2: Create clean fuel binary
 df['clean_fuel'] = df['hv226'].isin(CLEAN_FUELS).astype(int)
-
-# Step 3: Drop any remaining NaN
 df = df[df['clean_fuel'].notna()]
 
-print(f"✓ Created clean_fuel binary")
-print(f"  Clean fuel rate (unweighted): {df['clean_fuel'].mean()*100:.2f}%")
-print(f"  Clean fuel rate (weighted): {np.average(df['clean_fuel'], weights=df['weight'])*100:.2f}%")
+print(f"✓ Clean fuel rate (weighted): {np.average(df['clean_fuel'], weights=df['weight'])*100:.2f}%")
 
 # ============================================================
-# CREATE BINARY CONTROLS
+# STANDARDIZE STATE NAMES
 # ============================================================
 
-# Rural
-df['rural'] = (df['hv025'].str.lower() == 'rural').astype(int)
-
-# Electricity
-df['electricity'] = (df['hv206'].str.lower() == 'yes').astype(int)
-
-# Female head
-df['female_head'] = (df['hv219'].str.lower() == 'female').astype(int)
-
-# Improved water
-improved_water = ['piped into dwelling', 'piped to yard/plot', 'public tap/standpipe',
-                  'tube well or borehole', 'protected well', 'protected spring', 'rainwater']
-df['improved_water'] = df['hv201'].str.lower().fillna('').isin(improved_water).astype(int)
-
-# Improved floor
-unimproved_floors = ['mud/clay/earth', 'dung', 'sand', 'raw wood planks', 'palm, bamboo', 'stone']
-df['improved_floor'] = (~df['hv213'].str.lower().fillna('').isin(unimproved_floors)).astype(int)
-
-# Piped water
-piped_sources = ['piped into dwelling', 'piped to yard/plot']
-df['piped_water'] = df['hv201'].str.lower().fillna('').isin(piped_sources).astype(int)
-
-# Wealth quintile
-wealth_map = {'poorest': 1, 'poorer': 2, 'middle': 3, 'richer': 4, 'richest': 5}
-df['wealth_quintile'] = df['hv270'].astype(str).str.lower().map(wealth_map)
-df['rich'] = (df['wealth_quintile'] >= 4).astype(int)
-
-# Head higher education
-df['head_higher_edu'] = df['hv106_01'].str.lower().fillna('').isin(['secondary', 'higher']).astype(int)
-
-print(f"✓ Created all binary control variables")
+df['state'] = df['hv024'].str.lower().str.strip()
 
 # ============================================================
-# DEFINE TREATMENT (Based on NFHS-4 median)
+# DEFINE TREATMENT (Based on NFHS-4 median) - THIS IS CRITICAL
 # ============================================================
 
 print("\n" + "=" * 60)
 print("DEFINING TREATMENT (High Exposure)")
 print("=" * 60)
-
-# Standardize state names
-df['state'] = df['hv024'].str.lower().str.strip()
 
 # Calculate NFHS-4 state means
 state_nfhs4 = df[df['post'] == 0].groupby('state').apply(
@@ -142,26 +97,35 @@ state_nfhs4 = df[df['post'] == 0].groupby('state').apply(
 ).sort_values()
 
 median_value = state_nfhs4.median()
+
+# CORRECT: Treatment = states BELOW median (low clean fuel, high solid fuel exposure)
 treatment_states = state_nfhs4[state_nfhs4 < median_value].index.tolist()
 df['high_exposure'] = df['state'].isin(treatment_states).astype(int)
 
 print(f"Median NFHS-4 clean fuel: {median_value:.1f}%")
-print(f"Treatment states (below median): {len(treatment_states)}")
-print(f"Control states (above median): {len(state_nfhs4) - len(treatment_states)}")
+print(f"Treatment states (below median, low clean fuel): {len(treatment_states)}")
+print(f"Control states (above median, high clean fuel): {len(state_nfhs4) - len(treatment_states)}")
 
 # ============================================================
-# BASELINE METRIC (Naive DiD)
+# BASELINE METRIC (Naive DiD) - VERIFY THESE NUMBERS
 # ============================================================
 
 def wmean_pct(sub):
     return np.average(sub['clean_fuel'], weights=sub['weight']) * 100
 
-treat_pre = wmean_pct(df[(df['high_exposure']==1) & (df['post']==0)])
-treat_post = wmean_pct(df[(df['high_exposure']==1) & (df['post']==1)])
-ctrl_pre = wmean_pct(df[(df['high_exposure']==0) & (df['post']==0)])
-ctrl_post = wmean_pct(df[(df['high_exposure']==0) & (df['post']==1)])
+# Treatment = high_exposure=1 (low baseline states)
+treat_pre = wmean_pct(df[(df['high_exposure'] == 1) & (df['post'] == 0)])
+treat_post = wmean_pct(df[(df['high_exposure'] == 1) & (df['post'] == 1)])
+
+# Control = high_exposure=0 (high baseline states)
+ctrl_pre = wmean_pct(df[(df['high_exposure'] == 0) & (df['post'] == 0)])
+ctrl_post = wmean_pct(df[(df['high_exposure'] == 0) & (df['post'] == 1)])
+
+print(f"\nTreatment (low baseline): {treat_pre:.1f}% → {treat_post:.1f}%")
+print(f"Control (high baseline): {ctrl_pre:.1f}% → {ctrl_post:.1f}%")
 
 naive_did = (treat_post - treat_pre) - (ctrl_post - ctrl_pre)
+print(f"Naive DiD: {naive_did:+.1f} pp")
 
 baseline_metric = {
     "metric_name": "naive_did_pp",
@@ -175,22 +139,19 @@ baseline_metric = {
     "value": round(naive_did, 1),
     "unit": "percentage points",
     "threshold": 2.0,
-    "passed": True if abs(naive_did) >= 2.0 else False  # ← CONVERT TO bool, but make sure to pass through json
+    "passed": abs(naive_did) >= 2.0
 }
-
-# Convert numpy bool to Python bool for JSON serialization
-baseline_metric["passed"] = bool(baseline_metric["passed"])
 
 with open('outputs/baseline_metric.json', 'w') as f:
     json.dump(baseline_metric, f, indent=2)
-print(f"\n Wrote outputs/baseline_metric.json (value: {naive_did:.1f} pp)")
+print(f"\n✓ Wrote outputs/baseline_metric.json")
 
 # ============================================================
 # MILESTONE MANIFEST
 # ============================================================
 
 milestone_manifest = {
-    "milestone_date": "2026-05-06",
+    "milestone_date": "2026-05-07",
     "project": "The Impact of PMUY on Clean Fuel Adoption",
     "team": ["Tanisha Aggarwal", "Neha Rana", "Jaswathi Lalitha R"],
     "charter_locked": True,
@@ -205,7 +166,8 @@ milestone_manifest = {
     "treatment_definition": {
         "nfhs4_median_pp": round(median_value, 1),
         "n_treatment_states": len(treatment_states),
-        "n_control_states": len(state_nfhs4) - len(treatment_states)
+        "n_control_states": len(state_nfhs4) - len(treatment_states),
+        "definition": "Treatment (high_exposure=1) = states BELOW median (low clean fuel, high solid fuel exposure)"
     },
     "baseline_ready": True,
     "baseline_metric": {"value_pp": round(naive_did, 1)},
@@ -215,10 +177,10 @@ milestone_manifest = {
 
 with open('outputs/milestone_manifest.json', 'w') as f:
     json.dump(milestone_manifest, f, indent=2)
-print(" Wrote outputs/milestone_manifest.json")
+print("✓ Wrote outputs/milestone_manifest.json")
 
 # ============================================================
-# PRIMARY METRIC (Placeholder for milestone)
+# PRIMARY METRIC (Placeholder)
 # ============================================================
 
 primary_metric = {
@@ -238,6 +200,6 @@ print("✓ Wrote outputs/primary_metric.json (placeholder)")
 print("\n" + "=" * 60)
 print("MILESTONE OUTPUTS WRITTEN SUCCESSFULLY")
 print("=" * 60)
-print(f"   Baseline DiD: {naive_did:.1f} pp")
+print(f"   Baseline DiD: {naive_did:+.1f} pp")
 print(f"   Treatment states: {len(treatment_states)}")
 print(f"   Control states: {len(state_nfhs4) - len(treatment_states)}")
