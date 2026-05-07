@@ -10,7 +10,7 @@ Using NFHS-4 (2015–16) and NFHS-5 (2019–21) data, we implement a Difference-
 ## Data Sources
 
 - **NFHS-4 & NFHS-5 Household Data**
-  - Source: Google Drive (external due to size >100MB)
+  - We have attached it in the data folder :[PMUY Data](https://github.com/tanisha0710-ui/PMUY-AI/blob/1bff9e01a15f4abfec2ce02f83a4584722ceee5a/data/pmuy_data_compressed.csv.gz)
   - Used to construct clean fuel adoption variable (`hv226`)
 
 - **PPAC PMUY Data**
@@ -103,10 +103,16 @@ artifacts/probes/replace_me_probe.md
 
 ---
 
-Note- This is our old colab file {We have attached the pdf for codes and output
+Note- This is based on our final data file which we have uploaded in the data folder as [pmuy_data_compressed.csv.gz](https://github.com/tanisha0710-ui/PMUY-AI/blob/1bff9e01a15f4abfec2ce02f83a4584722ceee5a/data/pmuy_data_compressed.csv.gz)
+This is our final colab file {We have attached the pdf for codes and output
+(colab) under folder Notebook with file - [Test_Repo_Final.ipynb-Colab.pdf](https://github.com/tanisha0710-ui/PMUY-AI/blob/1bff9e01a15f4abfec2ce02f83a4584722ceee5a/notebooks/Test_Repo_Final.ipynb%20-%20Colab.pdf)
+. This pdf shows how we added the results fom Colab to Github 
+
+The below represents the test files we had for our csv file taken from google drive(using gdown: which could not reproduce the entire repo for review.)
+{-This is our old colab file {We have attached the pdf for codes and output
 (colab) under folder Notebook with file - [Test_Repo.ipynb-Colab.pdf](https://github.com/tanisha0710-ui/PMUY-AI/blob/c45f9f8cbbb0fa8b9d7da7fc924565d16d97073a/notebooks/Test_Repo.ipynb%20-%20Colab.pdf) 
 . Also this pdf shows how we added the results fom Colab to Github 
-Now, this is is our updated file (it includes colab codes that we used to run our codes and ity also has the output for the same ) and we have added it under folder notebook named [Test_Repo_2.ipynb-Colab.pdf](https://github.com/tanisha0710-ui/PMUY-AI/blob/75be2293f5d24aad3cffc930b6bc977b8a2fb76a/notebooks/Test_Repo_2.ipynb%20-%20Colab.pdf) 
+Now, this is is our updated file (it includes colab codes that we used to run our codes and ity also has the output for the same ) and we have added it under folder notebook named [Test_Repo_2.ipynb-Colab.pdf](https://github.com/tanisha0710-ui/PMUY-AI/blob/75be2293f5d24aad3cffc930b6bc977b8a2fb76a/notebooks/Test_Repo_2.ipynb%20-%20Colab.pdf)}
 
 ## Team
 
