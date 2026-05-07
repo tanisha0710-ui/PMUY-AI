@@ -8,8 +8,14 @@ import json
 import os
 import numpy as np
 import pandas as pd
+import sys
 from pathlib import Path
-
+try:
+    import requests
+except ImportError:
+    print("⚠️ requests not installed. Installing...")
+    os.system("pip install requests -q")
+    import requests
 # Create outputs directory
 Path("outputs").mkdir(exist_ok=True)
 
@@ -47,7 +53,9 @@ def download_data():
         for chunk in response.iter_content(chunk_size=8192):
             f.write(chunk)
     
-    print("✓ Download complete")
+    # Verify file size
+    file_size = os.path.getsize(OUTPUT_FILE) / (1024 * 1024)
+    print(f"✓ Download complete ({file_size:.1f} MB)")
     return True
 
 if not os.path.exists(OUTPUT_FILE):
@@ -55,8 +63,8 @@ if not os.path.exists(OUTPUT_FILE):
     try:
         download_data()
     except Exception as e:
-        print(f" Error downloading file: {e}")
-        print("\n FALLBACK OPTION: Please manually download the file from:")
+        print(f"❌ Error downloading file: {e}")
+        print("\n⚠️ FALLBACK OPTION: Please manually download the file from:")
         print(f"   https://drive.google.com/uc?id={FILE_ID}")
         print("   and place it in the current directory as 'pmuy_data.csv'")
         raise FileNotFoundError("Could not download data file. Please download manually.")
