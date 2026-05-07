@@ -104,9 +104,9 @@ artifacts/probes/replace_me_probe.md
 ---
 
 Note- This is our old colab file {We have attached the pdf for codes and output
-(colab) under folder Notebook with file - [Test_Repo.ipynb-Colab.pdf] (https://github.com/tanisha0710-ui/PMUY-AI/blob/c45f9f8cbbb0fa8b9d7da7fc924565d16d97073a/notebooks/Test_Repo.ipynb%20-%20Colab.pdf)} 
+(colab) under folder Notebook with file - [Test_Repo.ipynb-Colab.pdf](https://github.com/tanisha0710-ui/PMUY-AI/blob/c45f9f8cbbb0fa8b9d7da7fc924565d16d97073a/notebooks/Test_Repo.ipynb%20-%20Colab.pdf)} 
 . Also this pdf shows how we added the results fom Colab to Github 
-Now, this is is our updated file (it includes colab codes that we used to run our codes and ity also has the output for the same ) and we have added it under folder notebook named Test_ Repo_2. 
+Now, this is is our updated file (it includes colab codes that we used to run our codes and ity also has the output for the same ) and we have added it under folder notebook named [Test_Repo_2.ipynb-Colab.pdf](https://github.com/tanisha0710-ui/PMUY-AI/blob/75be2293f5d24aad3cffc930b6bc977b8a2fb76a/notebooks/Test_Repo_2.ipynb%20-%20Colab.pdf) 
 
 ## Team
 
