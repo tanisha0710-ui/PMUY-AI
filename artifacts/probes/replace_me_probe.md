@@ -7,7 +7,7 @@ NFHS-4 & NFHS-5 merged household dataset (pmuy_data.csv)
 The original NFHS-4 (2015-16) and NFHS-5 (2019-21) household recode files were obtained through registered access from the DHS Program website. From each survey, only the relevant variables for this analysis were extracted and filtered. The resulting cleaned dataset was then uploaded to Google Drive as pmuy_data.csv.csv, accessed in Colab via gdown or drive.mount(), and will be further processed for the DiD analysis
 
 ## URL or endpoint:
-https://drive.google.com/file/d/1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ/view
+**Access:** [PMUY data](https://github.com/tanisha0710-ui/PMUY-AI/blob/d4758ca7ded636a31f672db5cce0462745b105d2/data/pmuy_data_compressed.csv.gz)
 
 ## One-row proof:
 
