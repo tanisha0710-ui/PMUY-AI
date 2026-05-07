@@ -83,7 +83,7 @@ States that fell below the NFHS-4 median in clean-fuel access (high-exposure sta
 
 **Licence:** DHS data use agreement (non-commercial research).  
 
-**Access:** [PMUY data](https://github.com/tanisha0710-ui/PMUY-AI/blob/d4758ca7ded636a31f672db5cce0462745b105d2/data/pmuy_data_compressed.csv.gz)
+**Access:** [PMUY data - pmuy_data_compressed.csv.gz](https://github.com/tanisha0710-ui/PMUY-AI/blob/d4758ca7ded636a31f672db5cce0462745b105d2/data/pmuy_data_compressed.csv.gz)
 
 **Treatment intensity cross-check — PPAC state-wise PMUY connections:**
 
