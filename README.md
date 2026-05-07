@@ -79,12 +79,7 @@ Steps used:
     --include="*.py" --include="*.md" --include="*.json" . \
     || echo "CLEAN"
 ```
-Note:
-- The dataset is stored externally due to size constraints (>100MB)
-- Colab was used for development, but the official reproducible command remains:
 
-
----
 
 ## Outputs
 
