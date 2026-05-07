@@ -1,13 +1,13 @@
- #!/usr/bin/env python3
+#!/usr/bin/env python3
 """
 PMUY Clean Fuel Adoption Analysis - Main Pipeline
 ECO 6810 Final Project
 """
 
 import json
+import os
 import numpy as np
 import pandas as pd
-import os
 from pathlib import Path
 
 # Create outputs directory
@@ -35,7 +35,7 @@ def download_data():
         print("✓ Download complete")
         return True
     except ImportError:
-        print("gdown not installed. Installing...")
+        print(" gdown not installed. Installing...")
         os.system("pip install gdown -q")
         import gdown
         url = f"https://drive.google.com/uc?id={FILE_ID}"
@@ -89,7 +89,7 @@ print(f"  Clean fuel rate (unweighted): {df['clean_fuel'].mean()*100:.2f}%")
 print(f"  Clean fuel rate (weighted): {np.average(df['clean_fuel'], weights=df['weight'])*100:.2f}%")
 
 # ============================================================
-# CREATE BINARY CONTROLS (from your PDF)
+# CREATE BINARY CONTROLS
 # ============================================================
 
 # Rural
@@ -144,7 +144,6 @@ state_nfhs4 = df[df['post'] == 0].groupby('state').apply(
 median_value = state_nfhs4.median()
 treatment_states = state_nfhs4[state_nfhs4 < median_value].index.tolist()
 df['high_exposure'] = df['state'].isin(treatment_states).astype(int)
-df['did'] = df['post'] * df['high_exposure']
 
 print(f"Median NFHS-4 clean fuel: {median_value:.1f}%")
 print(f"Treatment states (below median): {len(treatment_states)}")
@@ -176,8 +175,11 @@ baseline_metric = {
     "value": round(naive_did, 1),
     "unit": "percentage points",
     "threshold": 2.0,
-    "passed": abs(naive_did) >= 2.0
+    "passed": True if abs(naive_did) >= 2.0 else False  # ← CONVERT TO bool, but make sure to pass through json
 }
+
+# Convert numpy bool to Python bool for JSON serialization
+baseline_metric["passed"] = bool(baseline_metric["passed"])
 
 with open('outputs/baseline_metric.json', 'w') as f:
     json.dump(baseline_metric, f, indent=2)
@@ -196,15 +198,14 @@ milestone_manifest = {
     "sources": [{
         "name": "pmuy_data.csv",
         "file": "Downloaded from Google Drive via gdown",
-        "file_id": FILE_ID,
         "rows_after_exclusions": len(df),
-        "states_uts": df['state'].nunique(),
+        "states_uts": int(df['state'].nunique()),
         "status": "verified"
     }],
     "treatment_definition": {
         "nfhs4_median_pp": round(median_value, 1),
         "n_treatment_states": len(treatment_states),
-        "n_control_states": df['state'].nunique() - len(treatment_states)
+        "n_control_states": len(state_nfhs4) - len(treatment_states)
     },
     "baseline_ready": True,
     "baseline_metric": {"value_pp": round(naive_did, 1)},
@@ -239,4 +240,4 @@ print("MILESTONE OUTPUTS WRITTEN SUCCESSFULLY")
 print("=" * 60)
 print(f"   Baseline DiD: {naive_did:.1f} pp")
 print(f"   Treatment states: {len(treatment_states)}")
-print(f"   Control states: {df['state'].nunique() - len(treatment_states)}")
+print(f"   Control states: {len(state_nfhs4) - len(treatment_states)}")
