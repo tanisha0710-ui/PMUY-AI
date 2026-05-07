@@ -1,4 +1,4 @@
- #!/usr/bin/env python3
+#!/usr/bin/env python3
 """
 PMUY Clean Fuel Adoption Analysis - Main Pipeline
 ECO 6810 Final Project
@@ -60,6 +60,14 @@ print(f"✓ Loaded data from {OUTPUT_FILE}")
 print(f"  Shape: {df.shape}")
 
 # ============================================================
+# DEBUG: Check post column
+# ============================================================
+print("\n=== DEBUG: Check post column values ===")
+print(f"post unique values: {df['post'].unique()}")
+print(f"post value counts:\n{df['post'].value_counts()}")
+print(f"clean_fuel by post:\n{df.groupby('post')['clean_fuel'].mean()}")
+
+# ============================================================
 # PREPARE WEIGHTS
 # ============================================================
 
@@ -83,14 +91,14 @@ print(f"✓ Clean fuel rate (weighted): {np.average(df['clean_fuel'], weights=df
 df['state'] = df['hv024'].str.lower().str.strip()
 
 # ============================================================
-# DEFINE TREATMENT (Based on NFHS-4 median)
+# DEFINE TREATMENT (Based on NFHS-4 median - using post=0 as pre)
 # ============================================================
 
 print("\n" + "=" * 60)
 print("DEFINING TREATMENT (High Exposure)")
 print("=" * 60)
 
-# Calculate NFHS-4 state means
+# Calculate NFHS-4 state means (assuming post=0 is NFHS-4 / pre-period)
 state_nfhs4 = df[df['post'] == 0].groupby('state').apply(
     lambda x: np.average(x['clean_fuel'], weights=x['weight']) * 100,
     include_groups=False
@@ -107,42 +115,6 @@ print(f"Treatment states (below median, low clean fuel): {len(treatment_states)}
 print(f"Control states (above median, high clean fuel): {len(state_nfhs4) - len(treatment_states)}")
 
 # ============================================================
-# CREATE CONTROL VARIABLES
-# ============================================================
-
-# Rural
-df['rural'] = (df['hv025'].str.lower() == 'rural').astype(int)
-
-# Electricity
-df['electricity'] = (df['hv206'].str.lower() == 'yes').astype(int)
-
-# Female head
-df['female_head'] = (df['hv219'].str.lower() == 'female').astype(int)
-
-# Improved water
-improved_water = ['piped into dwelling', 'piped to yard/plot', 'public tap/standpipe',
-                  'tube well or borehole', 'protected well', 'protected spring', 'rainwater']
-df['improved_water'] = df['hv201'].str.lower().fillna('').isin(improved_water).astype(int)
-
-# Improved floor
-unimproved_floors = ['mud/clay/earth', 'dung', 'sand', 'raw wood planks', 'palm, bamboo', 'stone']
-df['improved_floor'] = (~df['hv213'].str.lower().fillna('').isin(unimproved_floors)).astype(int)
-
-# Piped water
-piped_sources = ['piped into dwelling', 'piped to yard/plot']
-df['piped_water'] = df['hv201'].str.lower().fillna('').isin(piped_sources).astype(int)
-
-# Wealth quintile
-wealth_map = {'poorest': 1, 'poorer': 2, 'middle': 3, 'richer': 4, 'richest': 5}
-df['wealth_quintile'] = df['hv270'].astype(str).str.lower().map(wealth_map)
-df['rich'] = (df['wealth_quintile'] >= 4).astype(int)
-
-# Head higher education
-df['head_higher_edu'] = df['hv106_01'].str.lower().fillna('').isin(['secondary', 'higher']).astype(int)
-
-print("✓ Created binary control variables")
-
-# ============================================================
 # BASELINE METRIC (Naive DiD)
 # ============================================================
 
@@ -150,32 +122,36 @@ def wmean_pct(sub):
     return np.average(sub['clean_fuel'], weights=sub['weight']) * 100
 
 # Treatment = high_exposure=1 (low baseline states)
+# Control = high_exposure=0 (high baseline states)
 treat_pre = wmean_pct(df[(df['high_exposure'] == 1) & (df['post'] == 0)])
 treat_post = wmean_pct(df[(df['high_exposure'] == 1) & (df['post'] == 1)])
-
-# Control = high_exposure=0 (high baseline states)
 ctrl_pre = wmean_pct(df[(df['high_exposure'] == 0) & (df['post'] == 0)])
 ctrl_post = wmean_pct(df[(df['high_exposure'] == 0) & (df['post'] == 1)])
 
-print(f"\nTreatment (low baseline): {treat_pre:.1f}% → {treat_post:.1f}%")
-print(f"Control (high baseline): {ctrl_pre:.1f}% → {ctrl_post:.1f}%")
+print(f"\nPre-period (post=0) - Treatment: {treat_pre:.1f}%, Control: {ctrl_pre:.1f}%")
+print(f"Post-period (post=1) - Treatment: {treat_post:.1f}%, Control: {ctrl_post:.1f}%")
 
-naive_did = (treat_post - treat_pre) - (ctrl_post - ctrl_pre)
+treat_delta = treat_post - treat_pre
+ctrl_delta = ctrl_post - ctrl_pre
+naive_did = treat_delta - ctrl_delta
+
+print(f"\nTreatment change: {treat_delta:+.1f} pp")
+print(f"Control change: {ctrl_delta:+.1f} pp")
 print(f"Naive DiD: {naive_did:+.1f} pp")
 
 baseline_metric = {
     "metric_name": "naive_did_pp",
-    "description": "Unadjusted DiD — 2x2 weighted means, no controls, no FE. Treatment = states below median (low clean fuel). Control = states above median (high clean fuel).",
+    "description": "Unadjusted DiD — 2x2 weighted means, no controls, no FE. Treatment = states below median (low clean fuel). Control = states above median (high clean fuel). post=0 is pre-period, post=1 is post-period.",
     "treatment_pre_pp": round(treat_pre, 1),
     "treatment_post_pp": round(treat_post, 1),
-    "treatment_delta_pp": round(treat_post - treat_pre, 1),
+    "treatment_delta_pp": round(treat_delta, 1),
     "control_pre_pp": round(ctrl_pre, 1),
     "control_post_pp": round(ctrl_post, 1),
-    "control_delta_pp": round(ctrl_post - ctrl_pre, 1),
+    "control_delta_pp": round(ctrl_delta, 1),
     "value": round(naive_did, 1),
     "unit": "percentage points",
     "threshold": 2.0,
-    "passed": bool(abs(naive_did) >= 2.0)  # Convert to Python bool
+    "passed": bool(abs(naive_did) >= 2.0)
 }
 
 with open('outputs/baseline_metric.json', 'w') as f:
@@ -216,7 +192,7 @@ with open('outputs/milestone_manifest.json', 'w') as f:
 print("✓ Wrote outputs/milestone_manifest.json")
 
 # ============================================================
-# PRIMARY METRIC (Placeholder for milestone)
+# PRIMARY METRIC (Placeholder)
 # ============================================================
 
 primary_metric = {
