@@ -177,7 +177,7 @@ baseline_metric = {
             "Naive DiD is negative (-2.0 pp): low-access states improved less than "
             "high-access states unconditionally. This is the unadjusted baseline. "
             "The covariate-adjusted TWFE estimate in primary_metric.json is the graded deliverable. "
-            "Threshold is absolute magnitude — |-2.0| = 2.0 pp which should be met in the main DiD estimate for the final project."
+            "Threshold is absolute magnitude — |-2.0| = 2.0 pp which should be met in the main DiD estimate for the final project.")
  
 }
 
