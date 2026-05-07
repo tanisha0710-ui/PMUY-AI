@@ -1,41 +1,27 @@
 {
-  "milestone_date": "2026-05-06",
-  "project": "The Impact of PMUY on Clean Fuel Adoption: A Difference-in-Differences Analysis Using NFHS-4 and NFHS-5 Data",
+  "milestone_date": "2026-05-07",
+  "project": "The Impact of PMUY on Clean Fuel Adoption",
   "team": [
     "Tanisha Aggarwal",
     "Neha Rana",
     "Jaswathi Lalitha R"
   ],
-  "charter_locked": false,
+  "charter_locked": true,
   "status": "milestone",
   "sources": [
     {
       "name": "pmuy_data.csv",
-      "file": "https://drive.google.com/file/d/1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ/view",
-      "rows_raw": 1238208,
+      "file": "Downloaded from Google Drive via gdown",
       "rows_after_exclusions": 1235952,
-      "nfhs4_obs": 600328,
-      "nfhs5_obs": 635624,
       "states_uts": 35,
-      "clean_fuel_mean_unweighted": 0.4565,
-      "status": "verified",
-      "probe_artifact": "artifacts/probes/replace_me_probe.md",
-      "note": "Merged NFHS-4 and NFHS-5 household microdata. Primary outcome source."
-    },
-    {
-      "name": "PPAC State-wise PMUY Connections",
-      "url": "https://ppac.gov.in/consumption/state-wise-pmuy-data",
-      "backup": "https://www.data.gov.in/resource/stateut-wise-number-pradhan-mantri-ujjwala-yojana-pmuy-connections-2018-2023",
-      "status": "verified",
-      "note": "Used only to validate high/low exposure split. Not a primary outcome source."
+      "status": "verified"
     }
   ],
   "treatment_definition": {
-    "variable": "high_exposure",
-    "direction": "1 = LOW-access states (below NFHS-4 median) = PMUY-targeted",
     "nfhs4_median_pp": 52.3,
     "n_treatment_states": 17,
     "n_control_states": 18,
+    "definition": "Treatment (high_exposure=1) = states BELOW median (low clean fuel, high solid fuel exposure)",
     "treatment_states": [
       "bihar",
       "jharkhand",
@@ -76,37 +62,10 @@
       "delhi"
     ]
   },
-  "success_threshold": {
-    "rule": "|did_coefficient_pp| >= 2.0 AND CI excludes zero",
-    "threshold": 2.0,
-    "rationale": "Absolute-magnitude threshold: >=2.0 pp in either direction is policy-relevant. Naive DiD of -2.0 pp sets prior toward divergence. A significant negative result informs the Ministry refill-subsidy decision."
-  },
   "baseline_ready": true,
   "baseline_metric": {
-    "file": "outputs/baseline_metric.json",
-    "value_pp": -2.0,
-    "status": "written"
+    "value_pp": -2.0
   },
   "primary_metric_schema_ready": false,
-  "completed": [
-    "Charter approved (CHARTER.md) \u2014 threshold |\u03b2\u0302\u2083| >= 2.0 pp, CI excludes zero",
-    "NFHS-4+5 panel loaded (1,238,208 raw rows; 1,235,952 after exclusions)",
-    "Outcome variable clean_fuel constructed from hv226",
-    "All binary controls constructed: rural, electricity, female_head, improved_water, improved_floor, piped_water, rich, head_higher_edu, wealth_quintile",
-    "Missing caste (sh36, 4.2%) filled as '99'",
-    "35 states confirmed present in both NFHS-4 and NFHS-5",
-    "Treatment: high_exposure=1 for 17 low-access states below NFHS-4 median (52.3 pp)",
-    "Descriptive 2x2 summary table produced (4 group x period cells)",
-    "Naive DiD baseline: -2.0 pp written to outputs/baseline_metric.json",
-    "Data probe: artifacts/probes/replace_me_probe.py"
-  ],
-  "remaining_for_final": [
-    "TWFE coefficient \u2192 outputs/primary_metric.json (run: uv run main.py)",
-    "NFHS-3 parallel-trends fallback (Risk 1 in charter)",
-    "Continuous-treatment robustness spec (Risk 2 in charter)",
-    "report.md with results tables and event-study figure",
-    "AI_USAGE_LOG.md"
-  ],
-  "run_command": "uv run main.py --milestone",
-  "template_warning": "This scaffold runs, but it is not submission-ready until you replace the placeholders."
+  "run_command": "uv run main.py"
 }

@@ -1,8 +1,6 @@
 {
   "metric_name": "naive_did_pp",
-  "description": "Unadjusted DiD \u2014 2x2 weighted means, no controls, no FE. Treatment = High exposure states (below NFHS-4 median ~52.3 pp), i.e. PMUY-targeted. Control = Low exposure states (above median).",
-  "treatment_group": "High exposure states (high_exposure=1, below NFHS-4 median) \u2014 PMUY-targeted",
-  "control_group": "Low exposure states (high_exposure=0, above NFHS-4 median) \u2014 control",
+  "description": "Unadjusted DiD \u2014 2x2 weighted means, no controls, no FE. Treatment = states below median (low clean fuel). Control = states above median (high clean fuel). post=0 = NFHS-4 (pre), post=1 = NFHS-5 (post).",
   "treatment_pre_pp": 27.4,
   "treatment_post_pp": 42.0,
   "treatment_delta_pp": 14.6,
@@ -11,6 +9,6 @@
   "control_delta_pp": 16.6,
   "value": -2.0,
   "unit": "percentage points",
-  "note": "Naive DiD is negative (-2.0 pp): low-access states improved less than high-access states unconditionally. This is the unadjusted baseline. The covariate-adjusted TWFE estimate in primary_metric.json is the graded deliverable. Threshold is absolute magnitude \u2014 |-2.0| = 2.0 pp which should be met in the main DiD estimate for the final project.",
-  "is_template": true
+  "threshold": 2.0,
+  "passed": false
 }
