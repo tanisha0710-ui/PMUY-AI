@@ -22,103 +22,67 @@ print("=" * 80)
 # Works without gdown cookies/cache (fixes professor's local machine issue)
 # ============================================================
 
-FILE_ID     = "1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ"
+ # ============================================================
+# DOWNLOAD DATA FROM GOOGLE DRIVE (NO GDOWN / NO COOKIES)
+# ============================================================
+
+FILE_ID = "1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ"
 OUTPUT_FILE = "pmuy_data.csv"
 
-def download_gdrive(file_id, output_path):
-    """
-    Downloads a large file from Google Drive.
-    Handles the confirmation token that Google adds for large files.
-    Does NOT require gdown or local cookie cache.
-    """
-    import requests
+def download_data():
+    """Download CSV directly from Google Drive without cookies/cache"""
 
-    session = requests.Session()
-    URL     = "https://docs.google.com/uc?export=download"
+    print(f"Downloading {OUTPUT_FILE}...")
 
-    # First request — may return a confirmation page for large files
-    response = session.get(URL, params={"id": file_id}, stream=True)
+    # Direct download URL
+    url = f"https://drive.google.com/uc?export=download&id={FILE_ID}"
 
-    # Extract confirmation token from cookies (Google's virus-scan bypass)
-    token = None
-    for key, value in response.cookies.items():
-        if key.startswith("download_warning"):
-            token = value
-            break
+    response = requests.get(url, stream=True)
 
-    # If token found, re-request with confirmation
-    if token:
-        params   = {"id": file_id, "confirm": token}
-        response = session.get(URL, params=params, stream=True)
-
-    # Also handle newer Google Drive confirmation via URL params in response
-    if token is None and "confirm" in response.url:
-        response = session.get(response.url, stream=True)
-
-    # Write to file
-    total_bytes = 0
-    with open(output_path, "wb") as f:
-        for chunk in response.iter_content(chunk_size=32768):
-            if chunk:
-                f.write(chunk)
-                total_bytes += len(chunk)
-
-    size_mb = total_bytes / (1024 * 1024)
-    print(f"  Downloaded: {size_mb:.1f} MB")
-
-    # Verify it is actually a CSV and not an HTML error page
-    if size_mb < 1.0:
-        # Read first bytes to check
-        with open(output_path, "rb") as f:
-            header = f.read(200).decode("utf-8", errors="ignore")
-        if "<html" in header.lower() or "<!doctype" in header.lower():
-            os.remove(output_path)
-            raise RuntimeError(
-                "Downloaded file is an HTML page, not CSV. "
-                "Google Drive blocked the download. "
-                "Please share the file publicly or use gdown manually."
-            )
-        raise RuntimeError(
-            f"File too small ({size_mb:.1f} MB). Download likely failed."
+    if response.status_code != 200:
+        raise Exception(
+            f"Download failed with status code {response.status_code}"
         )
 
-    return True
+    # Save file
+    with open(OUTPUT_FILE, "wb") as f:
+        for chunk in response.iter_content(chunk_size=8192):
+            if chunk:
+                f.write(chunk)
 
+    # Validate file
+    if not os.path.exists(OUTPUT_FILE):
+        raise FileNotFoundError("File was not created")
+
+    file_size = os.path.getsize(OUTPUT_FILE)
+
+    # If tiny file → probably HTML instead of CSV
+    if file_size < 5000:
+        with open(OUTPUT_FILE, "r", encoding="utf-8", errors="ignore") as f:
+            preview = f.read(200)
+
+        raise ValueError(
+            "Downloaded file is not valid CSV. "
+            f"Preview: {preview}"
+        )
+
+    print(f"✓ Download complete ({file_size / (1024*1024):.2f} MB)")
+
+
+# ============================================================
+# ENSURE DATA EXISTS
+# ============================================================
 
 if not os.path.exists(OUTPUT_FILE):
-    print(f"Downloading {OUTPUT_FILE} from Google Drive...")
+
     try:
-        download_gdrive(FILE_ID, OUTPUT_FILE)
-        print("✓ Download complete")
-    except RuntimeError as e:
-        # Fallback: try gdown with temp cache to avoid cookie path issue
-        print(f"  Direct download failed: {e}")
-        print("  Trying gdown fallback...")
-        try:
-            # Override cache dir so it works on any machine without ~/.cache
-            os.makedirs("/tmp/gdown_cache", exist_ok=True)
-            os.environ["GDOWN_CACHEDIR"] = "/tmp/gdown_cache"
-            try:
-                import gdown
-            except ImportError:
-                os.system("pip install gdown -q")
-                import gdown
-            gdown.download(
-                f"https://drive.google.com/uc?id={FILE_ID}",
-                OUTPUT_FILE,
-                quiet=False,
-                fuzzy=True,
-            )
-            print("✓ gdown fallback succeeded")
-        except Exception as e2:
-            raise FileNotFoundError(
-                f"Both download methods failed.\n"
-                f"  Method 1: {e}\n"
-                f"  Method 2: {e2}\n"
-                f"Manual fix: download from "
-                f"https://drive.google.com/file/d/{FILE_ID} "
-                f"and place as '{OUTPUT_FILE}' in the repo root."
-            )
+        download_data()
+
+    except Exception as e:
+        raise RuntimeError(
+            f"Automatic download failed: {e}"
+        )
+
 else:
     print(f"✓ Found existing {OUTPUT_FILE}")
 
