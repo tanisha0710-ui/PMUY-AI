@@ -24,32 +24,45 @@ print("=" * 80)
 FILE_ID = "1V94LK_vh0R-D3Hioa5J8hqzenECcuyCZ"
 OUTPUT_FILE = "pmuy_data.csv"
 
-def download_data():
-    try:
-        import gdown
-        print(f"Downloading {OUTPUT_FILE} from Google Drive...")
-        url = f"https://drive.google.com/uc?id={FILE_ID}"
-        gdown.download(url, OUTPUT_FILE, quiet=False)
-        print("✓ Download complete")
-        return True
-    except ImportError:
-        print("gdown not installed. Installing...")
-        os.system("pip install gdown -q")
-        import gdown
-        url = f"https://drive.google.com/uc?id={FILE_ID}"
-        gdown.download(url, OUTPUT_FILE, quiet=False)
-        print("✓ Download complete")
-        return True
-    except Exception as e:
-        print(f" Error: {e}")
-        return False
+ def download_data():
+    """Download file from Google Drive using requests (no cache/cookies issue)"""
+    print(f"Downloading {OUTPUT_FILE} from Google Drive...")
+    
+    # URL for direct download with confirm token
+    url = f"https://drive.google.com/uc?export=download&id={FILE_ID}"
+    
+    session = requests.Session()
+    response = session.get(url, stream=True)
+    
+    # Handle Google Drive confirmation page
+    if "confirm" in response.text:
+        import re
+        confirm_token = re.search(r'confirm=([^&]+)', response.text)
+        if confirm_token:
+            url = f"https://drive.google.com/uc?export=download&id={FILE_ID}&confirm={confirm_token.group(1)}"
+            response = session.get(url, stream=True)
+    
+    # Write file
+    with open(OUTPUT_FILE, 'wb') as f:
+        for chunk in response.iter_content(chunk_size=8192):
+            f.write(chunk)
+    
+    print("✓ Download complete")
+    return True
 
 if not os.path.exists(OUTPUT_FILE):
     print(f"{OUTPUT_FILE} not found. Downloading...")
-    if not download_data():
-        raise FileNotFoundError("Could not download file")
+    try:
+        download_data()
+    except Exception as e:
+        print(f" Error downloading file: {e}")
+        print("\n FALLBACK OPTION: Please manually download the file from:")
+        print(f"   https://drive.google.com/uc?id={FILE_ID}")
+        print("   and place it in the current directory as 'pmuy_data.csv'")
+        raise FileNotFoundError("Could not download data file. Please download manually.")
 else:
     print(f"✓ Found existing {OUTPUT_FILE}")
+
 
 # ============================================================
 # LOAD DATA
