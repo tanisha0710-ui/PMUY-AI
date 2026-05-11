@@ -57,9 +57,18 @@ The central outcome variable of the project is the percentage change in Gross Va
 
 The primary outcome is constructed as:
 
-\[
-\frac{GVA_{2020-21} - GVA_{2019-20}}{GVA_{2019-20}} \times 100
-\]
+```math
+\text{GVA Drop Percentage}_{2020-21}
+=
+\left(
+\frac{
+GVA_{2020-21} - GVA_{2019-20}
+}{
+GVA_{2019-20}
+}
+\right)
+\times 100
+```
 
 The project also constructs a secondary recovery outcome measuring percentage GVA change between 2020-21 and 2021-22, though this recovery metric is not the primary grading metric.
 
@@ -71,15 +80,15 @@ The project also constructs a secondary recovery outcome measuring percentage GV
 
 The project succeeds if it produces multiplier-weighted estimates of COVID-era GVA shock and recovery for at least:
 
-\[
+```math
 N \geq 20
-\]
+```
 
 NIC 2-digit manufacturing industries with a minimum factory sample size of:
 
-\[
+```math
 \geq 300
-\]
+```
 
 factories per industry in every year.
 
