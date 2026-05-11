@@ -1,7 +1,7 @@
 {
-  "metric_name": "baseline_r2_state_mean",
-  "value": 0.9677,
-  "unit": "R\u00b2 (higher = better)",
-  "notes": "Template value. Replace this with your real baseline before the milestone.",
-  "is_template": true
+  "metric_name": "national_gva_drop_2020_21",
+  "value": -2.821946,
+  "unit": "percent",
+  "notes": "Mean industry-level GVA change from 2019-20 to 2020-21 in the main sample, used as the naive descriptive benchmark before labour-intensity split.",
+  "is_template": false
 }
