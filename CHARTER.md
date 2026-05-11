@@ -36,38 +36,62 @@
 
 ---
 
-## 1. Problem and stakeholder
+# 1. Problem and stakeholder
 
-One paragraph. Who is the specific person, institution, or policy body that would care about the answer, and what decision does the answer inform? 
+The Department for Promotion of Industry and Internal Trade (DPIIT), under the Ministry of Commerce and Industry, Government of India, is responsible for industrial policy design, sector-specific recovery initiatives, and long-run manufacturing development planning. During the COVID-19 period, different manufacturing industries experienced very different economic disruptions depending on their labour dependence, production structure, supply-chain exposure, and capital intensity. However, aggregate manufacturing statistics mask these sectoral differences and provide limited guidance regarding which industries were most vulnerable during the shock and which recovered most strongly afterward.
 
-The Ministry of Commerce and Industry's Department for Promotion of Industry and Internal Trade (DPIIT), which administers sector-specific relief and industrial revival packages, needs to know which registered manufacturing industries suffered the deepest GVA and employment losses during COVID-19 and which have failed to recover to their pre-pandemic baseline by 2021-22. Without factory-level evidence disaggregated by sector and state, DPIIT risks allocating post-COVID revival funds uniformly across industries that actually had very different shock-and-recovery trajectories. For example, if Printing and Leather remain 15–20% below their 2019-20 GVA baseline in 2021-22 while Basic Metals and Pharma have surged past it, a uniform subsidy scheme would be both wasteful and insufficient. This project uses four waves of ASI micro-data to produce the disaggregated, multiplier-weighted evidence DPIIT needs to target sector-specific support in any future shock.
+This project provides industry-level evidence on the magnitude of Gross Value Added (GVA) losses and subsequent recovery across registered manufacturing industries in India during the COVID shock period. In particular, the project examines whether labour-intensive industries experienced systematically larger declines than capital-intensive industries during the 2020-21 disruption year. The results can help DPIIT and related industrial policy bodies better understand which manufacturing sectors may require targeted support during future economic shocks rather than relying on uniform recovery policies across all industries.
 
----
-
-## 2. Main outcome variable
-
-- **Name:** GVA drop percentage during the COVID shock year
-- **Unit:** Percentage points (%)
-- **Source:** ASI Block J, column J113 (net value added, ₹ thousands) aggregated by NIC 2-digit industry code, multiplied by the factory-level sampling weight (Block A, column MULT)
-- **Population / panel:** All registered factories in India's ASI across 24 NIC 2-digit manufacturing industries, for the transition 2019-20 → 2020-21 (the primary COVID shock year). Secondary outcome is GVA recovery percentage (2020-21 → 2021-22). Both are reported for each of the 24 industries and for major states.
+The project is descriptive in nature. It does not estimate the causal effect of any specific policy intervention or attempt to forecast future manufacturing performance. Instead, it measures and compares observed patterns of shock and recovery across industries using nationally representative manufacturing survey data.
 
 ---
 
-## 3. Main quantitative success threshold
+## 2. Main Outcome Variable
 
-A single numeric bar. Your project is a success if the delivered metric crosses this bar, and a failure if it does not. Pick one form:
+The central outcome variable of the project is the percentage change in Gross Value Added (GVA) during the COVID shock year.
 
-- **Predictive:** "Out-of-sample [metric] on [held-out slice] is at most X, versus baseline Y."
-- **Causal:** "Point estimate of [parameter] has 95% CI excluding zero, and |estimate| ≥ X [unit]."
-- **Descriptive:** "Produce stratified estimates of [outcome] across [N ≥ __] strata, each with sample size ≥ __ and documented standard error."
+- **Variable name:** GVA drop percentage during 2020-21  
+- **Unit:** Percentage points (%)  
+- **Source:** Annual Survey of Industries (ASI), Block J, variable J113 (Gross Value Added / Net Value Added), aggregated using factory-level sampling weights (`MULT`) from Block A.  
+- **Population / panel:** Registered manufacturing factories in India across NIC 2-digit manufacturing industries (NIC 10–32), using ASI data for 2019-20, 2020-21, and 2021-22.
 
-If you cannot write a number, you do not yet have a project — you have a topic. Go back to Section 2.
+The primary outcome is constructed as:
 
-**Project type: Descriptive**
+\[
+\frac{GVA_{2020-21} - GVA_{2019-20}}{GVA_{2019-20}} \times 100
+\]
 
-> Produce multiplier-weighted GVA drop and recovery estimates for all N ≥ 20 industry strata, each with a factory sample size ≥ 300 (minimum observed: 339), with the difference in mean GVA drop between Labour-Intensive and Capital-Intensive industry groups documented with a 95% confidence interval that excludes zero.
+The project also constructs a secondary recovery outcome measuring percentage GVA change between 2020-21 and 2021-22, though this recovery metric is not the primary grading metric.
 
-Concretely: the project succeeds if we can report that the Labour-Intensive group's mean GVA drop is at least 2 percentage points worse than the Capital-Intensive group's mean GVA drop, with a CI that does not cross zero. Our current estimate from the full data is −4.97% vs −1.36%, a gap of **−3.61 pp** — the threshold of 2 pp is deliberately conservative to account for specification choices.
+---
+
+## 3. Main Quantitative Success Threshold
+
+- **Project type:** Descriptive
+
+The project succeeds if it produces multiplier-weighted estimates of COVID-era GVA shock and recovery for at least:
+
+\[
+N \geq 20
+\]
+
+NIC 2-digit manufacturing industries with a minimum factory sample size of:
+
+\[
+\geq 300
+\]
+
+factories per industry in every year.
+
+In addition, the project evaluates whether labour-intensive industries experienced systematically worse COVID-era outcomes than capital-intensive industries.
+
+The project defines success as finding that:
+
+> Labour-intensive industries exhibit an average GVA decline during 2020-21 that is at least 2 percentage points larger than the average decline observed among capital-intensive industries.
+
+The labour-intensity classification is based on baseline labour intensity in 2019-20, measured as labour cost relative to fixed capital at the industry level.
+
+The threshold is intentionally conservative because the project is descriptive rather than causal and is designed to detect economically meaningful differences in industry-level shock exposure rather than extremely precise statistical estimates.
 
 ---
 
@@ -87,12 +111,9 @@ We will compute this baseline formally before building any ML component: run a o
 
 ---
 
-## 5. Falsifiable hypothesis
+## 5. Falsifiable Hypothesis
 
-One sentence the data can prove wrong. A sign, a threshold, or a rank ordering. Not "we will analyse X" — "X will be greater than Y by at least Z".
-
-*Labour-intensive manufacturing industries (GVA per worker below the cross-industry median in 2019-20) will show a mean GVA drop in 2020-21 that is at least 2 percentage points larger in magnitude than capital-intensive industries, measured using multiplier-weighted ASI data.
-*
+Labour-intensive manufacturing industries, defined as industries with baseline labour intensity above the cross-industry median in 2019-20, will experience an average GVA decline during the COVID shock year (2020-21) that is at least 2 percentage points larger than the average decline observed among capital-intensive industries.
 
 ---
 
