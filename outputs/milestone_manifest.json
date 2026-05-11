@@ -10,5 +10,5 @@
   ],
   "baseline_ready": true,
   "primary_metric_schema_ready": true,
-  "run_command": "python main.py"
+  "run_command": "uv run main.py"
 }
