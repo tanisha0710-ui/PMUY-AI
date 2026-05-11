@@ -1,23 +1,14 @@
-manifest = {
-    "charter_locked": True,
-    "sources": [
-        {
-            "name": "Annual Survey of Industries, MoSPI",
-            "status": "working",
-            "probe_artifact": "artifacts/probes/asi_probe.md",
-            "note": (
-                "ASI Blocks A, C, D, and J were used to construct weighted "
-                "NIC-2 manufacturing industry aggregates for 2019-20, 2020-21, "
-                "and 2021-22."
-            )
-        }
-    ],
-    "baseline_ready": True,
-    "primary_metric_schema_ready": True,
-    "run_command": "uv run main.py"
+{
+  "charter_locked": false,
+  "sources": [
+    {
+      "name": "Annual Survey of Industries, MoSPI",
+      "status": "working",
+      "probe_artifact": "artifacts/probes/asi_probe.md",
+      "note": "ASI Blocks A, C, D, and J were used to construct weighted NIC-2 manufacturing industry aggregates for 2019-20, 2020-21, and 2021-22."
+    }
+  ],
+  "baseline_ready": true,
+  "primary_metric_schema_ready": true,
+  "run_command": "uv run main.py"
 }
-
-with open("outputs/milestone_manifest.json", "w") as f:
-    json.dump(manifest, f, indent=2)
-
-manifest
