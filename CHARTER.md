@@ -104,19 +104,28 @@ The threshold is intentionally conservative because the project is descriptive r
 
 ---
 
-## 4. Baseline to beat
+## 4. Baseline to Beat
 
-The naive or prior number your threshold is measured against. Examples:
+The naive baseline assumes that all manufacturing industries experienced the same average COVID-era GVA shock regardless of labour intensity or industry structure.
 
-- A previous study's coefficient or error.
-- A simple AR(1) or last-value forecast.
-- An unadjusted before-after difference.
+Using the cleaned industry-level panel, the average manufacturing-industry GVA change between 2019-20 and 2020-21 is:
 
-The naive baseline is the **aggregate national GVA change with no industry split**: −1.83% for 2020-21 vs 2019-20. Under this baseline, all 24 industries are assumed to have experienced the same −1.83% drop — i.e., capital intensity carries zero explanatory power.
+\[
+-2.82\%
+\]
 
-Our project beats this baseline if the industry-stratified estimates show meaningful dispersion (standard deviation of GVA drops across industries >> 0) and if the Labour vs Capital-Intensive gap is statistically distinguishable from zero.
+Under this baseline:
 
-We will compute this baseline formally before building any ML component: run a one-sample t-test of each industry's GVA drop against the national mean of −1.83%, and report which industries lie outside a ±2 pp band around the national mean.
+- industry heterogeneity is ignored,
+- labour intensity carries no explanatory value,
+- and all industries are assumed to experience the same average decline.
+
+The project improves upon this baseline if:
+
+- industry-level estimates display substantial dispersion around the aggregate mean, and
+- labour-intensive industries systematically exhibit larger declines than capital-intensive industries.
+
+The project will therefore compare industry-specific outcomes against the naive aggregate manufacturing benchmark.
 
 ---
 
