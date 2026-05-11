@@ -135,86 +135,76 @@ Labour-intensive manufacturing industries, defined as industries with baseline l
 
 ---
 
-## 6. Data sources and access plan
+## 6. Data Sources and Access Plan
 
-For each source:
+- **Source:** Annual Survey of Industries (ASI)  
+- **Institution:** Ministry of Statistics and Programme Implementation (MoSPI), Government of India  
+- **Access URL:** [Official MoSPI ASI data portal](https://www.mospi.gov.in/)  
+- **Licence:** Publicly available government data  
+- **Access method:** Direct download of ZIP archives containing CSV files  
 
-- **Name and URL/API endpoint**
-- **Licence or permission to use**
-- **Access method** (direct download, API call, authenticated portal)
-- **A 10-line script or notebook cell** that fetches one row and prints it
+### Survey years used
 
-**Source:** Annual Survey of Industries (ASI), Ministry of Statistics & Programme Implementation, Government of India.  
-**URL:** https://mospi.gov.in/web/asi → Unit Level Data → CSV  
-**Licence:** Public government data, freely downloadable, no registration required.  
-**Access method:** Direct download of four zip files (one per survey year: 2018-19, 2019-20, 2020-21, 2021-22). Each zip contains block-level CSVs.
+- 2019-20  
+- 2020-21  
+- 2021-22  
 
-**Verification script — fetches one row from Block J and prints it:**
+### ASI blocks used
 
-```python
-import zipfile, pandas as pd, io
+- **Block A:** Factory identifiers, industry codes, sampling weights  
+- **Block C:** Labour costs and emoluments  
+- **Block D:** Fixed assets and capital measures  
+- **Block J:** Output and Gross Value Added  
 
-zpath = "data/ASI_DATA_2019_20_CSV.zip"
-with zipfile.ZipFile(zpath) as z:
-    with z.open("ASI_DATA_2019_20_CSV/blkJ201920.csv") as f:
-        row = pd.read_csv(f, nrows=1)
-print(row.to_string())
-# Expected output: one row with columns AJ01, J11, J112, J113, ...
-```
+### Data construction process
 
-**No scraping, login, or permissions required.** All four zip files are already downloaded and committed under `data/` (zip format only — raw CSVs are gitignored due to file size).
+The raw ASI data are initially stored as separate CSV files for each block and year. Since several blocks contain multiple rows per factory, the cleaning process first collapses repeated entries to the factory-year level. The cleaned blocks are then merged using factory identifiers.
 
-**Blocks used:**
+Factory-level variables are weighted using the official ASI multiplier (`MULT`) in order to construct representative NIC 2-digit industry aggregates.
 
-| Block | File | Columns used | Purpose |
-|-------|------|-------------|---------|
-| A | blkA{2021-22}.csv | A1 (DSL/state), A5 (NIC), MULT | Factory ID, industry, state, weight |
-| J | blkJ{2020-21}.csv | J112 (output), J113 (GVA) | Financial outcomes |
-| H | blkH{2019-20}.csv | H14 (workers), H16 (wages) | Employment outcomes |
+The final dataset contains weighted measures of:
 
----
+- Gross Value Added  
+- Output  
+- Labour cost  
+- Total emoluments  
+- Fixed capital  
+- Labour intensity  
+- COVID shock percentage  
+- Recovery percentage  
 
-## 7. Scope limits
+### Final cleaned dataset
 
-Bullet list of things you are **not** claiming and **not** responsible for. Examples:
+[industry_shock_recovery_main_sample.csv](data/industry_shock_recovery_main_sample.csv)
 
-- "We will not estimate a structural causal effect of monetary policy."
-- "We will not harmonise district boundaries across NFHS rounds; analysis is at state level."
-- "We will not ship a mobile version of the app."
-We will not estimate causal effects of COVID-19 using structural or quasi-experimental econometric techniques (e.g., IV, DiD with identification claims). The analysis will remain descriptive and correlational.
-We will not construct firm-level or plant-level panel datasets beyond what is directly available in the ASI; the analysis will be conducted at the industry–state level.
-We will not harmonise industry classifications across all ASI rounds beyond standard NIC matching; minor inconsistencies may remain.
-We will not account for unobserved informal sector activity, as ASI covers only the formal manufacturing sector.
-We will not perform real-time or high-frequency analysis; the study relies on annual ASI data and available secondary datasets.
-We will not build predictive or machine learning models for forecasting recovery; the focus is on retrospective analysis.
-We will not conduct primary surveys or collect new data; the project relies entirely on secondary data sources.
-We will not provide policy prescriptions with causal claims; any policy discussion will be indicative and based on observed patterns.
-We will not develop a production-level dashboard or web application; outputs will be limited to analytical tables, charts, and a written report.
-
-*
 
 ---
 
-## 8. Risks and fallback
+## 7. Scope Limits
 
-One named failure mode, and the fallback analysis you will run if it materialises. Examples:
+- The project does not estimate the causal effect of any specific COVID policy, lockdown measure, or industrial intervention.  
 
-- "If the 2022-23 PPAC data is not released by the checkpoint, we will use the FY 2021-22 panel and document the truncation."
-- "If DiD parallel-trends fails visually, we fall back to a state-fixed-effects panel regression with year trends and report both."
+- The project does not forecast future manufacturing performance or future GVA values.  
 
-One risk is enough. Two is fine. Zero means you have not thought hard enough.
-**Risk 1 — State code identification fails for major states**
+- The Random Forest component is used only for exploratory variable-importance analysis and pattern discovery, not prediction.  
 
-The ASI anonymises factory-level state identifiers in the public CSV. We infer state from the first two digits of the factory DSL code, which follows a standard state-prefix scheme. However, if multiple large states (e.g. Maharashtra, Tamil Nadu, Gujarat) share overlapping DSL prefix ranges in a given year, our state-level estimates will be unreliable.
+- The analysis is restricted to registered manufacturing factories included in the ASI and does not cover informal manufacturing units.  
 
-*Fallback:* If state-level analysis is infeasible for more than 3 major states, we drop the state section entirely and restrict our claims to the industry-level analysis, which uses NIC codes from Block A column A5 and is not affected by this issue. Industry-level results are the primary contribution; state results are secondary.
+- The project operates at the NIC 2-digit industry level and does not attempt firm-level causal modelling.  
 
-**Risk 2 — GVA figures are implausible for some industries in one wave**
+- The project does not estimate structural production functions or equilibrium industrial models.  
 
-If a single year's Block J data for an industry shows a >90% spike or collapse inconsistent with the other three years, it likely reflects a data entry or aggregation anomaly rather than a real economic event.
+- The project does not harmonize district-level industrial boundaries or perform district-level analysis.
 
-*Fallback:* Flag the industry, report results with and without it, and note the anomaly in the limitations section. We will not impute or smooth the values.
+---
 
+## 8. Risks and Fallback
+
+One important risk is that the observed difference in GVA decline between labour-intensive and capital-intensive industries may weaken under alternative grouping rules or robustness checks. Because the number of industries is relatively small, the estimated gap may become statistically imprecise under some specifications.
+
+If this occurs, the project will remain a descriptive industry-shock analysis focused on documenting cross-industry heterogeneity in COVID-era manufacturing outcomes rather than emphasizing statistical differences between labour-intensity groups.
+
+A second risk is that some factories may appear inconsistently across ASI blocks, leading to missing observations after merging. To address this issue, the project restricts analysis to factories with valid GVA observations and explicitly documents all filtering and cleaning decisions.
 
 ---
 
