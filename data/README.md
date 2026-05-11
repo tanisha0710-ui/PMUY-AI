@@ -16,7 +16,8 @@ The raw ASI files were used to construct weighted NIC 2-digit manufacturing indu
 
 ## Files included in this repository
 
-### Main analysis dataset: [industry_shock_recovery_main_sample.csv](data/industry_shock_recovery_main_sample.csv)
+### Main analysis dataset
+- `industry_shock_recovery_main_sample.csv`
 
 This is the cleaned industry-level dataset used for the descriptive analysis in the project.
 
