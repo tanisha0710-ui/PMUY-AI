@@ -76,7 +76,7 @@ where:
 
 The model includes state fixed effects, state-specific time trends, and household-level controls including rural residence, electricity access, wealth quintile, household size, education of the household head, and housing quality indicators. Standard errors are clustered at the state level. The causal interpretation relies on the parallel trends assumption, meaning treatment and control states would have followed similar adoption trends in the absence of PMUY.
 
-# 5. Descriptive Statistics
+# 5. Descriptive Statistics (Evidence)
 
 This section presents the main descriptive patterns in the data before estimating the Difference-in-Differences model. The objective is to examine how clean-fuel adoption varied across states, socioeconomic groups, and rural–urban areas before and after the implementation of PMUY.
 
@@ -152,6 +152,41 @@ The correlation matrix indicates that clean-fuel adoption is strongly positively
 Clean-fuel adoption is negatively correlated with rural residence (−0.45), further reinforcing the importance of geographic and infrastructural inequality in household energy transitions. Overall, the descriptive patterns indicate that clean cooking adoption is deeply connected to broader socioeconomic development indicators.
 
 ![Figure 6](figures/corr.png)
+
+# 5. Results
+
+## Main Result
+
+The main Difference-in-Differences (DiD) estimate from the weighted two-way fixed effects model with state-specific time trends is −7.68 percentage points. The estimated 95% confidence interval ranges from −7.98 to −7.39 percentage points, and the coefficient is statistically significant at the 1 percent level (p < 0.001). The confidence interval excludes zero, satisfying the statistical significance requirement of the project charter.
+
+| Metric | Value |
+| ----------------------- | -------------------------------------------------------------------------------------- |
+| Main metric value | DiD coefficient = −7.68 percentage points |
+| Threshold | Absolute effect size ≥ 2.0 percentage points and 95% confidence interval excludes zero |
+| 95% Confidence Interval | [−7.98, −7.39] |
+| Passed | Yes |
+
+The result indicates that states with lower baseline clean-fuel access experienced a significantly different post-PMUY trajectory relative to high baseline states. However, the estimated effect is negative rather than positive. While clean-fuel adoption increased substantially across India between NFHS-4 and NFHS-5, the increase was slower in high-exposure states after accounting for household characteristics, state fixed effects, and state-specific time trends. In other words, PMUY-era gains did not fully close the gap between initially disadvantaged states and states that already had relatively high clean-fuel adoption before the policy rollout.
+
+The estimated coefficient is also economically meaningful. The magnitude of the effect exceeds the project charter threshold of 2 percentage points by a large margin, suggesting that the divergence between treatment and control states is not only statistically significant but also substantively important from a policy perspective.
+
+| Variables | TWFE DiD Estimate |
+| --- | --- |
+| Post × High Exposure | −7.682*** |
+|  | (0.150) |
+| Household controls | Yes |
+| State fixed effects | Yes |
+| State-specific time trends | Yes |
+| Weighted estimation | Yes |
+| Clustered SE (state level) | Yes |
+| Observations | 1,235,703 |
+| States/UTs | 35 |
+
+*Notes: Standard errors clustered at the state level in parentheses. *** p < 0.01.*
+
+**Table X: Difference-in-Differences Estimates of PMUY and Clean-Fuel Adoption**
+
+The descriptive trends showed that treatment states began from a much lower baseline and improved over time, but the regression confirms that the rate of improvement remained significantly lower relative to low-exposure states even after adjusting for socioeconomic and infrastructure differences.
 
 ## 9. Limits
 
