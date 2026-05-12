@@ -92,7 +92,7 @@ Between NFHS-4 and NFHS-5, clean-fuel adoption increased in both groups. However
 
 Table 2 presents the unadjusted change in clean-fuel adoption across treatment and control states. High-exposure states experienced an increase from 27.4% to 42.0%, representing a gain of 14.6 percentage points. In contrast, low-exposure states increased from 63.0% to 79.5%, a gain of 16.6 percentage points. The resulting naïve DiD estimate is −2.0 percentage points, indicating that high-exposure states improved more slowly than low-exposure states in raw terms.
 
-![Table 2](figures/raw_treatment_control.png)
+![Table 2](figures/raw_treat_control.png)
 
 Although this estimate is purely descriptive and does not account for covariates or fixed effects, it provides an important benchmark for the later regression analysis. The negative raw DiD suggests that PMUY may not have fully closed the gap between low-access and high-access states during the study period.
 
