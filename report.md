@@ -188,24 +188,13 @@ A simple independent-sample t-test is used to compare mean GVA declines between 
 An OLS regression is also estimated:
 
 $$
-\text{GVA Drop}_i
-=
-\alpha
-+
-\beta \cdot \text{LabourIntensive}_i
-+
-\varepsilon_i
+\text{GVA Drop}_i = \alpha + \beta \cdot \text{LabourIntensive}_i + \varepsilon_i
 $$
 
 where:
 
-$$
-\text{LabourIntensive}_i =
-\begin{cases}
-1, & \text{for labour-intensive industries} \\
-0, & \text{otherwise}
-\end{cases}
-$$
+- $\text{LabourIntensive}_i = 1$ for labour-intensive industries
+- $\text{LabourIntensive}_i = 0$ otherwise
 
 This regression provides a simple descriptive estimate of the average difference in COVID-era decline between groups.
 
