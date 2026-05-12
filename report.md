@@ -1,6 +1,6 @@
 # Final Report
 
-# 1. Question
+# 1. Introduction
 
 The Pradhan Mantri Ujjwala Yojana (PMUY), launched in 2016, is one of India’s largest clean energy welfare programmes aimed at expanding LPG access among low-income households. The scheme subsidises LPG connections for women from poor households in order to reduce dependence on traditional biomass fuels such as firewood, dung cakes, and crop residue. Reliance on these fuels generates high levels of indoor air pollution and is associated with adverse respiratory and health outcomes, particularly for women and children who are more exposed to household cooking smoke. Since clean cooking fuel adoption was highly uneven across Indian states before PMUY, evaluating whether the programme benefited low-access states more strongly is important for understanding its effectiveness and informing future subsidy expansion decisions.
 
@@ -18,66 +18,36 @@ This project asks: Did states with lower pre-PMUY clean-fuel access experience s
 
 # 3. Data
 
-The analysis uses industry-level aggregates constructed from the Annual Survey of Industries (ASI), conducted by the Ministry of Statistics and Programme Implementation (MoSPI), Government of India.
+The analysis combines multiple publicly available datasets to construct a state-level policy evaluation framework.
 
-## Main Data Source
+## Primary Dataset: NFHS Household Microdata
 
-- **Annual Survey of Industries (ASI)**
-- **Institution:** Ministry of Statistics and Programme Implementation (MoSPI), Government of India
-- **Access:** Publicly available government data accessed through the official MoSPI portal.
+The main source is pooled household-level data from the National Family Health Survey (NFHS), specifically:
 
-## Years Used
+- NFHS-4 (2015–16), representing the pre-policy period
+- NFHS-5 (2019–21), representing the post-policy period
 
-- 2019-20 (pre-COVID baseline year)
-- 2020-21 (COVID shock year)
-- 2021-22 (recovery year)
+These surveys were accessed through the DHS Program official website under the DHS data use agreement for non-commercial research purposes. The combined dataset contains over 1.2 million household observations across all Indian states and union territories.
 
-## ASI Blocks Used
+The primary outcome variable is a binary indicator of clean cooking fuel adoption constructed using the household cooking fuel variable (`hv226`). Households using LPG, natural gas, electricity, or biogas are coded as clean-fuel users, while households reporting traditional solid fuels are coded as non-users.
 
-| Block | Main Variables Used |
-|---|---|
-| Block A | Factory identifiers, NIC industry codes, sampling weights |
-| Block C | Labour costs and emoluments |
-| Block D | Fixed capital and assets |
-| Block J | Gross Value Added (GVA), output |
+Additional household-level covariates include:
 
-## Data Construction Process
+- Rural/urban residence
+- Electricity access
+- Sex and age of household head
+- Household size
+- Wealth quintile
+- Education level of household head
+- Religion and caste identifiers
 
-The raw ASI files were initially available as separate block-level datasets for each year. Several blocks contained repeated observations at the factory level, requiring aggregation before merging.
+## Data Storage and Reproducibility
 
-The cleaning pipeline involved:
+All cleaned and compressed datasets required for replication were stored in the project GitHub repository under the `data/` directory. The primary processed file used in the analysis is:
 
-- Cleaning and standardizing factory identifiers across blocks
-- Aggregating repeated factory observations where necessary
-- Merging Blocks A, C, D, and J using common factory identifiers
-- Applying official ASI multipliers (MULT) to construct representative industry-level aggregates
-- Aggregating the cleaned factory-level observations to NIC 2-digit manufacturing industries
+[pmuy_data_compressed.csv.gz](data/pmuy_data_compressed.csv.gz)
 
-## Final Industry-Level Variables Constructed
-
-The final dataset contains:
-
-- Gross Value Added (GVA)
-- Output
-- Labour cost
-- Total emoluments
-- Fixed capital
-- Factory counts
-- Labour intensity
-- GVA decline during 2020-21
-- GVA recovery during 2021-22
-
-## Sample Restrictions
-
-The analysis retains only industries satisfying the charter requirement of a minimum of 300 factories in every year. After filtering, the final sample contains:
-
-- 23 NIC 2-digit manufacturing industries
-- Minimum observed factory count: 501 factories
-- Mean factory count: 1,936 factories
-
-This filtering ensures that the analysis is based on relatively stable and economically meaningful industry aggregates rather than very small industry samples.
-
-### Final cleaned dataset
+This file contains the pooled and cleaned NFHS household dataset with constructed treatment, post-policy, and outcome variables used in the final analysis pipeline.
 
 [industry_shock_recovery_main_sample.csv](data/industry_shock_recovery_main_sample.csv)
 
