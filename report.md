@@ -263,8 +263,7 @@ The wide range of outcomes indicates that aggregate manufacturing statistics con
 
 ## Figure Placement
 
-![GVA Drop Distribution](<img width="790" height="490" alt="image" src="https://github.com/user-attachments/assets/e1806df9-a773-44bd-bc0a-e4564ebc3bad" />
-)
+![GVA Drop Distribution](figures/gva_drop_distribution.png)
 
 
 
