@@ -124,41 +124,45 @@ This figure provides a descriptive comparison of pre-policy and post-policy outc
 
 ## Distribution of Baseline Clean-Fuel Adoption
 
-Figure 3 presents the distribution of state-level clean-fuel adoption rates in NFHS-4. The histogram reveals substantial variation across states, ranging from below 20% in Bihar and Jharkhand to above 90% in Delhi and Chandigarh. The dashed vertical line marks the median cutoff used to assign treatment status.
+Figure 3 shows the distribution of state-level clean-fuel adoption rates in the pre-policy period using NFHS-4 data. Each observation represents a state or union territory, and the dashed vertical line indicates the median clean-fuel adoption rate used to classify treatment and control states in the Difference-in-Differences framework.
 
-The wide distribution demonstrates that India entered the PMUY period with highly unequal access to clean cooking fuel infrastructure. This unequal starting point strengthens the policy relevance of analysing whether PMUY disproportionately benefited low-access states.
+The figure highlights substantial variation in baseline clean-fuel access across Indian states before the implementation of PMUY. Several states exhibited very low levels of clean-fuel adoption, while others already had relatively high LPG penetration prior to the policy period. States below the median threshold are classified as high-exposure treatment states, reflecting greater initial dependence on traditional solid fuels.
+
+These differences in baseline conditions support the motivation for studying heterogeneous policy effects across states rather than relying only on aggregate national trends.
 
 ![Figure 3](figures/distribution_of_baseline.png)
 
 ## State-Wise Baseline Adoption
 
-Figure 4 ranks states according to their baseline clean-fuel adoption rates. Bihar, Jharkhand, Odisha, Chhattisgarh, and Assam appear among the lowest adopters, while Delhi, Chandigarh, Goa, and Puducherry exhibit the highest adoption rates. The ranking provides a clearer picture of the states that were most reliant on traditional biomass fuels before PMUY implementation.
+Figure 4 presents state-level clean-fuel adoption rates in the pre-policy period using NFHS-4 data. States are ordered according to their baseline level of clean cooking fuel usage, and the dashed vertical line represents the median threshold used to define treatment and control groups in the empirical analysis.
 
-These state-level differences justify the treatment classification strategy used in the analysis and show why a uniform national interpretation of PMUY effects may conceal important regional variation.
+The figure illustrates substantial cross-state disparities in baseline clean-fuel access prior to PMUY. Several states, particularly in eastern and central India, exhibited relatively low levels of clean-fuel adoption before the policy period. In contrast, states and union territories such as Delhi, Chandigarh, Goa, and Puducherry already had comparatively high baseline LPG penetration.
+
+These patterns reinforce the rationale for classifying low-access states as high-exposure treatment states within the Difference-in-Differences framework. The variation in baseline adoption levels suggests that states entered the PMUY period with very different initial conditions, making state-level heterogeneity an important component of the analysis.
 
 ![Figure 4](figures/baseline_clean_fuel.png)
 
 ## Rural–Urban Differences
 
-Figure 5 compare clean-fuel adoption across rural and urban households. Rural households reported a clean-fuel adoption rate of only 34.1%, compared with 85.5% among urban households. This large rural–urban gap highlights the strong association between infrastructure access, income, and clean cooking fuel use.
+Figure 5 compares average clean-fuel adoption rates across rural and urban households in the pooled NFHS sample. The figure reveals a substantial rural–urban gap in access to clean cooking fuel. Average clean-fuel adoption among rural households is approximately 34%, compared to nearly 85% among urban households, indicating that rural households continue to rely much more heavily on traditional solid fuels.
 
-The result is particularly important because PMUY primarily targeted poor and rural households. The descriptive evidence suggests that rural households remained substantially disadvantaged in clean-fuel adoption despite nationwide expansion in LPG access.
+The large disparity likely reflects differences in infrastructure access, household income, LPG availability, and market connectivity across regions. These patterns are important in the context of PMUY because a large share of the programme’s intended beneficiaries were rural households with historically limited access to clean cooking fuel.
 
 ![Figure 5](figures/rural_urban.png)
 
 ## Wealth Gradient in Clean-Fuel Adoption
 
-Figure 6 show a strong positive relationship between household wealth and clean-fuel adoption. Only 5.0% of households in the poorest quintile used clean cooking fuel, compared with 95.7% in the richest quintile. Adoption rises steadily across the wealth distribution, indicating that clean cooking remains closely linked to socioeconomic status.
+Figure 6 illustrates a strong positive relationship between household wealth and clean cooking fuel usage. In the pooled NFHS sample, clean-fuel adoption rises from only about 5% among the poorest households to nearly 96% among the richest households. The increase is especially pronounced between the lower-middle and upper wealth groups, indicating substantial inequality in access to clean cooking fuel across socioeconomic categories.
 
-This pattern supports the economic rationale for PMUY subsidies, since poorer households faced greater barriers to adopting LPG prior to the policy intervention. At the same time, the large wealth gradient suggests that affordability and refill costs may continue to constrain sustained clean-fuel usage among low-income households.
+The figure highlights the importance of household economic status in determining access to LPG and other clean fuels. Poorer households remain significantly more dependent on traditional solid fuels, which reinforces the policy relevance of PMUY as a targeted intervention aimed at expanding clean cooking access among economically disadvantaged households.
 
 ![Figure 6](figures/wealth.png)
 
 ## Correlation Analysis
 
-The correlation matrix indicates that clean-fuel adoption is strongly positively associated with wealth, improved flooring, piped water access, electricity, and education of the household head. The strongest positive correlation is observed between clean-fuel adoption and wealth quintile (0.66), suggesting that economic status is a central determinant of clean cooking access.
+Figure 7 presents the correlation matrix for the main outcome and selected household-level covariates used in the analysis. Clean-fuel adoption is positively correlated with wealth quintile, improved flooring, piped water access, electricity access, and higher education of the household head. The strongest association is with household wealth, where the correlation with clean-fuel adoption is 0.66.
 
-Clean-fuel adoption is negatively correlated with rural residence (−0.45), further reinforcing the importance of geographic and infrastructural inequality in household energy transitions. Overall, the descriptive patterns indicate that clean cooking adoption is deeply connected to broader socioeconomic development indicators.
+The figure also shows a negative correlation between rural residence and clean-fuel adoption (-0.45), indicating that rural households are less likely to use clean cooking fuel relative to urban households. Overall, the correlation patterns suggest that clean-fuel adoption is closely related to broader socioeconomic and infrastructure conditions, supporting the inclusion of these household controls in the regression analysis.
 
 ![Figure 6](figures/corr.png)
 
