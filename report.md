@@ -104,7 +104,11 @@ The figure highlights substantial geographic heterogeneity in baseline clean-fue
 
 ![Figure 1](figures/map.png)
 
+## Treatment-Control Trend Comparison
 
+Figure 2 plots average clean-fuel adoption over time for treatment and control states. Both groups experienced increases in adoption between NFHS-4 and NFHS-5, but high-exposure states consistently remained far below low-exposure states in overall adoption levels. The figure visually demonstrates the large initial disparity between the two groups and motivates the central DiD question of whether the post-policy trajectory differed systematically across them.
+
+The trend comparison also shows that improvements in high-exposure states did not fully catch up with gains observed in low-exposure states. This visual evidence is consistent with the negative naïve DiD estimate reported earlier.
 
 ## 9. Limits
 
