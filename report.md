@@ -2,45 +2,19 @@
 
 # 1. Question
 
-The COVID-19 pandemic generated one of the largest economic disruptions experienced by Indian manufacturing in recent decades. However, the severity of the shock was not uniform across industries. Differences in labour dependence, production technology, scale, supply-chain exposure, and capital structure meant that some industries experienced severe contractions while others remained relatively resilient or recovered rapidly after the initial disruption.
+The Pradhan Mantri Ujjwala Yojana (PMUY), launched in 2016, is one of India’s largest clean energy welfare programmes aimed at expanding LPG access among low-income households. The scheme subsidises LPG connections for women from poor households in order to reduce dependence on traditional biomass fuels such as firewood, dung cakes, and crop residue. Reliance on these fuels generates high levels of indoor air pollution and is associated with adverse respiratory and health outcomes, particularly for women and children who are more exposed to household cooking smoke. Since clean cooking fuel adoption was highly uneven across Indian states before PMUY, evaluating whether the programme benefited low-access states more strongly is important for understanding its effectiveness and informing future subsidy expansion decisions.
 
-This project asks three related questions:
-
-- Which manufacturing industries experienced the largest decline in Gross Value Added (GVA) during the COVID shock year (2020-21)?
-- Which industries recovered most strongly during the recovery year (2021-22)?
-- Did labour-intensive industries experience systematically larger economic declines than capital-intensive industries?
-
-The project is relevant for industrial policy institutions such as the Department for Promotion of Industry and Internal Trade (DPIIT), Ministry of Commerce and Industry, and other government bodies involved in industrial recovery planning. Understanding which sectors were structurally vulnerable during the pandemic can help policymakers design more targeted industrial-support policies during future economic shocks instead of relying on uniform sector-wide interventions.
-
-This project is novel in several ways:
-
-- It combines industry-level COVID shock analysis with recovery dynamics using a unified descriptive framework.
-- It studies both the collapse phase (2020-21) and the recovery phase (2021-22), rather than focusing only on the initial shock.
-- It introduces a recovery-archetype classification using unsupervised machine learning (K-Means clustering) to identify distinct patterns of industrial resilience and rebound.
-- It uses a Random Forest exploratory model to identify which pre-COVID industry characteristics were most strongly associated with resilience during the shock year.
-- It combines conventional descriptive statistics, regression analysis, machine learning, and clustering methods within a single integrated manufacturing-shock analysis.
-
-The project is descriptive and exploratory rather than causal. The analysis documents observed cross-industry patterns in COVID-era manufacturing outcomes without claiming that labour intensity or any other industry characteristic causally determined the observed declines.
+This project asks: Did states with lower pre-PMUY clean-fuel access experience significantly different changes in clean cooking fuel adoption after the introduction of PMUY relative to states with higher initial clean-fuel access? Using household-level data from NFHS-4 (2015–16) and NFHS-5 (2019–21), the analysis applies a Difference-in-Differences framework to compare changes in clean-fuel adoption between high-exposure and low-exposure states over time.
 
 # 2. Charter Summary
 
-- **Project type:** Descriptive
-
-- **Main outcome variable:** Percentage change in Gross Value Added (GVA) between 2019-20 and 2020-21
-
-- **Main success threshold:**
-  - Construct weighted COVID-era GVA shock and recovery estimates for at least 20 NIC 2-digit manufacturing industries
-  - Each industry must contain at least 300 factories in every year
-  - Labour-intensive industries must exhibit an average GVA decline at least 2 percentage points larger than capital-intensive industries
-
-- **Baseline benchmark:**  
-  Naive aggregate manufacturing GVA decline without industry stratification
-
-- **Main result:**  
-  Labour-intensive industries experienced an average GVA decline 3.63 percentage points larger than capital-intensive industries
-
-- **Threshold status:**  
-  Passed
+| Field | Summary |
+|---|---|
+| Project type | Causal inference project using a Difference-in-Differences design |
+| Main metric | Difference-in-Differences coefficient on Post×HighExposure measuring changes in clean cooking fuel adoption |
+| Success threshold | DiD coefficient with a 95% confidence interval excluding zero and an absolute magnitude of at least 2.0 percentage points |
+| Baseline | Naïve Difference-in-Differences estimate of −2.0 percentage points based on unadjusted pre-post state-level averages |
+```}
 
 # 3. Data
 
