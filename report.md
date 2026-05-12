@@ -137,6 +137,18 @@ The result is particularly important because PMUY primarily targeted poor and ru
 
 ![Figure 5](figures/rural_urban.png)
 
+## Wealth Gradient in Clean-Fuel Adoption
+
+Figure 6 show a strong positive relationship between household wealth and clean-fuel adoption. Only 5.0% of households in the poorest quintile used clean cooking fuel, compared with 95.7% in the richest quintile. Adoption rises steadily across the wealth distribution, indicating that clean cooking remains closely linked to socioeconomic status.
+
+This pattern supports the economic rationale for PMUY subsidies, since poorer households faced greater barriers to adopting LPG prior to the policy intervention. At the same time, the large wealth gradient suggests that affordability and refill costs may continue to constrain sustained clean-fuel usage among low-income households.
+
+## Correlation Analysis
+
+The correlation matrix indicates that clean-fuel adoption is strongly positively associated with wealth, improved flooring, piped water access, electricity, and education of the household head. The strongest positive correlation is observed between clean-fuel adoption and wealth quintile (0.66), suggesting that economic status is a central determinant of clean cooking access.
+
+Clean-fuel adoption is negatively correlated with rural residence (−0.45), further reinforcing the importance of geographic and infrastructural inequality in household energy transitions. Overall, the descriptive patterns indicate that clean cooking adoption is deeply connected to broader socioeconomic development indicators.
+
 ## 9. Limits
 
 This project can say with reasonable confidence that clean-fuel adoption increased substantially across India between NFHS-4 and NFHS-5, and that the pattern of adoption differed systematically between historically low-access states and states with higher baseline clean-fuel penetration. The analysis also provides evidence that, after controlling for household characteristics, state fixed effects, and state-specific trends, high-exposure states experienced relatively smaller gains in clean-fuel adoption during the post-PMUY period.
