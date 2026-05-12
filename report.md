@@ -1,64 +1,215 @@
 # Final Report
 
-Use this as the default shape. Keep it tight. The report should match what the code actually produced.
+# 1. Question
 
-## 1. Question
+The COVID-19 pandemic generated one of the largest economic disruptions experienced by Indian manufacturing in recent decades. However, the severity of the shock was not uniform across industries. Differences in labour dependence, production technology, scale, supply-chain exposure, and capital structure meant that some industries experienced severe contractions while others remained relatively resilient or recovered rapidly after the initial disruption.
 
-What question did you ask, who cares about the answer, and what decision does it inform?
-Which manufacturing industries and states were hit hardest by COVID —
-and which recovered fastest?  
-Did labour-intensive industries suffer more than capital-intensive ones?
+This project asks three related questions:
 
-This question is **novel** because:
-1. It combines sectoral and geographic analysis in a single unified framework
-2. It introduces a **recovery archetype classification** using unsupervised ML (K-Means)
-3. It uses a **predictive ML model** (Random Forest) to identify factory-level structural features that drove resilience — going beyond descriptive before-after comparisons
+- Which manufacturing industries experienced the largest decline in Gross Value Added (GVA) during the COVID shock year (2020-21)?
+- Which industries recovered most strongly during the recovery year (2021-22)?
+- Did labour-intensive industries experience systematically larger economic declines than capital-intensive industries?
 
-## 2. Charter Summary
+The project is relevant for industrial policy institutions such as the Department for Promotion of Industry and Internal Trade (DPIIT), Ministry of Commerce and Industry, and other government bodies involved in industrial recovery planning. Understanding which sectors were structurally vulnerable during the pandemic can help policymakers design more targeted industrial-support policies during future economic shocks instead of relying on uniform sector-wide interventions.
 
-- Project type: Predictive
-- Main metric: Out-of-sample RMSE on 2019–2024 hold-out (INR/quintal)
-- Success threshold: RMSE ≤ 120 INR/quintal
-- Baseline: Random-walk (last-year MSP = forecast)
+This project is novel in several ways:
 
-## 3. Data
+- It combines industry-level COVID shock analysis with recovery dynamics using a unified descriptive framework.
+- It studies both the collapse phase (2020-21) and the recovery phase (2021-22), rather than focusing only on the initial shock.
+- It introduces a recovery-archetype classification using unsupervised machine learning (K-Means clustering) to identify distinct patterns of industrial resilience and rebound.
+- It uses a Random Forest exploratory model to identify which pre-COVID industry characteristics were most strongly associated with resilience during the shock year.
+- It combines conventional descriptive statistics, regression analysis, machine learning, and clustering methods within a single integrated manufacturing-shock analysis.
 
-List the main sources you used. Say how you accessed them. If a source changed or failed, say what you did instead.
+The project is descriptive and exploratory rather than causal. The analysis documents observed cross-industry patterns in COVID-era manufacturing outcomes without claiming that labour intensity or any other industry characteristic causally determined the observed declines.
 
-**Annual Survey of Industries (ASI)**, Ministry of Statistics & PI, GoI
-  - Years: 2018-19, 2019-20, 2020-21, 2021-22
-  - Blocks used: A (factory identifiers, NIC code, state), J (GVA, output), H (employment, wages)
-  - Access: [mospi.gov.in](https://mospi.gov.in/web/asi) — publicly available
+# 2. Charter Summary
 
+- **Project type:** Descriptive
 
-## 4. Method
+- **Main outcome variable:** Percentage change in Gross Value Added (GVA) between 2019-20 and 2020-21
 
-Explain the baseline first. Then explain the main analysis. Keep it readable. If you used a causal design, state the assumptions. If you used a predictive model, state the evaluation split. If you used a descriptive design, state the comparison structure and sample discipline.
-### 3.1 Baseline
+- **Main success threshold:**
+  - Construct weighted COVID-era GVA shock and recovery estimates for at least 20 NIC 2-digit manufacturing industries
+  - Each industry must contain at least 300 factories in every year
+  - Labour-intensive industries must exhibit an average GVA decline at least 2 percentage points larger than capital-intensive industries
 
-The **state-mean predictor** predicts each state-quarter's informal share using that state's average informal share over the entire sample. This is a strong cross-sectional baseline because state identity explains most of the variance in informality. It has no predictive power for *within-state changes over time*.
+- **Baseline benchmark:**  
+  Naive aggregate manufacturing GVA decline without industry stratification
 
-### 3.2 Feature engineering
+- **Main result:**  
+  Labour-intensive industries experienced an average GVA decline 3.63 percentage points larger than capital-intensive industries
 
-We construct 10 features from the raw variables:
+- **Threshold status:**  
+  Passed
 
-- `log_upi_pc`, `log_upi_lag1`, `log_upi_lag2`: current and lagged UPI signal
-- `upi_growth`: quarter-on-quarter log growth rate
-- `upi_x_smartphone`: interaction term (UPI × smartphone penetration)
-- `log_gdp_pc`: income control
-- `smartphone_idx`, `urban_share`: structural controls
-- `t`, `t²`: linear and quadratic time trends
+# 3. Data
 
-### 3.3 Ridge regression (primary model)
+The analysis uses industry-level aggregates constructed from the Annual Survey of Industries (ASI), conducted by the Ministry of Statistics and Programme Implementation (MoSPI), Government of India.
 
-**Train set:** Q1 2020 – Q4 2023 (16 quarters × 20 states = 320 obs after lagging)  
-**Test set:** Q1 2024 – Q4 2024 (4 quarters × 20 states = 80 obs)
+## Main Data Source
 
-Ridge regression (L2 penalty, α = 1.0) is chosen over OLS because features are correlated. All features are standardised using training-set moments. Hyperparameter selection used 5-fold cross-validation on the training set.
+- **Annual Survey of Industries (ASI)**
+- **Institution:** Ministry of Statistics and Programme Implementation (MoSPI), Government of India
+- **Access:** Publicly available government data accessed through the official MoSPI portal.
 
-### 3.4 First-difference OLS (causal robustness check)
+## Years Used
 
-To remove time-invariant state fixed effects, we first-difference all variables and regress Δinformal\_share on Δlog\_upi\_pc, Δlog\_gdp\_pc, and Δt. This controls for unobserved time-invariant heterogeneity and tests whether *changes* in UPI penetration co-move with *changes* in informality.
+- 2019-20 (pre-COVID baseline year)
+- 2020-21 (COVID shock year)
+- 2021-22 (recovery year)
+
+## ASI Blocks Used
+
+| Block | Main Variables Used |
+|---|---|
+| Block A | Factory identifiers, NIC industry codes, sampling weights |
+| Block C | Labour costs and emoluments |
+| Block D | Fixed capital and assets |
+| Block J | Gross Value Added (GVA), output |
+
+## Data Construction Process
+
+The raw ASI files were initially available as separate block-level datasets for each year. Several blocks contained repeated observations at the factory level, requiring aggregation before merging.
+
+The cleaning pipeline involved:
+
+- Cleaning and standardizing factory identifiers across blocks
+- Aggregating repeated factory observations where necessary
+- Merging Blocks A, C, D, and J using common factory identifiers
+- Applying official ASI multipliers (MULT) to construct representative industry-level aggregates
+- Aggregating the cleaned factory-level observations to NIC 2-digit manufacturing industries
+
+## Final Industry-Level Variables Constructed
+
+The final dataset contains:
+
+- Gross Value Added (GVA)
+- Output
+- Labour cost
+- Total emoluments
+- Fixed capital
+- Factory counts
+- Labour intensity
+- GVA decline during 2020-21
+- GVA recovery during 2021-22
+
+## Sample Restrictions
+
+The analysis retains only industries satisfying the charter requirement of a minimum of 300 factories in every year. After filtering, the final sample contains:
+
+- 23 NIC 2-digit manufacturing industries
+- Minimum observed factory count: 501 factories
+- Mean factory count: 1,936 factories
+
+This filtering ensures that the analysis is based on relatively stable and economically meaningful industry aggregates rather than very small industry samples.
+
+# 4. Method
+
+## 4.1 Baseline
+
+The baseline benchmark is the average manufacturing-industry GVA change between 2019-20 and 2020-21 across all industries without considering labour intensity or industry structure.
+
+The baseline value equals:
+
+\[
+\text{Mean industry-level GVA decline} = -2.82\%
+\]
+
+This benchmark assumes that all industries experienced approximately similar COVID-era outcomes and ignores heterogeneity across manufacturing sectors.
+
+The project improves upon this baseline by introducing industry-level stratification and comparing labour-intensive and capital-intensive industries separately.
+
+## 4.2 Variable Construction
+
+### Main Outcome Variable
+
+The primary outcome variable is the percentage change in Gross Value Added (GVA) during the COVID shock year:
+
+:contentReference[oaicite:0]{index=0}
+
+Negative values represent declines in economic activity during the pandemic period.
+
+### Recovery Variable
+
+A secondary recovery measure is constructed as:
+
+:contentReference[oaicite:1]{index=1}
+
+This captures the extent of post-pandemic industrial rebound.
+
+### Labour Intensity
+
+Labour intensity is measured using baseline 2019-20 industry characteristics:
+
+:contentReference[oaicite:2]{index=2}
+
+Industries above the cross-industry median labour intensity are classified as labour-intensive; industries below the median are classified as capital-intensive.
+
+## 4.3 Descriptive Comparison Structure
+
+The main descriptive comparison examines whether labour-intensive industries experienced systematically larger COVID-era declines than capital-intensive industries.
+
+The analysis compares:
+
+- Mean GVA decline
+- Standard deviation of declines
+- Recovery performance
+- Distributional patterns across groups
+
+The project does not estimate a causal treatment effect. Instead, it evaluates whether meaningful descriptive differences exist between industry categories.
+
+## 4.4 Statistical Comparison
+
+A simple independent-sample t-test is used to compare mean GVA declines between labour-intensive and capital-intensive industries.
+
+An OLS regression is also estimated:
+
+:contentReference[oaicite:0]{index=0}
+
+where:
+
+\[
+\text{LabourIntensive}_i = 1
+\]
+
+for labour-intensive industries, and
+
+\[
+\text{LabourIntensive}_i = 0
+\]
+
+otherwise.
+
+This regression provides a simple descriptive estimate of the average difference in COVID-era decline between groups.
+
+Because the number of industries is relatively small, statistical power is limited. Therefore, the analysis emphasizes economic magnitude and descriptive heterogeneity rather than strict statistical significance.
+
+## 4.5 Random Forest Analysis
+
+A Random Forest Regressor is used as an exploratory machine-learning extension to identify which pre-COVID industry characteristics were most strongly associated with COVID-year GVA performance.
+
+The model includes:
+
+- Labour intensity
+- Output
+- Labour cost
+- Capital
+- Factory count
+- Productivity measures
+- Capital-GVA ratios
+
+The Random Forest component is used only for exploratory pattern discovery and variable importance analysis. It is not interpreted causally and is not intended as a forecasting model.
+
+## 4.6 Recovery Archetypes
+
+K-Means clustering is used to classify industries into recovery archetypes using:
+
+- COVID-year GVA decline
+- Recovery-year GVA change
+
+This unsupervised classification helps identify groups of industries with similar shock-and-recovery trajectories.
+
+The clustering exercise is exploratory and intended to summarize patterns of resilience rather than estimate structural economic mechanisms.
 
 ## 5. Result
 
