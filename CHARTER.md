@@ -67,6 +67,7 @@ Y_st = α + β₁·Post_t + β₂·HighExposure_s + β₃·(Post_t × HighExposu
 ```
 
 with `HighExposure` defined as below-median clean-fuel share in NFHS-4, standard errors clustered at the state level.
+
 ---
 
 ## 4. Baseline to beat
