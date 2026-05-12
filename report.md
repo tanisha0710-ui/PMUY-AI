@@ -233,7 +233,7 @@ More broadly, the project highlights that large-scale welfare programs may gener
   - `outputs/baseline_metric.json`
   - `outputs/milestone_manifest.json`
 
-# 10. AI Usage
+## 9. AI Usage
 
 AI tools were primarily used for debugging, repository management, variable construction suggestions, and improving parts of the data-cleaning workflow. GitHub Copilot was used to understand repository structure, output generation, Google Colab execution, and GitHub workflow issues, while Claude was used for assistance with binary recoding logic, variable transformations, and troubleshooting git and pipeline errors.
 
