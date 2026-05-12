@@ -103,6 +103,10 @@ The analysis retains only industries satisfying the charter requirement of a min
 
 This filtering ensures that the analysis is based on relatively stable and economically meaningful industry aggregates rather than very small industry samples.
 
+### Final cleaned dataset
+
+[industry_shock_recovery_main_sample.csv](data/industry_shock_recovery_main_sample.csv)
+
 ## 4.1 Baseline
 
 The baseline benchmark is the average manufacturing-industry GVA change between 2019-20 and 2020-21 across all industries without considering labour intensity or industry structure.
