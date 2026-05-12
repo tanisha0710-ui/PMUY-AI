@@ -197,8 +197,6 @@ The estimated coefficient is also economically meaningful. The magnitude of the 
 
 *Notes: Standard errors clustered at the state level in parentheses. *** p < 0.01.*
 
-**Table X: Difference-in-Differences Estimates of PMUY and Clean-Fuel Adoption**
-
 The descriptive trends showed that treatment states began from a much lower baseline and improved over time, but the regression confirms that the rate of improvement remained significantly lower relative to low-exposure states even after adjusting for socioeconomic and infrastructure differences.
 
 ## 9. Limits
