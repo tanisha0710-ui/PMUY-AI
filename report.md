@@ -78,37 +78,46 @@ The model includes state fixed effects, state-specific time trends, and househol
 
 # 5. Descriptive Statistics (Evidence)
 
-This section presents the main descriptive patterns in the data before estimating the Difference-in-Differences model. The objective is to examine how clean-fuel adoption varied across states, socioeconomic groups, and rural–urban areas before and after the implementation of PMUY.
+This section presents descriptive patterns in clean cooking fuel adoption across treatment and control states before and after the implementation of PMUY. The analysis begins with summary statistics for the main household-level variables used in the study, followed by comparisons across treatment groups and visual evidence on trends in clean-fuel adoption over time. These descriptive results provide important context for interpreting the subsequent Difference-in-Differences estimates.
 
 ## Summary Statistics by Treatment Status
 
-Table 1 compares household characteristics across treatment and control states before and after PMUY implementation. Even before the policy rollout, high-exposure states had substantially lower clean-fuel adoption rates than low-exposure states (27.4% versus 63.0%). These states also had lower electricity access, lower wealth levels, poorer housing conditions, and a much larger rural population share. The descriptive patterns confirm that treatment states were systematically more disadvantaged and more dependent on traditional fuels before PMUY, providing a strong policy rationale for targeted intervention.
+Table 1 presents summary statistics for the main household-level variables used in the analysis across treatment and control states in both the pre-policy and post-policy periods. The treatment group consists of states with below-median clean-fuel penetration in NFHS-4, while the control group includes states with relatively higher baseline clean-fuel access.
+
+The descriptive patterns show substantial pre-existing differences between the two groups. Before PMUY, treatment states exhibited significantly lower clean-fuel adoption rates compared to control states (27.4% versus 63.0%). Treatment states were also more rural, poorer on average, and had lower levels of electricity access, piped water access, improved flooring, and household educational attainment. These patterns are consistent with the policy motivation underlying PMUY, since the programme primarily targeted regions with historically greater dependence on traditional solid fuels.
+
+The table also shows that clean-fuel adoption increased in both groups during the post-policy period. However, treatment states continued to exhibit lower average socio-economic and infrastructure indicators relative to control states, highlighting the importance of accounting for structural differences across states in the empirical analysis.
 
 ![Table 1](figures/main_summary_stats.png)
 
-Between NFHS-4 and NFHS-5, clean-fuel adoption increased in both groups. However, the increase was larger in low-exposure states than in high-exposure states, suggesting that existing regional inequalities in clean-fuel access may have persisted even after the programme expansion. These differences motivate the use of the DiD framework to determine whether the observed trends remain after controlling for household and state-level characteristics.
 
 ## Raw Treatment-Control Change
 
-Table 2 presents the unadjusted change in clean-fuel adoption across treatment and control states. High-exposure states experienced an increase from 27.4% to 42.0%, representing a gain of 14.6 percentage points. In contrast, low-exposure states increased from 63.0% to 79.5%, a gain of 16.6 percentage points. The resulting naïve DiD estimate is −2.0 percentage points, indicating that high-exposure states improved more slowly than low-exposure states in raw terms.
+Table 2 presents the raw change in clean-fuel adoption between NFHS-4 and NFHS-5 across treatment and control states. Both groups experienced substantial increases in clean-fuel usage during the post-policy period. In high-exposure states, clean-fuel adoption increased from 27.4% to 42.0%, representing a rise of approximately 14.6 percentage points. In control states, adoption increased from 63.0% to 79.5%, corresponding to an increase of roughly 16.6 percentage points.
+
+The resulting unadjusted Difference-in-Differences estimate is approximately −2.0 percentage points. This naïve estimate is purely descriptive and does not account for differences in household characteristics, state-specific factors, or broader time trends. The adjusted regression analysis presented later incorporates fixed effects and household-level controls to estimate the policy effect more rigorously.
 
 ![Table 2](figures/raw_treat_control.png)
 
-Although this estimate is purely descriptive and does not account for covariates or fixed effects, it provides an important benchmark for the later regression analysis. The negative raw DiD suggests that PMUY may not have fully closed the gap between low-access and high-access states during the study period.
-
 ## Baseline State Classification and Geographic Distribution
 
-Figure 1 maps state-level clean-fuel adoption rates before and after PMUY implementation and illustrates the treatment classification used in the analysis. States below the NFHS-4 median clean-fuel adoption rate of 52.3% are classified as high-exposure states. These include Bihar, Jharkhand, Odisha, Chhattisgarh, Assam, and several northeastern states, all of which exhibited relatively low clean-fuel access before the policy rollout.
+Figure 1 presents state-level clean-fuel adoption rates before and after the implementation of PMUY using NFHS-4 and NFHS-5 household survey data. The left panel shows pre-policy clean-fuel access during NFHS-4 (2015–16), while the right panel presents post-policy clean-fuel access during NFHS-5 (2019–21). Darker shades indicate higher household adoption of clean cooking fuel.
 
-The figure highlights substantial geographic heterogeneity in baseline clean-fuel adoption across India. Southern and urbanized states such as Delhi, Chandigarh, Goa, Tamil Nadu, and Puducherry reported very high pre-policy adoption rates, while several northern and eastern states remained heavily dependent on solid fuels. Although adoption improved across most states by NFHS-5, the regional disparity in clean cooking access remained visible, supporting the importance of evaluating heterogeneous programme impacts.
+The figure also illustrates the treatment assignment used in the Difference-in-Differences framework. States with below-median clean-fuel penetration in NFHS-4 are classified as high-exposure treatment states and are outlined using dark maroon borders. States above the median form the control group and are outlined in gold.
+
+Several important descriptive patterns emerge from the maps. Before PMUY, clean-fuel adoption was substantially lower across many northern, central, and eastern states, while southern and relatively richer states exhibited higher baseline LPG usage. The post-policy map shows visible increases in clean-fuel adoption across most states between NFHS-4 and NFHS-5. However, substantial regional disparities remain even in the post-policy period, with treatment states continuing to exhibit lower average clean-fuel access relative to control states.
+
+These geographic patterns reinforce the motivation for the empirical strategy adopted in the paper. Since states entered the PMUY period with very different baseline levels of clean-fuel access and infrastructure, accounting for state-level heterogeneity is important when evaluating the programme’s impact.
 
 ![Figure 1](figures/map.png)
 
 ## Treatment-Control Trend Comparison
 
-Figure 2 plots average clean-fuel adoption over time for treatment and control states. Both groups experienced increases in adoption between NFHS-4 and NFHS-5, but high-exposure states consistently remained far below low-exposure states in overall adoption levels. The figure visually demonstrates the large initial disparity between the two groups and motivates the central DiD question of whether the post-policy trajectory differed systematically across them.
+Figure 2 compares average clean-fuel adoption rates across treatment and control states in NFHS-4 and NFHS-5. Treatment states correspond to high-exposure states with below-median clean-fuel penetration in the pre-policy period, while control states represent states with relatively higher baseline clean-fuel access.
 
-The trend comparison also shows that improvements in high-exposure states did not fully catch up with gains observed in low-exposure states. This visual evidence is consistent with the negative naïve DiD estimate reported earlier.
+The figure shows that clean-fuel adoption increased in both groups between NFHS-4 and NFHS-5. However, treatment states began from substantially lower baseline levels of clean-fuel usage and continued to remain below control states in the post-policy period. The upward trend in both groups reflects the broader expansion of clean cooking fuel adoption over time.
+
+This figure provides a descriptive comparison of pre-policy and post-policy outcomes across the two groups and motivates the Difference-in-Differences framework used in the subsequent analysis.
 
 ![Figure 2](figures/clean_fuel_by_treatment.png)
 
