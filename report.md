@@ -261,12 +261,116 @@ The industry-level sample contains substantial heterogeneity in COVID-era manufa
 
 The wide range of outcomes indicates that aggregate manufacturing statistics conceal substantial cross-industry variation.
 
-## Figure Placement
-
 ![GVA Drop Distribution](figures/gva_drop_distribution.png)
 
+The distribution of COVID-year GVA changes shows substantial dispersion across industries, with several industries experiencing extremely large declines while others remained resilient or even expanded during the pandemic year.
+
+## 5.2 Industry-Level Shock Patterns
+
+The most severely affected industries include:
+
+| Industry | GVA Change (%) |
+|---|---|
+| Printing | −34.77 |
+| Coke & refined petroleum | −23.15 |
+| Leather products | −19.34 |
+| Wearing apparel | −16.12 |
+
+In contrast, several industries experienced positive growth even during the pandemic:
+
+| Industry | GVA Change (%) |
+|---|---|
+| Tobacco | 20.74 |
+| Pharmaceuticals | 14.16 |
+| Food products | 7.77 |
+
+![GVA Drop by Industry](figures/gva_drop_by_industry.png)
+
+COVID-era manufacturing disruption was highly uneven across industries. Consumer-contact industries and industries exposed to mobility restrictions experienced substantially larger contractions than essential-goods industries such as food products and pharmaceuticals.
+
+## 5.3 Recovery Patterns
+
+Recovery dynamics were also highly heterogeneous.
+
+Industries with strong rebound performance include:
+
+| Industry | Recovery (%) |
+|---|---|
+| Computer & electronics | 65.74 |
+| Coke & refined petroleum | 62.68 |
+| Basic metals | 55.22 |
+| Furniture | 53.06 |
+
+Some industries that suffered large initial contractions later experienced strong recovery growth, suggesting delayed normalization after the pandemic shock.
+
+![GVA Recovery by Industry](figures/gva_recovery_by_industry.png)
+
+Recovery trajectories differed substantially across manufacturing sectors. Several industries exhibited V-shaped recovery patterns, while others recovered more gradually.
+
+## 5.4 Labour Intensity and COVID Vulnerability
+
+The scatter relationship between labour intensity and GVA decline shows moderate negative association.
+
+![Labour Intensity vs GVA Drop](figures/labour_intensity_vs_gva_drop.png)
+
+Industries with higher labour intensity generally experienced worse COVID-era performance, although substantial heterogeneity remains within both labour-intensive and capital-intensive groups.
 
 
+## 5.5 Group Comparison
+
+| Group | Mean GVA Drop (%) |
+|---|---|
+| Capital-intensive | −1.09 |
+| Labour-intensive | −4.71 |
+
+![GVA Drop Boxplot](figures/gva_drop_boxplot.png)
+
+Labour-intensive industries experienced larger average declines and somewhat greater dispersion in outcomes than capital-intensive industries.
+The difference is economically meaningful but statistically imprecise.
+
+## 5.6 Statistical Comparison
+
+### T-Test
+
+| Statistic | Value |
+|---|---|
+| t-statistic | 0.718 |
+| p-value | 0.481 |
+
+### OLS Regression
+
+| Variable | Coefficient |
+|---|---|
+| Labour-intensive dummy | −3.63 |
+
+### Interpretation
+
+The estimated direction is consistent with the project hypothesis: labour-intensive industries experienced larger declines. However, the p-value indicates considerable statistical uncertainty due to the small number of industries.
+
+The project therefore emphasizes descriptive economic magnitude rather than formal statistical significance.
+
+## 5.7 Random Forest Results
+
+The Random Forest model identifies the following variables as most strongly associated with COVID-year GVA performance:
+
+| Variable | Importance |
+|---|---|
+| Factory count | 0.233 |
+| GVA per labour cost | 0.200 |
+| Capital-GVA ratio | 0.148 |
+
+![Random Forest Feature Importance](figures/random_forest_feature_importance.png)
+
+Larger and more productive industries appear to have been relatively more resilient during the pandemic period. Labour intensity itself contributes explanatory power but is not the single dominant predictor of resilience.
+
+The Random Forest model achieves:
+
+| Metric | Value |
+|---|---|
+| R² | 0.645 |
+| MAE | 4.98 |
+
+These results are exploratory and intended for pattern discovery rather than forecasting or causal interpretation.
 
 ## 7. Limits
 
@@ -276,6 +380,7 @@ What can this project say with confidence, and what can it not say
 3. **Small N.** 20 states × 20 quarters = 400 observations. Confidence intervals are wide.
 4. **Annual PLFS interpolated to quarters.** True quarterly variation in informality is not measured; our quarterly interpolation introduces measurement error.
 5. **No lagged dependent variable.** A dynamic panel model (Arellano-Bond) would better capture persistence in informal share.
+
 
 
 ## 8. If The Result Was Null Or Weak
