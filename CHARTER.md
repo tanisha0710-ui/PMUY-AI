@@ -24,187 +24,119 @@
 
 ## Header
 
+## Header
+
 | Field | Value |
 |---|---|
-| Team members | Madhav Kumar, Vikas Chaurasiya |
-| Project type | Descriptive |
-| Estimated hours per person | 50 hours |
+| Team members | Tanisha Aggarwal, Neha Rana, Jaswathi Lalitha R |
+| Project type | Causal |
+| Estimated hours per person | 55 |
 | Charter version | v1 |
-| Date | _(YYYY-MM-DD)_ |
-
-**Project type notes.** This is a descriptive project. We measure how GVA and employment changed across manufacturing industries and states during the COVID shock year (2020-21) and the recovery year (2021-22), and test whether labour-intensive industries experienced larger drops than capital-intensive ones. We are not claiming a causal effect of any policy or building a forecasting model for future values. The Random Forest component is used for variable importance and pattern discovery — not for out-of-sample prediction of future GVA.
+| Date | 2026-05-05 |
 
 ---
 
-# 1. Problem and stakeholder
+## 1. Problem and stakeholder
 
-The Department for Promotion of Industry and Internal Trade (DPIIT), under the Ministry of Commerce and Industry, Government of India, is responsible for industrial policy design, sector-specific recovery initiatives, and long-run manufacturing development planning. During the COVID-19 period, different manufacturing industries experienced very different economic disruptions depending on their labour dependence, production structure, supply-chain exposure, and capital intensity. However, aggregate manufacturing statistics mask these sectoral differences and provide limited guidance regarding which industries were most vulnerable during the shock and which recovered most strongly afterward.
+The Pradhan Mantri Ujjwala Yojana (PMUY), launched in May 2016, subsidises LPG connections for women from poor households. In 2025 the Ministry of Petroleum and Natural Gas approved an additional 25 lakh connections under Ujjwala 2.0 and extended refill subsidies. The Ministry's FY 2026-27 budget memorandum requires a quantitative statement on whether the scheme has caused faster clean-fuel adoption in the states most dependent on solid fuel before the rollout. Our research idea targets that specific decision point and packages the evidence into a reproducible policy-facing analysis that a Ministry analyst could actually inspect and reuse.
 
-This project provides industry-level evidence on the magnitude of Gross Value Added (GVA) losses and subsequent recovery across registered manufacturing industries in India during the COVID shock period. In particular, the project examines whether labour-intensive industries experienced systematically larger declines than capital-intensive industries during the 2020-21 disruption year. The results can help DPIIT and related industrial policy bodies better understand which manufacturing sectors may require targeted support during future economic shocks rather than relying on uniform recovery policies across all industries.
-
-The project is descriptive in nature. It does not estimate the causal effect of any specific policy intervention or attempt to forecast future manufacturing performance. Instead, it measures and compares observed patterns of shock and recovery across industries using nationally representative manufacturing survey data.
 
 ---
 
-## 2. Main Outcome Variable
+## 2. Main outcome variable
 
-The central outcome variable of the project is the percentage change in Gross Value Added (GVA) during the COVID shock year.
+Name : Clean-cooking-fuel adoption (binary indicator)
 
-- **Variable name:** GVA drop percentage during 2020-21  
-- **Unit:** Percentage points (%)  
-- **Source:** Annual Survey of Industries (ASI), Block J, variable J113 (Gross Value Added / Net Value Added), aggregated using factory-level sampling weights (`MULT`) from Block A.  
-- **Population / panel:** Registered manufacturing factories in India across NIC 2-digit manufacturing industries (NIC 10–32), using ASI data for 2019-20, 2020-21, and 2021-22.
+Unit : percentage points, 0–100
 
-The primary outcome is constructed as:
+Source: NFHS-4 (2015-16) and NFHS-5 (2019-21) household-level survey files; variable `hv226` recoded into a binary `clean_fuel = 1` if `hv226 ∈ {lpg, natural gas, electricity, biogas}`; `0` otherwise. Households reporting "no food cooked in house" are dropped.
 
-```math
-\text{GVA Drop Percentage}_{2020-21}
-=
-\left(
-\frac{
-GVA_{2020-21} - GVA_{2019-20}
-}{
-GVA_{2019-20}
-}
-\right)
-\times 100
+Population / panel: 1,235,952 households across 35 states/UTs, two survey rounds (`survey = 4` pre-policy, `survey = 5` post-policy); `post = 1` for NFHS-5, `0` for NFHS-4.
+
+
+---
+
+## 3. Main quantitative success threshold
+
+The Difference-in-Differences coefficient `β₃` on `Post × HighExposure` in the two-way fixed-effects model below has: (a) a 95% confidence interval that excludes zero, and (b) a point estimate of at least 2.0 percentage points in absolute magnitude (`|β̂₃| ≥ 2.0 pp`), indicating an economically meaningful effect.
+
+Model:
+
+```text
+Y_st = α + β₁·Post_t + β₂·HighExposure_s + β₃·(Post_t × HighExposure_s) + δ_s + λ_t + γ·X_st + ε_st
 ```
 
-The project also constructs a secondary recovery outcome measuring percentage GVA change between 2020-21 and 2021-22, though this recovery metric is not the primary grading metric.
+with `HighExposure` defined as below-median clean-fuel share in NFHS-4, standard errors clustered at the state level.
+---
+
+## 4. Baseline to beat
+
+Unadjusted national pre-to-post change in weighted mean clean-fuel share:
+
+- Control group (low-exposure states): 63.0% → 79.5%, Δ = +16.6 pp
+- Treatment group (high-exposure states): 27.4% → 42.0%, Δ = +14.6 pp
+
+Naïve DiD (treatment Δ − control Δ) = -2.0 pp (unweighted, no controls or FE)
+
+This unadjusted figure is committed to `outputs/baseline_metric.json` before any regression.
+
+Success threshold: The covariate-adjusted TWFE estimate must exceed 2.0 pp in absolute magnitude with a CI excluding zero.
 
 ---
 
-## 3. Main Quantitative Success Threshold
+## 5. Falsifiable hypothesis
 
-- **Project type:** Descriptive
+States that fell below the NFHS-4 median in clean-fuel access (high-exposure states) experienced a measurably different trajectory in clean-fuel adoption between NFHS-4 and NFHS-5 relative to states above the median, after controlling for state fixed effects, time fixed effects, and household-level covariates (rural/urban, electricity access, female headship, household size, head's age, wealth quintile, and head's education).
 
-The project succeeds if it produces multiplier-weighted estimates of COVID-era GVA shock and recovery for at least:
+The success threshold is set at 2.0 percentage points in absolute magnitude, meaning the DiD coefficient must satisfy `|β̂₃| ≥ 2.0 pp` with a 95% CI that excludes zero.
 
-```math
-N \geq 20
-```
+If `|β̂₃| < 2.0 pp` or the CI contains zero, the result is too imprecise to be policy-relevant.
 
-NIC 2-digit manufacturing industries with a minimum factory sample size of:
-
-```math
-\geq 300
-```
-
-factories per industry in every year.
-
-In addition, the project evaluates whether labour-intensive industries experienced systematically worse COVID-era outcomes than capital-intensive industries.
-
-The project defines success as finding that:
-
-> Labour-intensive industries exhibit an average GVA decline during 2020-21 that is at least 2 percentage points larger than the average decline observed among capital-intensive industries.
-
-The labour-intensity classification is based on baseline labour intensity in 2019-20, measured as labour cost relative to fixed capital at the industry level.
-
-The threshold is intentionally conservative because the project is descriptive rather than causal and is designed to detect economically meaningful differences in industry-level shock exposure rather than extremely precise statistical estimates.
+The naïve DiD of `−2.0 pp` sets the prior expectation that divergence is more likely than convergence.
 
 ---
 
-## 4. Baseline to Beat
+## 6. Data sources and access plan
 
-The naive baseline assumes that all manufacturing industries experienced the same average COVID-era GVA shock regardless of labour intensity or industry structure.
+**Primary — NFHS household microdata (pooled NFHS-4 and NFHS-5):**
 
-Using the cleaned industry-level panel, the average manufacturing-industry GVA change between 2019-20 and 2020-21 is:
+**Source:** DHS Program (NFHS data taken from DHS) ( which was loaded as combined, cleaned panel, 1,238,208 rows before exclusions)  
 
-\[
--2.82\%
-\]
+**Variables used:** hv226 (cooking fuel), hv005 (sample weight ÷ 1,000,000), hv024 (state), hv025 (urban/rural), hv206 (electricity), hv219 (sex of head), hv220 (age of head), hv009 (household size), hv201 (water source), hv204 (water time), hv213 (floor material), hv270 (wealth index), sh34 (religion), sh36 (caste), hv106_01 (education of head), plus constructed survey and post flags.  
 
-Under this baseline:
+**Licence:** DHS data use agreement (non-commercial research).  
 
-- industry heterogeneity is ignored,
-- labour intensity carries no explanatory value,
-- and all industries are assumed to experience the same average decline.
+**Access:** [PMUY data - pmuy_data_compressed.csv.gz](https://github.com/tanisha0710-ui/PMUY-AI/blob/d4758ca7ded636a31f672db5cce0462745b105d2/data/pmuy_data_compressed.csv.gz)
 
-The project improves upon this baseline if:
+**Treatment intensity cross-check — PPAC state-wise PMUY connections:**
 
-- industry-level estimates display substantial dispersion around the aggregate mean, and
-- labour-intensive industries systematically exhibit larger declines than capital-intensive industries.
-
-The project will therefore compare industry-specific outcomes against the naive aggregate manufacturing benchmark.
+**Landing page:** https://ppac.gov.in/consumption/state-wise-pmuy-data  
+The `.xlsx` filename is timestamp-versioned and re-scraped at pipeline runtime; backup at https://www.data.gov.in/resource/stateut-wise-number-pradhan-mantri-ujjwala-yojana-pmuy-connections-2018-2023 (free instant API key).  
+Used only to validate the high/low exposure split; not a primary outcome source.
 
 ---
 
-## 5. Falsifiable Hypothesis
+## 7. Scope limits
 
-Labour-intensive manufacturing industries, defined as industries with baseline labour intensity above the cross-industry median in 2019-20, will experience an average GVA decline during the COVID shock year (2020-21) that is at least 2 percentage points larger than the average decline observed among capital-intensive industries.
-
----
-
-## 6. Data Sources and Access Plan
-
-- **Source:** Annual Survey of Industries (ASI)  
-- **Institution:** Ministry of Statistics and Programme Implementation (MoSPI), Government of India  
-- **Access URL:** [Official MoSPI ASI data portal](https://www.mospi.gov.in/)  
-- **Licence:** Publicly available government data  
-- **Access method:** Direct download of ZIP archives containing CSV files  
-
-### Survey years used
-
-- 2019-20  
-- 2020-21  
-- 2021-22  
-
-### ASI blocks used
-
-- **Block A:** Factory identifiers, industry codes, sampling weights  
-- **Block C:** Labour costs and emoluments  
-- **Block D:** Fixed assets and capital measures  
-- **Block J:** Output and Gross Value Added  
-
-### Data construction process
-
-The raw ASI data are initially stored as separate CSV files for each block and year. Since several blocks contain multiple rows per factory, the cleaning process first collapses repeated entries to the factory-year level. The cleaned blocks are then merged using factory identifiers.
-
-Factory-level variables are weighted using the official ASI multiplier (`MULT`) in order to construct representative NIC 2-digit industry aggregates.
-
-The final dataset contains weighted measures of:
-
-- Gross Value Added  
-- Output  
-- Labour cost  
-- Total emoluments  
-- Fixed capital  
-- Labour intensity  
-- COVID shock percentage  
-- Recovery percentage  
-
-### Final cleaned dataset
-
-[industry_shock_recovery_main_sample.csv](data/industry_shock_recovery_main_sample.csv)
-
+- We will not claim structural causal identification beyond the parallel-trends assumption. Event-study plots are diagnostic.  
+- We will not analyse refill intensity, health outcomes (respiratory, blood pressure), or LPG consumption volumes as primary outcomes.  
+- We will not disaggregate to district level or harmonise district boundaries across rounds; analysis is at state/UT level.
+- The wealth-quintile and caste breakdowns are descriptive summaries, not causal estimates.  
 
 ---
 
-## 7. Scope Limits
+## 8. Risks and fallback
 
-- The project does not estimate the causal effect of any specific COVID policy, lockdown measure, or industrial intervention.  
+**Risk: Parallel trends assumption may not hold**
 
-- The project does not forecast future manufacturing performance or future GVA values.  
+The Difference-in-Differences design assumes that treatment (low baseline states) and control (high baseline states) would have followed similar trends in clean fuel adoption in the absence of PMUY. With only one pre-policy period (NFHS-4), this assumption cannot be directly validated.
 
-- The Random Forest component is used only for exploratory variable-importance analysis and pattern discovery, not prediction.  
+**Fallback:**
+We will incorporate NFHS-3 (2005–06) as an additional pre-policy period to construct a longer pre-trend. We will estimate an event-study specification and visually test whether treatment and control states exhibit parallel trends prior to PMUY implementation. If pre-trends diverge, we will report both the baseline DiD results and the extended specification, clearly noting limitations in causal interpretation.
 
-- The analysis is restricted to registered manufacturing factories included in the ASI and does not cover informal manufacturing units.  
+**Risk 2:** The binary high/low split (≈17–18 states per group) may produce standard errors too wide to reject the null at conventional levels.  
+**Fallback:** Pre-commit an alternative continuous-treatment specification — β · (1 − baseline_clean_share) × post; and report both the binary-split and the continuous-treatment estimates.  
 
-- The project operates at the NIC 2-digit industry level and does not attempt firm-level causal modelling.  
-
-- The project does not estimate structural production functions or equilibrium industrial models.  
-
-- The project does not harmonize district-level industrial boundaries or perform district-level analysis.
-
----
-
-## 8. Risks and Fallback
-
-One important risk is that the observed difference in GVA decline between labour-intensive and capital-intensive industries may weaken under alternative grouping rules or robustness checks. Because the number of industries is relatively small, the estimated gap may become statistically imprecise under some specifications.
-
-If this occurs, the project will remain a descriptive industry-shock analysis focused on documenting cross-industry heterogeneity in COVID-era manufacturing outcomes rather than emphasizing statistical differences between labour-intensity groups.
-
-A second risk is that some factories may appear inconsistently across ASI blocks, leading to missing observations after merging. To address this issue, the project restricts analysis to factories with valid GVA observations and explicitly documents all filtering and cleaning decisions.
 
 ---
 
@@ -212,18 +144,10 @@ A second risk is that some factories may appear inconsistently across ASI blocks
 
 Your final repo must satisfy all of these:
 
-- [✔] `uv run main.py` runs end-to-end in under 10 minutes on a clean machine with no manual intervention.
-- [✔] It writes `outputs/primary_metric.json` containing a single JSON object with at least `{"metric_name": "...", "value": <number>, "threshold": <number>, "passed": <bool>}`.
-- [✔] It writes `outputs/baseline_metric.json` in the same shape.
-- [✔] A `README.md` documents the commands and expected outputs in ≤ 20 lines.
-- [✔] All data sources are either fetched in-script or committed under `data/` with a licence note.
+- [ ] `uv run main.py` runs end-to-end in under 10 minutes on a clean machine with no manual intervention.
+- [ ] It writes `outputs/primary_metric.json` containing a single JSON object with at least `{"metric_name": "...", "value": <number>, "threshold": <number>, "passed": <bool>}`.
+- [ ] It writes `outputs/baseline_metric.json` in the same shape.
+- [ ] A `README.md` documents the commands and expected outputs in ≤ 20 lines.
+- [ ] All data sources are either fetched in-script or committed under `data/` with a licence note.
 
-If you cannot commit to this, your project is probably still too broad. Talk to the instructor before proceeding.
 
----
-
-## Sign-off
-
-By submitting this charter, the team agrees that this is the plan the project will be graded against. The instructor will not penalize you just because the topic turns out to be difficult, as long as the project stays honest and within the approved scope.
-
-*Signed: Madhav Kumar, Vikas Chaurasiya *
