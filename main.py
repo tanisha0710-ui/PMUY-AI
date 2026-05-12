@@ -249,7 +249,7 @@ primary_metric = {
     "ci_upper": round(ci_upper, 3),
     "p_value": round(p_value, 4),
     "threshold": "|value| >= 2.0 pp AND CI excludes zero",
-    "passed": bool(p_value < 0.05 and |value| > 2 ),
+    "passed": bool(p_value < 0.05 and did_coef > 2 ),
     "unit": "percentage points",
     "status": "computed_twfe_with_state_trends",
     "notes": "TWFE coefficient with state FE, time FE, state-specific linear trends (θ_s·t), controls, and state-clustered SEs",
