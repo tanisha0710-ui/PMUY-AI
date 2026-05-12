@@ -6,6 +6,8 @@ The Pradhan Mantri Ujjwala Yojana (PMUY), launched in 2016, is one of India’s 
 
 This project asks: Did states with lower pre-PMUY clean-fuel access experience significantly different changes in clean cooking fuel adoption after the introduction of PMUY relative to states with higher initial clean-fuel access? Using household-level data from NFHS-4 (2015–16) and NFHS-5 (2019–21), the analysis applies a Difference-in-Differences framework to compare changes in clean-fuel adoption between high-exposure and low-exposure states over time.
 
+--
+
 # 2. Charter Summary
 
 | Field | Summary |
@@ -15,6 +17,8 @@ This project asks: Did states with lower pre-PMUY clean-fuel access experience s
 | Success threshold | DiD coefficient with a 95% confidence interval excluding zero and an absolute magnitude of at least 2.0 percentage points |
 | Baseline | Naïve Difference-in-Differences estimate of −2.0 percentage points based on unadjusted pre-post state-level averages |
 ```}
+
+--
 
 # 3. Data
 
