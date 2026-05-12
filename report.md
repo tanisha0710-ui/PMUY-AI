@@ -76,6 +76,10 @@ where:
 
 The model includes state fixed effects, state-specific time trends, and household-level controls including rural residence, electricity access, wealth quintile, household size, education of the household head, and housing quality indicators. Standard errors are clustered at the state level. The causal interpretation relies on the parallel trends assumption, meaning treatment and control states would have followed similar adoption trends in the absence of PMUY.
 
+# 5. Descriptive Statistics
+
+This section presents the main descriptive patterns in the data before estimating the Difference-in-Differences model. The objective is to examine how clean-fuel adoption varied across states, socioeconomic groups, and rural–urban areas before and after the implementation of PMUY.
+
 
 # 5. Result (Evidence)
 
