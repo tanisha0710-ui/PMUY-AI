@@ -15,7 +15,7 @@ This project asks: Did states with lower pre-PMUY clean-fuel access experience s
 | Main metric | Difference-in-Differences coefficient on Post×HighExposure measuring changes in clean cooking fuel adoption |
 | Success threshold | DiD coefficient with a 95% confidence interval excluding zero and an absolute magnitude of at least 2.0 percentage points |
 | Baseline | Naïve Difference-in-Differences estimate of −2.0 percentage points based on unadjusted pre-post state-level averages |
-```}
+
 ---
 
 # 3. Data
