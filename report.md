@@ -153,7 +153,7 @@ Clean-fuel adoption is negatively correlated with rural residence (−0.45), fur
 
 ![Figure 6](figures/corr.png)
 
-# 5. Results
+# 5. Results (Evidence)
 
 ## Main Result
 
