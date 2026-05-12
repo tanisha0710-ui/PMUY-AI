@@ -110,6 +110,8 @@ Figure 2 plots average clean-fuel adoption over time for treatment and control s
 
 The trend comparison also shows that improvements in high-exposure states did not fully catch up with gains observed in low-exposure states. This visual evidence is consistent with the negative naïve DiD estimate reported earlier.
 
+![Figure 2](figures/clean_fuel_by_treatment.png)
+
 ## 9. Limits
 
 This project can say with reasonable confidence that clean-fuel adoption increased substantially across India between NFHS-4 and NFHS-5, and that the pattern of adoption differed systematically between historically low-access states and states with higher baseline clean-fuel penetration. The analysis also provides evidence that, after controlling for household characteristics, state fixed effects, and state-specific trends, high-exposure states experienced relatively smaller gains in clean-fuel adoption during the post-PMUY period.
