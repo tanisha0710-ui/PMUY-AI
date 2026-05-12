@@ -1,12 +1,13 @@
 {
   "metric_name": "did_coefficient_pp",
-  "value": null,
-  "ci_lower": null,
-  "ci_upper": null,
-  "p_value": null,
-  "threshold": 2.0,
-  "passed": null,
+  "value": -7.682,
+  "ci_lower": -7.977,
+  "ci_upper": -7.388,
+  "p_value": 0.0,
+  "threshold": "|value| >= 2.0 pp AND CI excludes zero",
+  "passed": true,
   "unit": "percentage points",
-  "status": "placeholder_for_final_submission",
-  "notes": "TWFE coefficient with state FE, time FE, controls, and state-clustered SEs to be computed in final submission"
+  "status": "computed_twfe_with_state_trends",
+  "notes": "TWFE coefficient with state FE, time FE, state-specific linear trends (\u03b8_s\u00b7t), controls, and state-clustered SEs",
+  "specification": "clean_fuel ~ post + high_exposure + did_interaction + C(state) + C(state):post + controls"
 }

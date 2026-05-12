@@ -1,6 +1,6 @@
 {
   "milestone_date": "2026-05-07",
-  "project": "The Impact of PMUY on Clean Fuel Adoption: A Difference-in-Differences Analysis Using NFHS-4 and NFHS-5",
+  "project": "The Impact of PMUY on Clean Fuel Adoption: A DiD Analysis Using NFHS-4 and NFHS-5",
   "team": [
     "Tanisha Aggarwal",
     "Neha Rana",
@@ -12,15 +12,16 @@
     {
       "name": "pmuy_data_compressed.csv.gz",
       "file": "data/pmuy_data_compressed.csv.gz",
-      "rows_after_exclusions": 1235021,
+      "rows_after_exclusions": 1235952,
       "states": 35,
       "status": "verified",
-      "note": "Compressed CSV file stored directly in the data/ folder. No external download required."
+      "probe_artifact": "artifacts/probes/probe_nfhs.md",
+      "note": "Compressed CSV stored in data/. No external download required."
     }
   ],
   "treatment_definition": {
     "variable": "high_exposure",
-    "direction": "1 = LOW clean-fuel-access states (below NFHS-4 median) = high solid fuel dependence = PMUY primary targets",
+    "direction": "1 = LOW clean-fuel-access states (below NFHS-4 median) = PMUY-targeted",
     "nfhs4_median_pp": 52.3,
     "n_treatment_states": 17,
     "n_control_states": 18,
@@ -64,12 +65,22 @@
       "telangana"
     ]
   },
+  "success_threshold": {
+    "rule": "|did_coefficient_pp| >= 2.0 AND CI excludes zero",
+    "threshold": 2.0
+  },
   "baseline_ready": true,
+  "primary_metric_schema_ready": true,
   "baseline_metric": {
     "file": "outputs/baseline_metric.json",
-    "value_pp": -2.05,
+    "value_pp": -2.0,
     "status": "written"
   },
-  "primary_metric_schema_ready": false,
+  "primary_metric": {
+    "file": "outputs/primary_metric.json",
+    "value_pp": -7.682,
+    "passed": true,
+    "status": "written"
+  },
   "run_command": "uv run main.py"
 }

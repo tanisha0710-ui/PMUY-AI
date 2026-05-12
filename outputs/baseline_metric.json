@@ -1,12 +1,13 @@
 {
   "metric_name": "naive_did_pp",
-  "description": "Unadjusted DiD \u2014 2x2 weighted means, no controls, no FE. Treatment = states BELOW NFHS-4 median clean fuel share (high solid fuel dependence = PMUY primary targets). Control = states ABOVE median (already had LPG access). post=0 = NFHS-4 (pre-policy), post=1 = NFHS-5 (post-policy).",
-  "treatment_pre_pp": 27.44,
-  "treatment_post_pp": 42.02,
-  "treatment_delta_pp": 14.58,
-  "control_pre_pp": 62.98,
-  "control_post_pp": 79.61,
-  "control_delta_pp": 16.63,
-  "value": -2.05,
-  "unit": "percentage points"
+  "description": "Unadjusted DiD \u2014 2x2 weighted means, no controls, no FE. Treatment = states below NFHS-4 median (PMUY-targeted).",
+  "treatment_pre_pp": 27.42,
+  "treatment_post_pp": 41.99,
+  "treatment_delta_pp": 14.57,
+  "control_pre_pp": 62.96,
+  "control_post_pp": 79.52,
+  "control_delta_pp": 16.56,
+  "value": -2.0,
+  "unit": "percentage points",
+  "threshold": 2.0
 }
