@@ -227,7 +227,7 @@ This unsupervised classification helps identify groups of industries with simila
 
 The clustering exercise is exploratory and intended to summarize patterns of resilience rather than estimate structural economic mechanisms.
 
-# 5. Result
+# 5. Result (Evidence)
 
 ## Main Metric
 
@@ -372,37 +372,55 @@ The Random Forest model achieves:
 
 These results are exploratory and intended for pattern discovery rather than forecasting or causal interpretation.
 
-## 7. Limits
+# 6. Result 
 
-What can this project say with confidence, and what can it not say
-1. **Synthetic data.** Our panel is calibrated to aggregates, not actual microdata. Results should be validated against real NPCI state-level data when it becomes available.
-2. **Reverse causality.** More formal businesses may adopt UPI *because* they are formal, not the other way around. Our first-difference estimator controls for state fixed effects but cannot rule out time-varying confounders.
-3. **Small N.** 20 states × 20 quarters = 400 observations. Confidence intervals are wide.
-4. **Annual PLFS interpolated to quarters.** True quarterly variation in informality is not measured; our quarterly interpolation introduces measurement error.
-5. **No lagged dependent variable.** A dynamic panel model (Arellano-Bond) would better capture persistence in informal share.
+Overall, the project finds substantial heterogeneity in the economic impact of COVID-19 across Indian manufacturing industries. While aggregate manufacturing statistics suggest a moderate average decline, industry-level analysis reveals that several sectors experienced extremely severe contractions whereas others remained resilient or recovered rapidly.
 
+The central finding of the project is that labour-intensive industries experienced systematically larger COVID-era declines than capital-intensive industries. On average, labour-intensive industries recorded a GVA decline approximately 3.63 percentage points larger than capital-intensive industries during 2020-21, exceeding the charter threshold of 2 percentage points.
 
+The analysis also shows that recovery dynamics differed sharply across sectors. Some industries that experienced severe initial contractions later displayed strong rebound growth, suggesting significant variation in resilience and recovery capacity across manufacturing sectors.
 
-## 8. If The Result Was Null Or Weak
+The exploratory machine-learning analysis further indicates that industry scale, productivity, and capital structure were strongly associated with resilience during the pandemic period. Larger and more productive industries generally experienced relatively smaller declines.
 
-Say so directly. Do not force a story onto the data.
-The result was not null — the model passed the threshold. However, the 2023 paddy observation is the largest residual (predicted ≈ 2,100, actual 2,183), driven by an above-cost-justified hike that our model's features do not capture. If we were to extend the hold-out to include 2025, the error could be larger depending on actual CACP decisions.
+Taken together, the results suggest that industrial vulnerability during large economic shocks is highly uneven and structurally linked to industry characteristics such as labour dependence, productivity, and scale. The findings support the idea that future industrial recovery policies may benefit from more targeted sector-specific approaches rather than uniform manufacturing-wide interventions.
+
+# 7. Limits
+
+This project provides descriptive evidence on cross-industry manufacturing outcomes during the COVID period, but several limitations are important.
+
+First, the project is descriptive rather than causal. The analysis identifies patterns of association between labour intensity and COVID-era manufacturing decline, but it does not establish that labour intensity causally caused worse outcomes. Other correlated industry characteristics — such as export dependence, supply-chain exposure, automation levels, or demand shocks — may also explain part of the observed differences.
+
+Second, the number of industries in the final sample is relatively small. The analysis includes 23 NIC 2-digit manufacturing industries, which limits statistical power and produces relatively wide confidence intervals. As a result, some estimated differences are economically meaningful but statistically imprecise.
+
+Third, the analysis relies on industry-level aggregates rather than factory-level panel tracking over time. Although the ASI provides nationally representative manufacturing data, aggregation may conceal important within-industry heterogeneity across firms of different sizes and ownership structures.
+
+Fourth, labour-intensity classification is based on a simple baseline ratio of labour cost to fixed capital. Alternative definitions of labour intensity or different classification thresholds could produce somewhat different group assignments and estimated differences.
+
+Fifth, the Random Forest and K-Means components are exploratory tools intended for pattern discovery rather than structural inference. The feature-importance measures should not be interpreted causally, and the recovery archetypes depend partly on the chosen clustering specification.
+
+Finally, the analysis focuses only on registered manufacturing factories covered by the Annual Survey of Industries. Informal manufacturing units and very small enterprises are not included in the sample, meaning the results may understate the full extent of COVID-era disruption in India’s broader manufacturing economy.
+
+# 8. If The Result Was Null Or Weak
+
+The result was not null. The project successfully passed the charter threshold.
+
+Labour-intensive industries experienced an average COVID-era GVA decline approximately 3.63 percentage points larger than capital-intensive industries, exceeding the pre-specified threshold of 2 percentage points.
+
+However, the statistical evidence remains somewhat imprecise because the number of industries is limited and cross-industry variation is substantial. The estimated difference therefore should be interpreted primarily as economically meaningful descriptive evidence rather than definitive statistical proof of structural vulnerability.
+
+In addition, several industries exhibited outcomes that did not fully align with the overall labour-intensity pattern. For example, some capital-intensive industries experienced very large contractions, while certain labour-intensive industries remained relatively resilient or recovered rapidly during 2021-22. This suggests that labour intensity alone cannot fully explain manufacturing resilience during the pandemic period.
+
+The Random Forest analysis also indicates that other structural variables — particularly factory scale, productivity, and capital structure — were strongly associated with COVID-era performance. Therefore, although labour intensity appears important, it is likely only one component of a broader set of industry characteristics shaping resilience during economic shocks.
 
 
 ## 9. Reproducibility
 
 - Run command:`uv run main.py` (or `python main.py` with dependencies installed)
 - Runtime:< 2 minutes on any machine
-- Output files written:- `outputs/primary_metric.json`
+- Output files written:-
+  -`outputs/primary_metric.json`
   - `outputs/baseline_metric.json`
   - `outputs/milestone_manifest.json`
-  - `outputs/prediction_table.json`
-  - `outputs/figures/fig1_msp_history.png`
-  - `outputs/figures/fig2_predictions.png`
-  - `outputs/figures/fig3_rmse_comparison.png`
-  - `artifacts/probes/probe_msp.json`
-  - `artifacts/probes/probe_cpial.json`
-  - `artifacts/probes/probe_diesel.json`
 
 ## 10. AI Usage
 
