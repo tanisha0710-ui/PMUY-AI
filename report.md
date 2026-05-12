@@ -76,6 +76,12 @@ where:
 
 The model includes state fixed effects, state-specific time trends, and household-level controls including rural residence, electricity access, wealth quintile, household size, education of the household head, and housing quality indicators. Standard errors are clustered at the state level. The causal interpretation relies on the parallel trends assumption, meaning treatment and control states would have followed similar adoption trends in the absence of PMUY.
 
+## Assumptions
+
+The main identifying assumption of the Difference-in-Differences design is the parallel trends assumption. This assumes that, in the absence of PMUY, high-exposure and low-exposure states would have experienced similar trends in clean-fuel adoption over time. The inclusion of state fixed effects and state-specific time trends helps relax this assumption by allowing states to follow different underlying trajectories before and after the policy period.
+
+A second assumption is that there were no other major nationwide policy changes during the study period that differentially affected treatment states relative to control states in a way directly correlated with PMUY exposure. The analysis also assumes consistent measurement of household fuel-use variables across NFHS-4 and NFHS-5, and that the NFHS sampling design remains comparable across survey rounds. Standard errors are clustered at the state level to account for within-state correlation in outcomes over time.
+
 # 5. Descriptive Statistics (Evidence)
 
 This section presents descriptive patterns in clean cooking fuel adoption across treatment and control states before and after the implementation of PMUY. The analysis begins with summary statistics for the main household-level variables used in the study, followed by comparisons across treatment groups and visual evidence on trends in clean-fuel adoption over time. These descriptive results provide important context for interpreting the subsequent Difference-in-Differences estimates.
