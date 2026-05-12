@@ -234,8 +234,7 @@ baseline_metric = {
     "value":              round(naive_did,              2),
     "unit":               "percentage points",
     "threshold":          2.0,
-    "threshold_rule":     "|value| >= 2.0 pp",
-    "passed":             bool(abs(naive_did) >= 2.0),
+     
 }
 with open("outputs/baseline_metric.json", "w") as f:
     json.dump(baseline_metric, f, indent=2)
