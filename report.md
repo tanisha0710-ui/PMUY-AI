@@ -80,163 +80,22 @@ The model includes state fixed effects, state-specific time trends, and househol
 
 This section presents the main descriptive patterns in the data before estimating the Difference-in-Differences model. The objective is to examine how clean-fuel adoption varied across states, socioeconomic groups, and rural–urban areas before and after the implementation of PMUY.
 
+## Summary Statistics by Treatment Status
 
-# 5. Result (Evidence)
+Table 1 compares household characteristics across treatment and control states before and after PMUY implementation. Even before the policy rollout, high-exposure states had substantially lower clean-fuel adoption rates than low-exposure states (27.4% versus 63.0%). These states also had lower electricity access, lower wealth levels, poorer housing conditions, and a much larger rural population share. The descriptive patterns confirm that treatment states were systematically more disadvantaged and more dependent on traditional fuels before PMUY, providing a strong policy rationale for targeted intervention.
 
-## Main Metric
+![Table 1](figures/main_summary_stats.png)
 
-| Metric | Value |
-|---|---|
-| Labour-intensive average GVA decline | −4.71% |
-| Capital-intensive average GVA decline | −1.09% |
-| Difference | 3.63 percentage points |
-| Threshold | 2.0 percentage points |
-| Passed | Yes |
+Between NFHS-4 and NFHS-5, clean-fuel adoption increased in both groups. However, the increase was larger in low-exposure states than in high-exposure states, suggesting that existing regional inequalities in clean-fuel access may have persisted even after the programme expansion. These differences motivate the use of the DiD framework to determine whether the observed trends remain after controlling for household and state-level characteristics.
 
-The project successfully satisfies the charter threshold.
+## Raw Treatment-Control Change
 
-Labour-intensive industries experienced an average GVA decline approximately 3.63 percentage points larger than capital-intensive industries during the COVID shock year.
+Table 2 presents the unadjusted change in clean-fuel adoption across treatment and control states. High-exposure states experienced an increase from 27.4% to 42.0%, representing a gain of 14.6 percentage points. In contrast, low-exposure states increased from 63.0% to 79.5%, a gain of 16.6 percentage points. The resulting naïve DiD estimate is −2.0 percentage points, indicating that high-exposure states improved more slowly than low-exposure states in raw terms.
 
-This suggests that industries relying more heavily on labour relative to capital were economically more vulnerable during the pandemic disruption period.
+![Table 2](figures/raw_treatment_control.png)
 
-However, because the number of industries is relatively small, the estimated difference is statistically imprecise. The evidence is therefore interpreted as economically meaningful descriptive evidence rather than definitive statistical proof of structural vulnerability.
+Although this estimate is purely descriptive and does not account for covariates or fixed effects, it provides an important benchmark for the later regression analysis. The negative raw DiD suggests that PMUY may not have fully closed the gap between low-access and high-access states during the study period.
 
-## 5.1 Descriptive Statistics
-
-The industry-level sample contains substantial heterogeneity in COVID-era manufacturing outcomes.
-
-### Main Summary Statistics
-
-| Variable | Mean | Std Dev | Min | Max |
-|---|---|---|---|---|
-| GVA drop (%) | −2.82 | 11.98 | −34.77 | 20.74 |
-| Recovery (%) | 33.36 | 17.62 | −11.62 | 65.74 |
-| Labour intensity | 0.39 | 0.28 | 0.12 | 1.44 |
-
-The wide range of outcomes indicates that aggregate manufacturing statistics conceal substantial cross-industry variation.
-
-![GVA Drop Distribution](figures/gva_drop_distribution.png)
-
-The distribution of COVID-year GVA changes shows substantial dispersion across industries, with several industries experiencing extremely large declines while others remained resilient or even expanded during the pandemic year.
-
-## 5.2 Industry-Level Shock Patterns
-
-The most severely affected industries include:
-
-| Industry | GVA Change (%) |
-|---|---|
-| Printing | −34.77 |
-| Coke & refined petroleum | −23.15 |
-| Leather products | −19.34 |
-| Wearing apparel | −16.12 |
-
-In contrast, several industries experienced positive growth even during the pandemic:
-
-| Industry | GVA Change (%) |
-|---|---|
-| Tobacco | 20.74 |
-| Pharmaceuticals | 14.16 |
-| Food products | 7.77 |
-
-![GVA Drop by Industry](figures/gva_drop_by_industry.png)
-
-COVID-era manufacturing disruption was highly uneven across industries. Consumer-contact industries and industries exposed to mobility restrictions experienced substantially larger contractions than essential-goods industries such as food products and pharmaceuticals.
-
-## 5.3 Recovery Patterns
-
-Recovery dynamics were also highly heterogeneous.
-
-Industries with strong rebound performance include:
-
-| Industry | Recovery (%) |
-|---|---|
-| Computer & electronics | 65.74 |
-| Coke & refined petroleum | 62.68 |
-| Basic metals | 55.22 |
-| Furniture | 53.06 |
-
-Some industries that suffered large initial contractions later experienced strong recovery growth, suggesting delayed normalization after the pandemic shock.
-
-![GVA Recovery by Industry](figures/gva_recovery_by_industry.png)
-
-Recovery trajectories differed substantially across manufacturing sectors. Several industries exhibited V-shaped recovery patterns, while others recovered more gradually.
-
-## 5.4 Labour Intensity and COVID Vulnerability
-
-The scatter relationship between labour intensity and GVA decline shows moderate negative association.
-
-![Labour Intensity vs GVA Drop](figures/labour_intensity_vs_gva_drop.png)
-
-Industries with higher labour intensity generally experienced worse COVID-era performance, although substantial heterogeneity remains within both labour-intensive and capital-intensive groups.
-
-
-## 5.5 Group Comparison
-
-| Group | Mean GVA Drop (%) |
-|---|---|
-| Capital-intensive | −1.09 |
-| Labour-intensive | −4.71 |
-
-![GVA Drop Boxplot](figures/gva_drop_boxplot.png)
-
-Labour-intensive industries experienced larger average declines and somewhat greater dispersion in outcomes than capital-intensive industries.
-The difference is economically meaningful but statistically imprecise.
-
-## 5.6 Statistical Comparison
-
-### T-Test
-
-| Statistic | Value |
-|---|---|
-| t-statistic | 0.718 |
-| p-value | 0.481 |
-
-### OLS Regression
-
-| Variable | Coefficient |
-|---|---|
-| Labour-intensive dummy | −3.63 |
-
-### Interpretation
-
-The estimated direction is consistent with the project hypothesis: labour-intensive industries experienced larger declines. However, the p-value indicates considerable statistical uncertainty due to the small number of industries.
-
-The project therefore emphasizes descriptive economic magnitude rather than formal statistical significance.
-
-## 5.7 Random Forest Results
-
-The Random Forest model identifies the following variables as most strongly associated with COVID-year GVA performance:
-
-| Variable | Importance |
-|---|---|
-| Factory count | 0.233 |
-| GVA per labour cost | 0.200 |
-| Capital-GVA ratio | 0.148 |
-
-![Random Forest Feature Importance](figures/random_forest_feature_importance.png)
-
-Larger and more productive industries appear to have been relatively more resilient during the pandemic period. Labour intensity itself contributes explanatory power but is not the single dominant predictor of resilience.
-
-The Random Forest model achieves:
-
-| Metric | Value |
-|---|---|
-| R² | 0.645 |
-| MAE | 4.98 |
-
-These results are exploratory and intended for pattern discovery rather than forecasting or causal interpretation.
-
-# 6. Result 
-
-Overall, the project finds substantial heterogeneity in the economic impact of COVID-19 across Indian manufacturing industries. While aggregate manufacturing statistics suggest a moderate average decline, industry-level analysis reveals that several sectors experienced extremely severe contractions whereas others remained resilient or recovered rapidly.
-
-The central finding of the project is that labour-intensive industries experienced systematically larger COVID-era declines than capital-intensive industries. On average, labour-intensive industries recorded a GVA decline approximately 3.63 percentage points larger than capital-intensive industries during 2020-21, exceeding the charter threshold of 2 percentage points.
-
-The analysis also shows that recovery dynamics differed sharply across sectors. Some industries that experienced severe initial contractions later displayed strong rebound growth, suggesting significant variation in resilience and recovery capacity across manufacturing sectors.
-
-The exploratory machine-learning analysis further indicates that industry scale, productivity, and capital structure were strongly associated with resilience during the pandemic period. Larger and more productive industries generally experienced relatively smaller declines.
-
-Taken together, the results suggest that industrial vulnerability during large economic shocks is highly uneven and structurally linked to industry characteristics such as labour dependence, productivity, and scale. The findings support the idea that future industrial recovery policies may benefit from more targeted sector-specific approaches rather than uniform manufacturing-wide interventions.
 
 ## 9. Limits
 
