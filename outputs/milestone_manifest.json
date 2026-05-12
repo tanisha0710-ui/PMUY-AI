@@ -1,14 +1,75 @@
 {
-  "charter_locked": true,
+  "milestone_date": "2026-05-07",
+  "project": "The Impact of PMUY on Clean Fuel Adoption: A Difference-in-Differences Analysis Using NFHS-4 and NFHS-5",
+  "team": [
+    "Tanisha Aggarwal",
+    "Neha Rana",
+    "Jaswathi Lalitha R"
+  ],
+  "charter_locked": false,
+  "status": "milestone",
   "sources": [
     {
-      "name": "Annual Survey of Industries, MoSPI",
-      "status": "working",
-      "probe_artifact": "artifacts/probes/asi_probe.md",
-      "note": "ASI Blocks A, C, D, and J were used to construct weighted NIC-2 manufacturing industry aggregates for 2019-20, 2020-21, and 2021-22."
+      "name": "pmuy_data_compressed.csv.gz",
+      "file": "data/pmuy_data_compressed.csv.gz",
+      "rows_after_exclusions": 1235021,
+      "states": 35,
+      "status": "verified",
+      "note": "Compressed CSV file stored directly in the data/ folder. No external download required."
     }
   ],
+  "treatment_definition": {
+    "variable": "high_exposure",
+    "direction": "1 = LOW clean-fuel-access states (below NFHS-4 median) = high solid fuel dependence = PMUY primary targets",
+    "nfhs4_median_pp": 52.3,
+    "n_treatment_states": 17,
+    "n_control_states": 18,
+    "treatment_states": [
+      "arunachal pradesh",
+      "assam",
+      "bihar",
+      "chhattisgarh",
+      "himachal pradesh",
+      "jharkhand",
+      "lakshadweep",
+      "madhya pradesh",
+      "manipur",
+      "meghalaya",
+      "nagaland",
+      "odisha",
+      "rajasthan",
+      "tripura",
+      "uttar pradesh",
+      "uttarakhand",
+      "west bengal"
+    ],
+    "control_states": [
+      "andaman and nicobar islands",
+      "andhra pradesh",
+      "chandigarh",
+      "dadra and nagar haveli and daman and diu",
+      "delhi",
+      "goa",
+      "gujarat",
+      "haryana",
+      "jammu and kashmir",
+      "karnataka",
+      "kerala",
+      "maharashtra",
+      "mizoram",
+      "puducherry",
+      "punjab",
+      "sikkim",
+      "tamil nadu",
+      "telangana"
+    ]
+  },
   "baseline_ready": true,
-  "primary_metric_schema_ready": true,
+  "baseline_metric": {
+    "file": "outputs/baseline_metric.json",
+    "value_pp": -2.05,
+    "status": "written"
+  },
+  "primary_metric_schema_ready": false,
   "run_command": "uv run main.py"
 }
