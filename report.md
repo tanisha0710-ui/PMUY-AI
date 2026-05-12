@@ -388,33 +388,29 @@ The exploratory machine-learning analysis further indicates that industry scale,
 
 Taken together, the results suggest that industrial vulnerability during large economic shocks is highly uneven and structurally linked to industry characteristics such as labour dependence, productivity, and scale. The findings support the idea that future industrial recovery policies may benefit from more targeted sector-specific approaches rather than uniform manufacturing-wide interventions.
 
-# 7. Limits
+## 9. Limits
 
-This project provides descriptive evidence on cross-industry manufacturing outcomes during the COVID period, but several limitations are important.
+This project can say with reasonable confidence that clean-fuel adoption increased substantially across India between NFHS-4 and NFHS-5, and that the pattern of adoption differed systematically between historically low-access states and states with higher baseline clean-fuel penetration. The analysis also provides evidence that, after controlling for household characteristics, state fixed effects, and state-specific trends, high-exposure states experienced relatively smaller gains in clean-fuel adoption during the post-PMUY period.
 
-First, the project is descriptive rather than causal. The analysis identifies patterns of association between labour intensity and COVID-era manufacturing decline, but it does not establish that labour intensity causally caused worse outcomes. Other correlated industry characteristics — such as export dependence, supply-chain exposure, automation levels, or demand shocks — may also explain part of the observed differences.
+However, the project cannot claim fully causal identification with complete confidence. The main limitation is that the parallel trends assumption underlying the Difference-in-Differences framework is not fully satisfied in the raw pre-policy data. Using NFHS-2, NFHS-3, and NFHS-4, treatment and control states exhibit somewhat different trajectories in clean-fuel adoption prior to PMUY implementation. To partially address this issue, the main specification includes state-specific linear time trends, allowing each state to follow its own underlying trajectory over time. While this adjustment helps account for differential pre-existing trends, it also makes the estimated treatment effect more dependent on modeling assumptions regarding how state-level trends evolve over time. Consequently, the estimates should be interpreted cautiously rather than as definitive causal effects.
 
-Second, the number of industries in the final sample is relatively small. The analysis includes 23 NIC 2-digit manufacturing industries, which limits statistical power and produces relatively wide confidence intervals. As a result, some estimated differences are economically meaningful but statistically imprecise.
+In addition, the analysis relies on repeated cross-sectional household surveys rather than a true household panel. This means the same households are not tracked over time, limiting the ability to study household-level transitions into clean-fuel adoption.
 
-Third, the analysis relies on industry-level aggregates rather than factory-level panel tracking over time. Although the ASI provides nationally representative manufacturing data, aggregation may conceal important within-industry heterogeneity across firms of different sizes and ownership structures.
+The treatment classification is also based on baseline state-level clean-fuel penetration rather than direct household-level PMUY participation. As a result, the estimates capture differential state-level adoption patterns associated with PMUY exposure intensity rather than the exact effect of receiving an LPG connection.
 
-Fourth, labour-intensity classification is based on a simple baseline ratio of labour cost to fixed capital. Alternative definitions of labour intensity or different classification thresholds could produce somewhat different group assignments and estimated differences.
+Further, the dataset measures whether households report using clean cooking fuel as their primary fuel source, but it cannot observe refill intensity, sustained LPG usage, fuel stacking behavior, or actual fuel consumption volumes. Some households may have obtained LPG connections while continuing to rely partly on traditional biomass fuels.
 
-Fifth, the Random Forest and K-Means components are exploratory tools intended for pattern discovery rather than structural inference. The feature-importance measures should not be interpreted causally, and the recovery archetypes depend partly on the chosen clustering specification.
+Finally, although the regressions include extensive household controls and fixed effects, other time-varying factors — such as electrification programs, infrastructure improvements, fuel-price changes, or broader economic growth — may still influence clean-fuel adoption alongside PMUY.
 
-Finally, the analysis focuses only on registered manufacturing factories covered by the Annual Survey of Industries. Informal manufacturing units and very small enterprises are not included in the sample, meaning the results may understate the full extent of COVID-era disruption in India’s broader manufacturing economy.
+## 10. If The Result Was Null Or Weak
 
-# 8. If The Result Was Null Or Weak
+The final regression estimates do not support the initial expectation that high-exposure states experienced faster clean-fuel adoption after PMUY relative to low-exposure states. Instead, the estimated Difference-in-Differences coefficient is negative and statistically significant, suggesting that states with historically low clean-fuel access experienced smaller relative improvements during the post-policy period after controlling for household characteristics, state fixed effects, and state-specific trends.
 
-The result was not null. The project successfully passed the charter threshold.
+This finding does not necessarily imply that PMUY failed to increase clean-fuel adoption. Clean-fuel usage increased substantially across both treatment and control states over time. However, the results suggest that historically disadvantaged states may have continued to face structural barriers — including weaker infrastructure, refill affordability constraints, distribution challenges, and lower baseline household capacity to sustain LPG usage — which limited the relative pace of transition toward clean cooking fuels.
 
-Labour-intensive industries experienced an average COVID-era GVA decline approximately 3.63 percentage points larger than capital-intensive industries, exceeding the pre-specified threshold of 2 percentage points.
+The inclusion of state-specific linear time trends is particularly important in interpreting the results. Since the raw pre-policy trends are not perfectly parallel, the adjusted estimates rely partly on assumptions regarding how states would have evolved in the absence of PMUY. Consequently, the findings should be interpreted as evidence of differential state-level adoption patterns conditional on those trend adjustments, rather than as definitive proof of a fully causal policy effect.
 
-However, the statistical evidence remains somewhat imprecise because the number of industries is limited and cross-industry variation is substantial. The estimated difference therefore should be interpreted primarily as economically meaningful descriptive evidence rather than definitive statistical proof of structural vulnerability.
-
-In addition, several industries exhibited outcomes that did not fully align with the overall labour-intensity pattern. For example, some capital-intensive industries experienced very large contractions, while certain labour-intensive industries remained relatively resilient or recovered rapidly during 2021-22. This suggests that labour intensity alone cannot fully explain manufacturing resilience during the pandemic period.
-
-The Random Forest analysis also indicates that other structural variables — particularly factory scale, productivity, and capital structure — were strongly associated with COVID-era performance. Therefore, although labour intensity appears important, it is likely only one component of a broader set of industry characteristics shaping resilience during economic shocks.
+More broadly, the project highlights that large-scale welfare programs may generate heterogeneous outcomes across regions depending on baseline conditions and structural constraints. Even when a policy substantially expands access nationally, historically disadvantaged regions may continue to lag behind in relative terms.
 
 
 ## 9. Reproducibility
