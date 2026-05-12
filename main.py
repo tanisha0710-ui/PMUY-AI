@@ -48,19 +48,10 @@ else:
 # CLEAN FUEL BINARY
 # ============================================================
 
-def is_clean_fuel(val):
-    if pd.isna(val):
-        return np.nan
-    v = str(val).lower().strip()
-    if v in ["no food cooked in house", "other", "nan"]:
-        return np.nan
-    if "electricity" in v or "lpg" in v or "natural gas" in v or "biogas" in v:
-        return 1
-    return 0
-
-df["clean_fuel"] = df["hv226"].apply(is_clean_fuel)
-df = df[df["clean_fuel"].notna()].copy()
-df["clean_fuel"] = df["clean_fuel"].astype(int)
+CLEAN_FUELS = ['electricity', 'lpg, natural gas', 'biogas']
+df = df[~df['hv226'].isin(['no food cooked in house'])]
+df['clean_fuel'] = df['hv226'].isin(CLEAN_FUELS).astype(int)
+df = df[df['clean_fuel'].notna()].copy()
 
 print("\n=== Clean fuel rate by round (weighted) ===")
 for rnd in sorted(df["survey"].unique()):
