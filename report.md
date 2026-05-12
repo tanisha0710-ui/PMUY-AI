@@ -119,17 +119,23 @@ Figure 3 presents the distribution of state-level clean-fuel adoption rates in N
 
 The wide distribution demonstrates that India entered the PMUY period with highly unequal access to clean cooking fuel infrastructure. This unequal starting point strengthens the policy relevance of analysing whether PMUY disproportionately benefited low-access states.
 
+![Figure 3](figures/distribution_of_baseline.png)
+
 ## State-Wise Baseline Adoption
 
 Figure 4 ranks states according to their baseline clean-fuel adoption rates. Bihar, Jharkhand, Odisha, Chhattisgarh, and Assam appear among the lowest adopters, while Delhi, Chandigarh, Goa, and Puducherry exhibit the highest adoption rates. The ranking provides a clearer picture of the states that were most reliant on traditional biomass fuels before PMUY implementation.
 
 These state-level differences justify the treatment classification strategy used in the analysis and show why a uniform national interpretation of PMUY effects may conceal important regional variation.
 
+![Figure 4](figures/baseline clean fuel.png)
+
 ## Rural–Urban Differences
 
 Figure 5 compare clean-fuel adoption across rural and urban households. Rural households reported a clean-fuel adoption rate of only 34.1%, compared with 85.5% among urban households. This large rural–urban gap highlights the strong association between infrastructure access, income, and clean cooking fuel use.
 
 The result is particularly important because PMUY primarily targeted poor and rural households. The descriptive evidence suggests that rural households remained substantially disadvantaged in clean-fuel adoption despite nationwide expansion in LPG access.
+
+![Figure 5](figures/rural urban.png)
 
 ## 9. Limits
 
