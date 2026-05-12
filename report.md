@@ -135,7 +135,7 @@ Figure 5 compare clean-fuel adoption across rural and urban households. Rural ho
 
 The result is particularly important because PMUY primarily targeted poor and rural households. The descriptive evidence suggests that rural households remained substantially disadvantaged in clean-fuel adoption despite nationwide expansion in LPG access.
 
-![Figure 5](figures/rural urban.png)
+![Figure 5](figures/rural_urban.png)
 
 ## 9. Limits
 
