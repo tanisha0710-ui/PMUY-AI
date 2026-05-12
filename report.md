@@ -96,6 +96,15 @@ Table 2 presents the unadjusted change in clean-fuel adoption across treatment a
 
 Although this estimate is purely descriptive and does not account for covariates or fixed effects, it provides an important benchmark for the later regression analysis. The negative raw DiD suggests that PMUY may not have fully closed the gap between low-access and high-access states during the study period.
 
+## Baseline State Classification and Geographic Distribution
+
+Figure 1 maps state-level clean-fuel adoption rates before and after PMUY implementation and illustrates the treatment classification used in the analysis. States below the NFHS-4 median clean-fuel adoption rate of 52.3% are classified as high-exposure states. These include Bihar, Jharkhand, Odisha, Chhattisgarh, Assam, and several northeastern states, all of which exhibited relatively low clean-fuel access before the policy rollout.
+
+The figure highlights substantial geographic heterogeneity in baseline clean-fuel adoption across India. Southern and urbanized states such as Delhi, Chandigarh, Goa, Tamil Nadu, and Puducherry reported very high pre-policy adoption rates, while several northern and eastern states remained heavily dependent on solid fuels. Although adoption improved across most states by NFHS-5, the regional disparity in clean cooking access remained visible, supporting the importance of evaluating heterogeneous programme impacts.
+
+![Figure 1](figures/map.png)
+
+
 
 ## 9. Limits
 
