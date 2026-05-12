@@ -127,7 +127,7 @@ Figure 4 ranks states according to their baseline clean-fuel adoption rates. Bih
 
 These state-level differences justify the treatment classification strategy used in the analysis and show why a uniform national interpretation of PMUY effects may conceal important regional variation.
 
-![Figure 4](figures/baseline clean fuel.png)
+![Figure 4](figures/baseline_clean_fuel.png)
 
 ## Rural–Urban Differences
 
