@@ -103,17 +103,15 @@ The analysis retains only industries satisfying the charter requirement of a min
 
 This filtering ensures that the analysis is based on relatively stable and economically meaningful industry aggregates rather than very small industry samples.
 
-# 4. Method
-
 ## 4.1 Baseline
 
 The baseline benchmark is the average manufacturing-industry GVA change between 2019-20 and 2020-21 across all industries without considering labour intensity or industry structure.
 
 The baseline value equals:
 
-\[
+$$
 \text{Mean industry-level GVA decline} = -2.82\%
-\]
+$$
 
 This benchmark assumes that all industries experienced approximately similar COVID-era outcomes and ignores heterogeneity across manufacturing sectors.
 
@@ -125,7 +123,16 @@ The project improves upon this baseline by introducing industry-level stratifica
 
 The primary outcome variable is the percentage change in Gross Value Added (GVA) during the COVID shock year:
 
-:contentReference[oaicite:0]{index=0}
+$$
+\text{GVA Drop Percentage} =
+\left(
+\frac{
+\text{GVA}_{2020-21} - \text{GVA}_{2019-20}
+}{
+\text{GVA}_{2019-20}
+}
+\right) \times 100
+$$
 
 Negative values represent declines in economic activity during the pandemic period.
 
@@ -133,7 +140,16 @@ Negative values represent declines in economic activity during the pandemic peri
 
 A secondary recovery measure is constructed as:
 
-:contentReference[oaicite:1]{index=1}
+$$
+\text{GVA Recovery Percentage} =
+\left(
+\frac{
+\text{GVA}_{2021-22} - \text{GVA}_{2020-21}
+}{
+\text{GVA}_{2020-21}
+}
+\right) \times 100
+$$
 
 This captures the extent of post-pandemic industrial rebound.
 
@@ -141,7 +157,14 @@ This captures the extent of post-pandemic industrial rebound.
 
 Labour intensity is measured using baseline 2019-20 industry characteristics:
 
-:contentReference[oaicite:2]{index=2}
+$$
+\text{Labour Intensity} =
+\frac{
+\text{Labour Cost}
+}{
+\text{Fixed Capital}
+}
+$$
 
 Industries above the cross-industry median labour intensity are classified as labour-intensive; industries below the median are classified as capital-intensive.
 
@@ -164,19 +187,27 @@ A simple independent-sample t-test is used to compare mean GVA declines between 
 
 An OLS regression is also estimated:
 
-:contentReference[oaicite:0]{index=0}
+$$
+\text{GVA Drop}_i
+=
+\alpha
++
+\beta \text{LabourIntensive}_i
++
+\varepsilon_i
+$$
 
 where:
 
-\[
+$$
 \text{LabourIntensive}_i = 1
-\]
+$$
 
 for labour-intensive industries, and
 
-\[
+$$
 \text{LabourIntensive}_i = 0
-\]
+$$
 
 otherwise.
 
