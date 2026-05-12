@@ -51,130 +51,31 @@ All cleaned and compressed datasets required for replication were stored in the 
 
 This file contains the pooled and cleaned NFHS household dataset with constructed treatment, post-policy, and outcome variables used in the final analysis pipeline.
 
+# 4. Method
 
-## 4.1 Baseline
+The analysis begins with a descriptive baseline comparison between treatment states (states below the NFHS-4 median clean-fuel share) and control states (states above the median). Weighted household averages from NFHS-4 and NFHS-5 are used to calculate pre-post changes in clean cooking fuel adoption for both groups. This produces a naïve Difference-in-Differences (DiD) estimate that captures the raw change in adoption before adjusting for household characteristics or state-level differences. Additional descriptive analysis examines variation in clean-fuel adoption across states, rural and urban households, and wealth quintiles in order to understand the socioeconomic patterns associated with clean energy access.
 
-The baseline benchmark is the average manufacturing-industry GVA change between 2019-20 and 2020-21 across all industries without considering labour intensity or industry structure.
-
-The baseline value equals:
-
-$$
-\text{Mean industry-level GVA decline} = -2.82\%
-$$
-
-This benchmark assumes that all industries experienced approximately similar COVID-era outcomes and ignores heterogeneity across manufacturing sectors.
-
-The project improves upon this baseline by introducing industry-level stratification and comparing labour-intensive and capital-intensive industries separately.
-
-## 4.2 Variable Construction
-
-### Main Outcome Variable
-
-The primary outcome variable is the percentage change in Gross Value Added (GVA) during the COVID shock year:
+The main analysis uses a two-way fixed effects Difference-in-Differences framework to estimate whether high-exposure states experienced different post-PMUY changes in clean-fuel adoption relative to low-exposure states.
 
 $$
-\text{GVA Drop Percentage} =
-\left(
-\frac{
-\text{GVA}_{2020-21} - \text{GVA}_{2019-20}
-}{
-\text{GVA}_{2019-20}
-}
-\right) \times 100
-$$
-
-Negative values represent declines in economic activity during the pandemic period.
-
-### Recovery Variable
-
-A secondary recovery measure is constructed as:
-
-$$
-\text{GVA Recovery Percentage} =
-\left(
-\frac{
-\text{GVA}_{2021-22} - \text{GVA}_{2020-21}
-}{
-\text{GVA}_{2020-21}
-}
-\right) \times 100
-$$
-
-This captures the extent of post-pandemic industrial rebound.
-
-### Labour Intensity
-
-Labour intensity is measured using baseline 2019-20 industry characteristics:
-
-$$
-\text{Labour Intensity} =
-\frac{
-\text{Labour Cost}
-}{
-\text{Fixed Capital}
-}
-$$
-
-Industries above the cross-industry median labour intensity are classified as labour-intensive; industries below the median are classified as capital-intensive.
-
-## 4.3 Descriptive Comparison Structure
-
-The main descriptive comparison examines whether labour-intensive industries experienced systematically larger COVID-era declines than capital-intensive industries.
-
-The analysis compares:
-
-- Mean GVA decline
-- Standard deviation of declines
-- Recovery performance
-- Distributional patterns across groups
-
-The project does not estimate a causal treatment effect. Instead, it evaluates whether meaningful descriptive differences exist between industry categories.
-
-## 4.4 Statistical Comparison
-
-A simple independent-sample t-test is used to compare mean GVA declines between labour-intensive and capital-intensive industries.
-
-An OLS regression is also estimated:
-
-$$
-\text{GVA Drop}_i = \alpha + \beta \cdot \text{LabourIntensive}_i + \varepsilon_i
+Y_{st} = \alpha + \beta_1 Post_t + \beta_2 HighExposure_s + \beta_3 (Post_t \times HighExposure_s) + \delta_s + \lambda_t + \theta_s(Post_t) + \gamma X_{st} + \varepsilon_{st}
 $$
 
 where:
 
-- $\text{LabourIntensive}_i = 1$ for labour-intensive industries
-- $\text{LabourIntensive}_i = 0$ otherwise
+- $Y_{st}$ is a binary indicator for clean cooking fuel adoption for household $i$ in state $s$ and period $t$.
+- $Post_t$ equals 1 for NFHS-5 (post-PMUY period) and 0 for NFHS-4 (pre-PMUY period), capturing the average post-policy change across all states.
+- $HighExposure_s$ identifies states with below-median baseline clean-fuel adoption in NFHS-4.
+- $(Post_t \times HighExposure_s)$ is the interaction term and the main Difference-in-Differences estimator.
+- $\beta_3$ measures whether high-exposure states experienced a significantly different change in clean-fuel adoption after PMUY relative to low-exposure states.
+- $\delta_s$ represents state fixed effects that control for time-invariant differences across states.
+- $\lambda_t$ represents time fixed effects that capture nationwide changes between NFHS-4 and NFHS-5.
+- $\theta_s(Post_t)$ represents state-specific time trends, implemented through interactions between state fixed effects and the post-policy indicator (`C(state):post`). These terms allow states to follow different underlying trends over time and help account for differential pre-trends across states.
+- $X_{st}$ is a vector of household-level control variables including rural residence, electricity access, wealth quintile, household size, education of household head, and housing quality indicators.
+- $\varepsilon_{st}$ is the error term.
 
-This regression provides a simple descriptive estimate of the average difference in COVID-era decline between groups.
+The model includes state fixed effects, state-specific time trends, and household-level controls including rural residence, electricity access, wealth quintile, household size, education of the household head, and housing quality indicators. Standard errors are clustered at the state level. The causal interpretation relies on the parallel trends assumption, meaning treatment and control states would have followed similar adoption trends in the absence of PMUY.
 
-Because the number of industries is relatively small, statistical power is limited. Therefore, the analysis emphasizes economic magnitude and descriptive heterogeneity rather than strict statistical significance.
-
-## 4.5 Random Forest Analysis
-
-A Random Forest Regressor is used as an exploratory machine-learning extension to identify which pre-COVID industry characteristics were most strongly associated with COVID-year GVA performance.
-
-The model includes:
-
-- Labour intensity
-- Output
-- Labour cost
-- Capital
-- Factory count
-- Productivity measures
-- Capital-GVA ratios
-
-The Random Forest component is used only for exploratory pattern discovery and variable importance analysis. It is not interpreted causally and is not intended as a forecasting model.
-
-## 4.6 Recovery Archetypes
-
-K-Means clustering is used to classify industries into recovery archetypes using:
-
-- COVID-year GVA decline
-- Recovery-year GVA change
-
-This unsupervised classification helps identify groups of industries with similar shock-and-recovery trajectories.
-
-The clustering exercise is exploratory and intended to summarize patterns of resilience rather than estimate structural economic mechanisms.
 
 # 5. Result (Evidence)
 
