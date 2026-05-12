@@ -24,8 +24,6 @@
 
 ## Header
 
-## Header
-
 | Field | Value |
 |---|---|
 | Team members | Tanisha Aggarwal, Neha Rana, Jaswathi Lalitha R |
@@ -34,52 +32,36 @@
 | Charter version | v1 |
 | Date | 2026-05-05 |
 
----
-
 ## 1. Problem and stakeholder
 
 The Pradhan Mantri Ujjwala Yojana (PMUY), launched in May 2016, subsidises LPG connections for women from poor households. In 2025 the Ministry of Petroleum and Natural Gas approved an additional 25 lakh connections under Ujjwala 2.0 and extended refill subsidies. The Ministry's FY 2026-27 budget memorandum requires a quantitative statement on whether the scheme has caused faster clean-fuel adoption in the states most dependent on solid fuel before the rollout. Our research idea targets that specific decision point and packages the evidence into a reproducible policy-facing analysis that a Ministry analyst could actually inspect and reuse.
 
-
----
-
 ## 2. Main outcome variable
 
-Name : Clean-cooking-fuel adoption (binary indicator)
-
-Unit : percentage points, 0–100
-
-Source: NFHS-4 (2015-16) and NFHS-5 (2019-21) household-level survey files; variable `hv226` recoded into a binary `clean_fuel = 1` if `hv226 ∈ {lpg, natural gas, electricity, biogas}`; `0` otherwise. Households reporting "no food cooked in house" are dropped.
-
-Population / panel: 1,235,952 households across 35 states/UTs, two survey rounds (`survey = 4` pre-policy, `survey = 5` post-policy); `post = 1` for NFHS-5, `0` for NFHS-4.
-
-
----
-
+- **Name** : Clean-cooking-fuel adoption (binary indicator)
+- **Unit** : percentage points, 0–100
+- **Source**: NFHS-4 (2015-16) and NFHS-5 (2019-21) household-level survey files; variable hv226 recoded into a binary clean_fuel = 1 if hv226 ∈ {lpg, natural gas, electricity, biogas}; 0 otherwise. Households reporting "no food cooked in house" are dropped.
+- **Population / panel**: 1,235,952 households across 35 states/UTs, two survey rounds (survey = 4 pre-policy, survey = 5 post-policy); post = 1 for NFHS-5, 0 for NFHS-4.
+  
 ## 3. Main quantitative success threshold
 
-The Difference-in-Differences coefficient `β₃` on `Post × HighExposure` in the two-way fixed-effects model below has: (a) a 95% confidence interval that excludes zero, and (b) a point estimate of at least 2.0 percentage points in absolute magnitude (`|β̂₃| ≥ 2.0 pp`), indicating an economically meaningful effect.
+The Difference-in-Differences coefficient β₃ on `Post × HighExposure` in the two-way fixed-effects model below has:
+(a) a 95% confidence interval that excludes zero, and
+(b)  a point estimate of at least **2.0 percentage points in absolute magnitude** (|β̂₃| ≥ 2.0 pp), indicating an economically meaningful effect.
 
-Model:
-
-```text
-Y_st = α + β₁·Post_t + β₂·HighExposure_s + β₃·(Post_t × HighExposure_s) + δ_s + λ_t + γ·X_st + ε_st
-```
-
-with `HighExposure` defined as below-median clean-fuel share in NFHS-4, standard errors clustered at the state level.
+Model: `Y_st = α + β₁·Post_t + β₂·HighExposure_s + β₃·(Post_t × HighExposure_s) + δ_s + λ_t + γ·X_st + ε_st`, with `HighExposure` defined as below-median clean-fuel share in NFHS-4, standard errors clustered at the state level.
 
 ---
 
 ## 4. Baseline to beat
-
 Unadjusted national pre-to-post change in weighted mean clean-fuel share:
 
-- Control group (low-exposure states): 63.0% → 79.5%, Δ = +16.6 pp
-- Treatment group (high-exposure states): 27.4% → 42.0%, Δ = +14.6 pp
+**Control group (low-exposure states):** 63.0% → 79.5%, Δ = +16.6 pp   
+**Treatment group (high-exposure states):** 27.4% → 42.0%, Δ = +14.6 pp 
 
-Naïve DiD (treatment Δ − control Δ) = -2.0 pp (unweighted, no controls or FE)
+**Naïve DiD (treatment Δ − control Δ) = -2.0 pp** (unweighted, no controls or FE)
 
-This unadjusted figure is committed to `outputs/baseline_metric.json` before any regression.
+This unadjusted figure is committed to `outputs/baseline_metric.json` before any regression.  
 
 Success threshold: The covariate-adjusted TWFE estimate must exceed 2.0 pp in absolute magnitude with a CI excluding zero.
 
