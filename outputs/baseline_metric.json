@@ -1,7 +1,12 @@
 {
-  "metric_name": "national_gva_drop_2020_21",
-  "value": -2.821946,
-  "unit": "percent",
-  "notes": "Mean industry-level GVA change from 2019-20 to 2020-21 in the main sample, used as the naive descriptive benchmark before labour-intensity split.",
-  "is_template": false
+  "metric_name": "naive_did_pp",
+  "description": "Unadjusted DiD \u2014 2x2 weighted means, no controls, no FE. Treatment = states BELOW NFHS-4 median clean fuel share (high solid fuel dependence = PMUY primary targets). Control = states ABOVE median (already had LPG access). post=0 = NFHS-4 (pre-policy), post=1 = NFHS-5 (post-policy).",
+  "treatment_pre_pp": 27.44,
+  "treatment_post_pp": 42.02,
+  "treatment_delta_pp": 14.58,
+  "control_pre_pp": 62.98,
+  "control_post_pp": 79.61,
+  "control_delta_pp": 16.63,
+  "value": -2.05,
+  "unit": "percentage points"
 }
