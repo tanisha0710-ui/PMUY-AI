@@ -240,20 +240,26 @@ with open("outputs/baseline_metric.json", "w") as f:
     json.dump(baseline_metric, f, indent=2)
 print("\n✓ Wrote outputs/baseline_metric.json")
 
+ 
+# --- primary_metric.json  ---
 primary_metric = {
-    "metric_name":      "did_coefficient_pp",
-    "value":            round(did_coef,  3),
-    "ci_lower":         round(ci_lower,  3),
-    "ci_upper":         round(ci_upper,  3),
-    "p_value":          round(p_value,   4),
-    "threshold":        2.0,
-    "threshold_rule":   "|value| >= 2.0 pp AND CI excludes zero",
-    "ci_excludes_zero": ci_excl_zero,
-    "passed":           passed,
-    "unit":             "percentage points",
-    "notes":            "TWFE with state FE, time FE, state-specific trends (C(state):post), controls, state-clustered SEs",
-    "specification":    "clean_fuel ~ post + high_exposure + did_interaction + C(state) + C(state):post + controls",
+    "metric_name": "did_coefficient_pp",
+    "value": round(did_coef, 3),
+    "ci_lower": round(ci_lower, 3),
+    "ci_upper": round(ci_upper, 3),
+    "p_value": round(p_value, 4),
+    "threshold": "|value| >= 2.0 pp AND CI excludes zero",
+    "passed": bool(p_value < 0.05 and |value| > 2 ),
+    "unit": "percentage points",
+    "status": "computed_twfe_with_state_trends",
+    "notes": "TWFE coefficient with state FE, time FE, state-specific linear trends (θ_s·t), controls, and state-clustered SEs",
+    "specification": "clean_fuel ~ post + high_exposure + did_interaction + C(state) + C(state):post + controls"
 }
+
+with open("outputs/primary_metric.json", "w") as f:
+    json.dump(primary_metric, f, indent=2)
+print("✓ Wrote outputs/primary_metric.json (with TWFE results)")
+
 with open("outputs/primary_metric.json", "w") as f:
     json.dump(primary_metric, f, indent=2)
 print("✓ Wrote outputs/primary_metric.json")
