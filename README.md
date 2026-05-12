@@ -1,156 +1,128 @@
-# ECO6810 Final Project Starter Repo
+# PMUY Clean-Fuel Adoption — Causal DiD Analysis (ECO 6810)
 
-This repo is the home for your team's final project.
+## Project Overview
+This project evaluates the impact of the Pradhan Mantri Ujjwala Yojana (PMUY) on clean cooking fuel adoption across Indian states.
 
-Use it to keep the charter, code, report, outputs, and team history in one place. If you like working in Colab, that is fine. Run notebooks there if you want, but push the important work back here. GitHub is the source of truth. Colab is just one place to run code.
+Using NFHS-4 (2015–16) and NFHS-5 (2019–21) data, we implement a Difference-in-Differences (DiD) design comparing high-exposure (low baseline access) and low-exposure states.
 
-This public repo is the starter. Your actual team repo should usually be private.
+---
 
-## Start Here
+## Data Sources
 
-1. Click `Use this template` on GitHub to create your team's own **private** repo.
-2. Rename the repo to something clear and short.
-3. Add teammates as collaborators.
-4. Add the instructor as collaborator if the repo is private.
-5. If GitHub is new, read [GITHUB_PRIMER.md](./GITHUB_PRIMER.md).
-6. If moving from notebooks to scripts is new, read [PYTHON_PROJECT_PRIMER.md](./PYTHON_PROJECT_PRIMER.md).
-7. Read [FINAL_PROJECT.md](./FINAL_PROJECT.md).
-8. Read [SUBMISSION_FLOW.md](./SUBMISSION_FLOW.md).
-9. Start filling [CHARTER.md](./CHARTER.md) in this repo.
-10. Replace the placeholder fields in `main.py`, `report.md`, and `AI_USAGE_LOG.md`.
-11. Run `uv sync && uv run main.py`.
-12. Commit early. Commit often. Keep the repo readable.
+- **NFHS-4 & NFHS-5 Household Data**
+  - We have attached it in the data folder :[PMUY Data](https://github.com/tanisha0710-ui/PMUY-AI/blob/1bff9e01a15f4abfec2ce02f83a4584722ceee5a/data/pmuy_data_compressed.csv.gz)
+  - Used to construct clean fuel adoption variable (`hv226`)
 
-## Why GitHub For The Project
+- **PPAC PMUY Data**
+  - Used for validation of exposure classification
 
-For assignments, plain Colab was enough. For a team project, it starts to break down.
+---
 
-GitHub helps because:
+## Methodology
 
-- everyone sees the same current version
-- code, report, figures, and outputs live in one place
-- you can tell what changed and when
-- reproducibility gets much easier
-- handing the project to the instructor is just sharing the repo
+- Outcome: Clean fuel usage (binary, derived from `hv226`)
+- Treatment: `high_exposure = 1` for states below NFHS-4 median clean fuel access
+- Design: Difference-in-Differences (DiD)
 
-The goal is not to turn you into software engineers overnight. The goal is to make team coordination simple and keep the project organized.
+Baseline metric:
+- Naive DiD estimate of clean fuel adoption change
 
-## What This Repo Already Gives You
+---
 
-- a fast primer in [GITHUB_PRIMER.md](./GITHUB_PRIMER.md)
-- a notebook-to-project guide in [PYTHON_PROJECT_PRIMER.md](./PYTHON_PROJECT_PRIMER.md)
-- the full project brief in [FINAL_PROJECT.md](./FINAL_PROJECT.md)
-- an exact submission guide in [SUBMISSION_FLOW.md](./SUBMISSION_FLOW.md)
-- the project plan template in [CHARTER.md](./CHARTER.md)
-- a runnable `main.py` that writes the required JSON outputs
-- a `project_code/` folder for reusable Python functions
-- a report template in [report.md](./report.md)
-- an AI usage log template in [AI_USAGE_LOG.md](./AI_USAGE_LOG.md)
-- a `notebooks/` folder for Colab-first exploration
-- probe and output folders in the right shape
-- peer samples in [`peer-samples/README.md`](./peer-samples/README.md)
-- starter ideas in [`starter-ideas/README.md`](./starter-ideas/README.md)
+## How to Run (Milestone — Official Method)
 
-## The Working Rule
+Clone the repository:
 
-One repo. One main metric. One baseline. One documented run command.
-
-If your team remembers only one thing, remember that.
-
-## Repo Map
-
-| Path | What it is for |
-|---|---|
-| `GITHUB_PRIMER.md` | Fast GitHub onboarding for students coming from Colab |
-| `PYTHON_PROJECT_PRIMER.md` | How to combine notebooks, Python files, and `main.py` |
-| `FINAL_PROJECT.md` | Full project requirements and grading |
-| `SUBMISSION_FLOW.md` | Exact milestone and final submission steps |
-| `CHARTER.md` | The short project plan you submit first |
-| `main.py` | Your main reproducible run |
-| `project_code/` | Reusable helper functions imported by notebooks or `main.py` |
-| `notebooks/` | Colab notebooks and exploratory work |
-| `data/` | Data files or licence notes |
-| `artifacts/probes/` | Small proofs that your data sources work |
-| `outputs/` | Required JSON outputs plus tables and figures |
-| `report.md` | Final written report |
-| `AI_USAGE_LOG.md` | What you used AI for and what you verified yourself |
-| `peer-samples/` | Strong sample charters based on earlier student project ideas |
-| `starter-ideas/` | Course-proposed project ideas you can adopt and narrow down |
-
-## Quick Setup
-
-```bash
-uv sync
-uv run main.py
+```
+git clone https://github.com/tanisha0710-ui/PMUY-AI.git
+cd PMUY-AI
 ```
 
-That first run is only a scaffold check. It writes placeholder outputs so you can see the required file shapes. Replace those placeholders before you submit anything.
+Run the milestone pipeline:
 
-Add project-specific packages in `pyproject.toml` as your work evolves. The starter environment is intentionally light.
+```
+uv run main.py --milestone
+```
 
-## How To Work As A Team
+---
 
-- put the project question and stakeholder in the charter first
-- assign clear ownership for data, analysis, writing, and cleanup
-- keep commits small enough that teammates can understand them
-- do not let the report drift away from what the code actually produced
-- if you use a notebook, export the important logic into scripts before the end
+## Alternative (Colab — Used by Team)
 
-## If You Prefer Colab
+This project was developed and tested in Google Colab.
 
-You can still use it.
+Steps used:
 
-Good pattern:
+1. Clone the repository:
+```
+%cd /content
+!rm -rf PMUY-AI-test
+!git clone https://github.com/tanisha0710-ui/PMUY-AI.git PMUY-AI-test
+%cd PMUY-AI-test
 
-- explore in Colab if that is faster
-- save the notebook in `notebooks/`
-- move stable logic into `project_code/` or helper scripts
-- keep the final reproducible run inside the repo
+```
 
-Bad pattern:
+2. Install:
+```
+!pip install uv -q
+!uv sync
+```
 
-- one teammate has the "real" notebook
-- figures exist only in Colab outputs
-- no one knows which version is current
-- the final result depends on hidden notebook state
 
-## What Will Be Graded
+3. Run the pipeline:
+```
+!uv run main.py
+```
+4. Check:
+```
+!echo "=== GREP CHECK ===" 
+!grep -r "replace_me\|is_template.*true\|blocked\|Template outputs written" \
+    --include="*.py" --include="*.md" --include="*.json" . \
+    || echo "CLEAN"
+```
 
-You are not submitting a random folder of files. You are showing that your project works and that your team can explain it clearly.
 
-For the milestone, we mainly ask:
+## Outputs
 
-- is the project real?
-- can you access the data?
-- does the repo run?
+Running the pipeline generates:
 
-For the final submission, we mainly ask:
+```
+outputs/baseline_metric.json
+outputs/milestone_manifest.json
+outputs/primary_metric.json
+```
 
-- did you stick to the approved plan?
-- does the repo still run cleanly?
-- does the report match the code and outputs?
+---
 
-The full details are in [FINAL_PROJECT.md](./FINAL_PROJECT.md).
+## Data Probe
 
-## Before You Submit
+A data probe confirming access to NFHS data is provided in:
 
-For the milestone:
+```
+artifacts/probes/replace_me_probe.md
+```
 
-- the charter is approved
-- the run command in `README.md` is accurate
-- each main data source has a small proof that it works
-- `outputs/baseline_metric.json` is real
-- `outputs/milestone_manifest.json` is real
+---
 
-For the final submission:
+Note- This is based on our final data file which we have uploaded in the data folder as [pmuy_data_compressed.csv.gz](https://github.com/tanisha0710-ui/PMUY-AI/blob/1bff9e01a15f4abfec2ce02f83a4584722ceee5a/data/pmuy_data_compressed.csv.gz)
+This is our final colab file {We have attached the pdf for codes and output
+(colab) under folder Notebook with file - [Test_Repo_Final.ipynb-Colab.pdf](https://github.com/tanisha0710-ui/PMUY-AI/blob/1bff9e01a15f4abfec2ce02f83a4584722ceee5a/notebooks/Test_Repo_Final.ipynb%20-%20Colab.pdf)
+. This pdf shows how we added the results fom Colab to Github 
 
-- `outputs/baseline_metric.json` is real
-- `outputs/primary_metric.json` is real
-- the report matches the code
-- the AI usage log is honest
+The below represents the test files we had for our csv file taken from google drive(using gdown: which could not reproduce the entire repo for review.)
+{-This is our old colab file {We have attached the pdf for codes and output
+(colab) under folder Notebook with file - [Test_Repo.ipynb-Colab.pdf](https://github.com/tanisha0710-ui/PMUY-AI/blob/c45f9f8cbbb0fa8b9d7da7fc924565d16d97073a/notebooks/Test_Repo.ipynb%20-%20Colab.pdf) 
+. Also this pdf shows how we added the results fom Colab to Github 
+Now, this is is our updated file (it includes colab codes that we used to run our codes and ity also has the output for the same ) and we have added it under folder notebook named [Test_Repo_2.ipynb-Colab.pdf](https://github.com/tanisha0710-ui/PMUY-AI/blob/75be2293f5d24aad3cffc930b6bc977b8a2fb76a/notebooks/Test_Repo_2.ipynb%20-%20Colab.pdf)}
 
-## One Good Habit
+## Team
 
-Do not wait until the final week to make the repo clean.
+- Tanisha Aggarwal  
+- Neha Rana  
+- Jaswathi Lalitha R  
 
-Messy projects do not usually fail because the idea was bad. They fail because the structure never became stable enough to trust.
+---
+
+## Course
+
+ECO 6810 — Data Analysis for Economics  
+Ashoka University
