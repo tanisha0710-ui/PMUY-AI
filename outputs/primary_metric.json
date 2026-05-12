@@ -1,23 +1,12 @@
 {
-  "metric_name": "labour_intensive_excess_gva_decline",
-
-  "value": 3.6271,
-
+  "metric_name": "did_coefficient_pp",
+  "value": null,
+  "ci_lower": null,
+  "ci_upper": null,
+  "p_value": null,
   "threshold": 2.0,
-
-  "passed": true,
-
-  "unit": "percentage_points",
-
-  "capital_intensive_mean_drop": -1.0872,
-
-  "labour_intensive_mean_drop": -4.7143,
-
-  "industry_count": 23,
-
-  "minimum_factory_count": 501,
-
-  "notes": "Labour-intensive manufacturing industries experienced an average GVA decline during 2020-21 that was 3.63 percentage points larger than the decline observed among capital-intensive industries. The analysis includes 23 NIC 2-digit manufacturing industries, each satisfying the minimum sample threshold of 300 factories in every year.",
-
-  "is_template": false
+  "passed": null,
+  "unit": "percentage points",
+  "status": "placeholder_for_final_submission",
+  "notes": "TWFE coefficient with state FE, time FE, controls, and state-clustered SEs to be computed in final submission"
 }
