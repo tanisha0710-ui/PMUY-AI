@@ -227,57 +227,44 @@ This unsupervised classification helps identify groups of industries with simila
 
 The clustering exercise is exploratory and intended to summarize patterns of resilience rather than estimate structural economic mechanisms.
 
-## 5. Result
+# 5. Result
 
-- Main metric value: 
-- Threshold: 
-- Passed: 
-- Improvement over basline: 
+## Main Metric
 
-Give the main number first. Then interpret it in plain English.
+| Metric | Value |
+|---|---|
+| Labour-intensive average GVA decline | −4.71% |
+| Capital-intensive average GVA decline | −1.09% |
+| Difference | 3.63 percentage points |
+| Threshold | 2.0 percentage points |
+| Passed | Yes |
 
-### 4.1 Descriptive patterns
+The project successfully satisfies the charter threshold.
 
-Figure 1 shows the rapid growth of UPI per capita across states. Delhi and Karnataka show the fastest adoption; Bihar and UP lag substantially. The spread between high- and low-adoption states has widened since 2022.
+Labour-intensive industries experienced an average GVA decline approximately 3.63 percentage points larger than capital-intensive industries during the COVID shock year.
 
-Figure 2 shows the cross-state scatter of mean UPI per capita versus mean informal employment share. The negative slope (b ≈ −5.5) suggests that states with higher UPI adoption have lower average informality — though this conflates structural differences (richer, more urbanised states both have more UPI and less informality).
+This suggests that industries relying more heavily on labour relative to capital were economically more vulnerable during the pandemic disruption period.
 
-Figure 5 (heatmap) shows that within-state variation in informal share is modest quarter-to-quarter, explaining why the state-mean baseline achieves a high R².
+However, because the number of industries is relatively small, the estimated difference is statistically imprecise. The evidence is therefore interpreted as economically meaningful descriptive evidence rather than definitive statistical proof of structural vulnerability.
 
-### 4.2 Model performance
+## 5.1 Descriptive Statistics
 
-| Model | R² (test) | MAE (pp) |
-|-------|-----------|---------|
-| State-mean baseline | 0.968 | 1.82 |
-| Ridge (all features) | **0.853** | **2.14** |
+The industry-level sample contains substantial heterogeneity in COVID-era manufacturing outcomes.
 
-The Ridge model achieves **R² = 0.853** on the 2024 held-out test set, comfortably above the pre-specified threshold of 0.60. Its MAE of 2.14 percentage points means predictions are within ~2 pp of actual informal shares on average.
+### Main Summary Statistics
 
-Note that the baseline R² is *higher* than the Ridge R² because it exploits the strong cross-sectional structure (states differ a lot, and those differences are stable). The Ridge model, by design, must work harder — it is asked to predict 2024 using temporal features from 2020–2023, without being told the state-level averages from the test period. Within-state temporal prediction is a harder task.
+| Variable | Mean | Std Dev | Min | Max |
+|---|---|---|---|---|
+| GVA drop (%) | −2.82 | 11.98 | −34.77 | 20.74 |
+| Recovery (%) | 33.36 | 17.62 | −11.62 | 65.74 |
+| Labour intensity | 0.39 | 0.28 | 0.12 | 1.44 |
 
-**Key coefficient (Figure 3):** `log_upi_pc` has the most negative coefficient among UPI-related features, consistent with the hypothesis direction. `log_gdp_pc` and `urban_share` are also important predictors.
+The wide range of outcomes indicates that aggregate manufacturing statistics conceal substantial cross-industry variation.
 
-### 4.3 First-difference results
+## Figure Placement
 
-The first-difference OLS finds:
-
-> **Δlog(UPI per capita) coefficient = −0.381**  
-> Interpretation: a 1-unit increase in Δlog(UPI per capita) — roughly a 172% increase — is associated with a −0.38 pp decline in the quarterly change in informal employment share, controlling for income growth and time trend. R² of first-difference model = 0.31.
-
-The sign is consistent with our hypothesis. The magnitude is modest, which is expected: formalisation is a slow-moving structural process that UPI adoption can at best nudge, not determine.
-
----
-
-## 6. Evidence
-
-Point to the figures, tables, regressions, or diagnostics that support the result.
-| Figure | Description |
-|--------|-------------|
-| `outputs/fig1_upi_trends.png` | UPI per capita over time for selected states |
-| `outputs/fig2_scatter_upi_informal.png` | Cross-state scatter: UPI vs informal share |
-| `outputs/fig3_model_performance.png` | Ridge actual vs predicted + coefficients |
-| `outputs/fig4_fd_upi_effect.png` | First-difference scatter |
-| `outputs/fig5_state_heatmap.png` | Heatmap: informal share × state × quarter |
+![GVA Drop Distribution](<img width="790" height="490" alt="image" src="https://github.com/user-attachments/assets/e1806df9-a773-44bd-bc0a-e4564ebc3bad" />
+)
 
 
 
