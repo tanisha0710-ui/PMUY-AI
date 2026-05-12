@@ -192,7 +192,7 @@ $$
 =
 \alpha
 +
-\beta \text{LabourIntensive}_i
+\beta \cdot \text{LabourIntensive}_i
 +
 \varepsilon_i
 $$
@@ -200,16 +200,12 @@ $$
 where:
 
 $$
-\text{LabourIntensive}_i = 1
+\text{LabourIntensive}_i =
+\begin{cases}
+1, & \text{for labour-intensive industries} \\
+0, & \text{otherwise}
+\end{cases}
 $$
-
-for labour-intensive industries, and
-
-$$
-\text{LabourIntensive}_i = 0
-$$
-
-otherwise.
 
 This regression provides a simple descriptive estimate of the average difference in COVID-era decline between groups.
 
