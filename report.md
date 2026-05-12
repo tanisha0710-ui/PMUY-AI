@@ -112,6 +112,25 @@ The trend comparison also shows that improvements in high-exposure states did no
 
 ![Figure 2](figures/clean_fuel_by_treatment.png)
 
+
+## Distribution of Baseline Clean-Fuel Adoption
+
+Figure 3 presents the distribution of state-level clean-fuel adoption rates in NFHS-4. The histogram reveals substantial variation across states, ranging from below 20% in Bihar and Jharkhand to above 90% in Delhi and Chandigarh. The dashed vertical line marks the median cutoff used to assign treatment status.
+
+The wide distribution demonstrates that India entered the PMUY period with highly unequal access to clean cooking fuel infrastructure. This unequal starting point strengthens the policy relevance of analysing whether PMUY disproportionately benefited low-access states.
+
+## State-Wise Baseline Adoption
+
+Figure 4 ranks states according to their baseline clean-fuel adoption rates. Bihar, Jharkhand, Odisha, Chhattisgarh, and Assam appear among the lowest adopters, while Delhi, Chandigarh, Goa, and Puducherry exhibit the highest adoption rates. The ranking provides a clearer picture of the states that were most reliant on traditional biomass fuels before PMUY implementation.
+
+These state-level differences justify the treatment classification strategy used in the analysis and show why a uniform national interpretation of PMUY effects may conceal important regional variation.
+
+## Rural–Urban Differences
+
+Figure 5 compare clean-fuel adoption across rural and urban households. Rural households reported a clean-fuel adoption rate of only 34.1%, compared with 85.5% among urban households. This large rural–urban gap highlights the strong association between infrastructure access, income, and clean cooking fuel use.
+
+The result is particularly important because PMUY primarily targeted poor and rural households. The descriptive evidence suggests that rural households remained substantially disadvantaged in clean-fuel adoption despite nationwide expansion in LPG access.
+
 ## 9. Limits
 
 This project can say with reasonable confidence that clean-fuel adoption increased substantially across India between NFHS-4 and NFHS-5, and that the pattern of adoption differed systematically between historically low-access states and states with higher baseline clean-fuel penetration. The analysis also provides evidence that, after controlling for household characteristics, state fixed effects, and state-specific trends, high-exposure states experienced relatively smaller gains in clean-fuel adoption during the post-PMUY period.
