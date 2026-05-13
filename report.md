@@ -205,7 +205,7 @@ The estimated coefficient is also economically meaningful. The magnitude of the 
 
 The descriptive trends showed that treatment states began from a much lower baseline and improved over time, but the regression confirms that the rate of improvement remained significantly lower relative to low-exposure states even after adjusting for socioeconomic and infrastructure differences.
 
-## 7. Limits
+# 7. Limits
 
 This project can say with reasonable confidence that clean-fuel adoption increased substantially across India between NFHS-4 and NFHS-5, and that the pattern of adoption differed systematically between historically low-access states and states with higher baseline clean-fuel penetration. The analysis also provides evidence that, after controlling for household characteristics, state fixed effects, and state-specific trends, high-exposure states experienced relatively smaller gains in clean-fuel adoption during the post-PMUY period.
 
@@ -219,7 +219,7 @@ Further, the dataset measures whether households report using clean cooking fuel
 
 Finally, although the regressions include extensive household controls and fixed effects, other time-varying factors — such as electrification programs, infrastructure improvements, fuel-price changes, or broader economic growth — may still influence clean-fuel adoption alongside PMUY.
 
-## 8. If The Result Was Null Or Weak
+# 8. If The Result Was Null Or Weak
 
 The final regression estimates do not support the initial expectation that high-exposure states experienced faster clean-fuel adoption after PMUY relative to low-exposure states. Instead, the estimated Difference-in-Differences coefficient is negative and statistically significant, suggesting that states with historically low clean-fuel access experienced smaller relative improvements during the post-policy period after controlling for household characteristics, state fixed effects, and state-specific trends.
 
@@ -230,7 +230,7 @@ The inclusion of state-specific linear time trends is particularly important in 
 More broadly, the project highlights that large-scale welfare programs may generate heterogeneous outcomes across regions depending on baseline conditions and structural constraints. Even when a policy substantially expands access nationally, historically disadvantaged regions may continue to lag behind in relative terms.
 
 
-## 9. Reproducibility
+# 9. Reproducibility
 
 - Run command:`uv run main.py` (or `python main.py` with dependencies installed)
 - Runtime:< 2 minutes on any machine
@@ -239,6 +239,6 @@ More broadly, the project highlights that large-scale welfare programs may gener
   - `outputs/baseline_metric.json`
   - `outputs/milestone_manifest.json`
 
-## 10. AI Usage
+# 10. AI Usage
 
 AI tools were primarily used for debugging, repository management, variable construction suggestions, and improving parts of the data-cleaning workflow. GitHub Copilot was used to understand repository structure, output generation, Google Colab execution, and GitHub workflow issues, while Claude was used for assistance with binary recoding logic, variable transformations, and troubleshooting git and pipeline errors.
