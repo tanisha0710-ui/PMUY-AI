@@ -1,26 +1,10 @@
 # AI Usage Log
 
-Keep this short and honest.
-
-The point is not to confess that you used AI. Of course you used AI. The point is to show where it helped, what you trusted, and what you checked yourself.
-
-## Log
-
 | Date | Tool | What you used it for | What you verified yourself |
-|---|---|---|---|
-| YYYY-MM-DD | Claude / ChatGPT / Gemini / Copilot / other | Drafted a data-cleaning function | Re-ran the code, checked the output on 20 rows, fixed one wrong column mapping |
-| YYYY-MM-DD | ... | ... | ... |
-
-## Things To Avoid
-
-- "used AI for coding"
-- "used ChatGPT for analysis"
-- "AI helped with debugging"
-
-Those lines are too vague to be useful.
-
-## Better
-
-- "Claude suggested the first version of the FRED fetch helper; we changed the parsing after checking the missing-value handling"
-- "ChatGPT proposed a DiD specification; we kept the controls but rewrote the treatment definition after reading the data"
-- "Gemini rewrote the report summary; we replaced two claims that overstated causality"
+| --- | --- | --- | --- |
+| 2026-05-06 | GitHub Copilot | Assisted with debugging and understanding minor syntax and file-path issues during data cleaning and output generation | Checked variable mappings, verified treatment/control classifications, and manually validated summary outputs and baseline results |
+| 2026-05-06 | GitHub Copilot | Assisted in understanding GitHub repo structure, milestone requirements, and how reproducible-run workflows should be organised for `uv run main.py`. | Manually tested the repo from the root directory, confirmed that the pipeline executed successfully, and checked that the correct files were written to the `outputs/` folder. |
+| 2026-05-06 | ChatGPT | Helped troubleshoot the milestone issue where template outputs were still being generated instead of project-specific PMUY/NFHS outputs. | Re-ran the full pipeline after edits to `main.py`, verified that placeholder values were removed, and confirmed that the generated JSON files contained real baseline and project metrics. |
+| 2026-05-07 | DeepSeek | Assisted in resolving data-access and reproducibility issues by suggesting a cleaner workflow using the committed dataset in `data/pmuy_data_compressed.csv.gz` instead of external download steps. | Verified that the local dataset loaded correctly, checked the sample size (1.23M+ rows), and confirmed that regression and descriptive-statistics outputs matched the notebook results. |
+| 2026-05-10 | DeepSeek | Used to cross-check whether the repository setup and `uv run main.py` workflow would execute correctly on a clean machine before the professor re-ran the repo. | Manually tested the run command from the repo root, verified successful execution, and confirmed that the required JSON output files were generated correctly. |
+| 2026-05-09 | GitHub Copilot | Assisted in identifying minor package and environment inconsistencies affecting reproducible execution of the project pipeline across different runs. | Manually re-ran the environment setup, verified successful execution of all commands, and confirmed that the outputs remained consistent across repeated runs. |
