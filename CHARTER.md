@@ -26,114 +26,100 @@
 
 | Field | Value |
 |---|---|
-| Team members | _(names, 2–3 people)_ |
-| Project type | _(predictive / causal / descriptive — pick one)_ |
-| Estimated hours per person | _(be honest; solo projects should be around 50 hours; team projects around 45–50 hours per person)_ |
+| Team members | Tanisha Aggarwal, Neha Rana, Jaswathi Lalitha R |
+| Project type | Causal |
+| Estimated hours per person | 55 |
 | Charter version | v1 |
-| Date | _(YYYY-MM-DD)_ |
-
-**Project type notes.** Predictive = you are trying to forecast or predict a quantity. Causal = you are trying to estimate the effect of a policy or intervention. Descriptive = you are measuring patterns or disparities without making a causal claim. The success threshold looks different for each type, so pick the one that fits your main question.
-
----
+| Date | 2026-05-05 |
 
 ## 1. Problem and stakeholder
 
-One paragraph. Who is the specific person, institution, or policy body that would care about the answer, and what decision does the answer inform? Generic "policymakers" is not a stakeholder; "the Ministry of Petroleum and Natural Gas deciding whether to extend PMUY subsidies in FY 2026-27" is.
-
-*Write here:*
-
----
+The Pradhan Mantri Ujjwala Yojana (PMUY), launched in May 2016, subsidises LPG connections for women from poor households. In 2025 the Ministry of Petroleum and Natural Gas approved an additional 25 lakh connections under Ujjwala 2.0 and extended refill subsidies. The Ministry's FY 2026-27 budget memorandum requires a quantitative statement on whether the scheme has caused faster clean-fuel adoption in the states most dependent on solid fuel before the rollout. Our research idea targets that specific decision point and packages the evidence into a reproducible policy-facing analysis that a Ministry analyst could actually inspect and reuse.
 
 ## 2. Main outcome variable
 
-The single number your project centres on. State:
-
-- **Name** of the variable
-- **Unit** (percentage, Rs/month, points, deaths per 1000, etc.)
-- **Source table/column/field**
-- **Population / panel** (which rows: which years, which geographies, which people)
-
-Only one main outcome. Secondary outcomes go under "Scope limits" as things you *may* report but will not be graded on.
-
-*Write here:*
-
----
-
+- **Name** : Clean-cooking-fuel adoption (binary indicator)
+- **Unit** : percentage points, 0–100
+- **Source**: NFHS-4 (2015-16) and NFHS-5 (2019-21) household-level survey files; variable hv226 recoded into a binary clean_fuel = 1 if hv226 ∈ {lpg, natural gas, electricity, biogas}; 0 otherwise. Households reporting "no food cooked in house" are dropped.
+- **Population / panel**: 1,235,952 households across 35 states/UTs, two survey rounds (survey = 4 pre-policy, survey = 5 post-policy); post = 1 for NFHS-5, 0 for NFHS-4.
+  
 ## 3. Main quantitative success threshold
 
-A single numeric bar. Your project is a success if the delivered metric crosses this bar, and a failure if it does not. Pick one form:
+The Difference-in-Differences coefficient β₃ on `Post × HighExposure` in the two-way fixed-effects model below has:
+(a) a 95% confidence interval that excludes zero, and
+(b)  a point estimate of at least **2.0 percentage points in absolute magnitude** (|β̂₃| ≥ 2.0 pp), indicating an economically meaningful effect.
 
-- **Predictive:** "Out-of-sample [metric] on [held-out slice] is at most X, versus baseline Y."
-- **Causal:** "Point estimate of [parameter] has 95% CI excluding zero, and |estimate| ≥ X [unit]."
-- **Descriptive:** "Produce stratified estimates of [outcome] across [N ≥ __] strata, each with sample size ≥ __ and documented standard error."
-
-If you cannot write a number, you do not yet have a project — you have a topic. Go back to Section 2.
-
-*Write here:*
+Model: `Y_st = α + β₁·Post_t + β₂·HighExposure_s + β₃·(Post_t × HighExposure_s) + δ_s + λ_t + γ·X_st + ε_st`, with `HighExposure` defined as below-median clean-fuel share in NFHS-4, standard errors clustered at the state level.
 
 ---
 
 ## 4. Baseline to beat
+Unadjusted national pre-to-post change in weighted mean clean-fuel share:
 
-The naive or prior number your threshold is measured against. Examples:
+**Control group (low-exposure states):** 63.0% → 79.5%, Δ = +16.6 pp   
+**Treatment group (high-exposure states):** 27.4% → 42.0%, Δ = +14.6 pp 
 
-- A previous study's coefficient or error.
-- A simple AR(1) or last-value forecast.
-- An unadjusted before-after difference.
+**Naïve DiD (treatment Δ − control Δ) = -2.0 pp** (unweighted, no controls or FE)
 
-State **what the baseline produces numerically** if you know it, or how you will compute it before the checkpoint if you do not. You must compute the baseline *before* you build anything fancy.
+This unadjusted figure is committed to `outputs/baseline_metric.json` before any regression.  
 
-*Write here:*
+Success threshold: The covariate-adjusted TWFE estimate must exceed 2.0 pp in absolute magnitude with a CI excluding zero.
 
 ---
 
 ## 5. Falsifiable hypothesis
 
-One sentence the data can prove wrong. A sign, a threshold, or a rank ordering. Not "we will analyse X" — "X will be greater than Y by at least Z".
+States that fell below the NFHS-4 median in clean-fuel access (high-exposure states) experienced a measurably different trajectory in clean-fuel adoption between NFHS-4 and NFHS-5 relative to states above the median, after controlling for state fixed effects, time fixed effects, and household-level covariates (rural/urban, electricity access, female headship, household size, head's age, wealth quintile, and head's education).
 
-*Write here:*
+The success threshold is set at 2.0 percentage points in absolute magnitude, meaning the DiD coefficient must satisfy `|β̂₃| ≥ 2.0 pp` with a 95% CI that excludes zero.
+
+If `|β̂₃| < 2.0 pp` or the CI contains zero, the result is too imprecise to be policy-relevant.
+
+The naïve DiD of `−2.0 pp` sets the prior expectation that divergence is more likely than convergence.
 
 ---
 
 ## 6. Data sources and access plan
 
-For each source:
+**Primary — NFHS household microdata (pooled NFHS-4 and NFHS-5):**
 
-- **Name and URL/API endpoint**
-- **Licence or permission to use**
-- **Access method** (direct download, API call, authenticated portal)
-- **A 10-line script or notebook cell** that fetches one row and prints it
+**Source:** DHS Program (NFHS data taken from DHS) ( which was loaded as combined, cleaned panel, 1,238,208 rows before exclusions)  
 
-If any source requires manual scraping, permissions, or a login you do not yet have, flag it here with a mitigation plan.
+**Variables used:** hv226 (cooking fuel), hv005 (sample weight ÷ 1,000,000), hv024 (state), hv025 (urban/rural), hv206 (electricity), hv219 (sex of head), hv220 (age of head), hv009 (household size), hv201 (water source), hv204 (water time), hv213 (floor material), hv270 (wealth index), sh34 (religion), sh36 (caste), hv106_01 (education of head), plus constructed survey and post flags.  
 
-*Write here:*
+**Licence:** DHS data use agreement (non-commercial research).  
+
+**Access:** [PMUY data - pmuy_data_compressed.csv.gz](https://github.com/tanisha0710-ui/PMUY-AI/blob/d4758ca7ded636a31f672db5cce0462745b105d2/data/pmuy_data_compressed.csv.gz)
+
+**Treatment intensity cross-check — PPAC state-wise PMUY connections:**
+
+**Landing page:** https://ppac.gov.in/consumption/state-wise-pmuy-data  
+The `.xlsx` filename is timestamp-versioned and re-scraped at pipeline runtime; backup at https://www.data.gov.in/resource/stateut-wise-number-pradhan-mantri-ujjwala-yojana-pmuy-connections-2018-2023 (free instant API key).  
+Used only to validate the high/low exposure split; not a primary outcome source.
 
 ---
 
 ## 7. Scope limits
 
-Bullet list of things you are **not** claiming and **not** responsible for. Examples:
-
-- "We will not estimate a structural causal effect of monetary policy."
-- "We will not harmonise district boundaries across NFHS rounds; analysis is at state level."
-- "We will not ship a mobile version of the app."
-
-This section protects you at grading time. If you clearly say "we are not doing X," you will not be graded on X.
-
-*Write here:*
+- We will not claim structural causal identification beyond the parallel-trends assumption. Event-study plots are diagnostic.  
+- We will not analyse refill intensity, health outcomes (respiratory, blood pressure), or LPG consumption volumes as primary outcomes.  
+- We will not disaggregate to district level or harmonise district boundaries across rounds; analysis is at state/UT level.
+- The wealth-quintile and caste breakdowns are descriptive summaries, not causal estimates.  
 
 ---
 
 ## 8. Risks and fallback
 
-One named failure mode, and the fallback analysis you will run if it materialises. Examples:
+**Risk: Parallel trends assumption may not hold**
 
-- "If the 2022-23 PPAC data is not released by the checkpoint, we will use the FY 2021-22 panel and document the truncation."
-- "If DiD parallel-trends fails visually, we fall back to a state-fixed-effects panel regression with year trends and report both."
+The Difference-in-Differences design assumes that treatment (low baseline states) and control (high baseline states) would have followed similar trends in clean fuel adoption in the absence of PMUY. With only one pre-policy period (NFHS-4), this assumption cannot be directly validated.
 
-One risk is enough. Two is fine. Zero means you have not thought hard enough.
+**Fallback:**
+We will incorporate NFHS-3 (2005–06) as an additional pre-policy period to construct a longer pre-trend. We will estimate an event-study specification and visually test whether treatment and control states exhibit parallel trends prior to PMUY implementation. If pre-trends diverge, we will report both the baseline DiD results and the extended specification, clearly noting limitations in causal interpretation.
 
-*Write here:*
+**Risk 2:** The binary high/low split (≈17–18 states per group) may produce standard errors too wide to reject the null at conventional levels.  
+**Fallback:** Pre-commit an alternative continuous-treatment specification — β · (1 − baseline_clean_share) × post; and report both the binary-split and the continuous-treatment estimates.  
+
 
 ---
 
@@ -147,12 +133,3 @@ Your final repo must satisfy all of these:
 - [ ] A `README.md` documents the commands and expected outputs in ≤ 20 lines.
 - [ ] All data sources are either fetched in-script or committed under `data/` with a licence note.
 
-If you cannot commit to this, your project is probably still too broad. Talk to the instructor before proceeding.
-
----
-
-## Sign-off
-
-By submitting this charter, the team agrees that this is the plan the project will be graded against. The instructor will not penalize you just because the topic turns out to be difficult, as long as the project stays honest and within the approved scope.
-
-*Signed:* _(team member names)_
