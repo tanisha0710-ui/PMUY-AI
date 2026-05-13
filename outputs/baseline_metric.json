@@ -1,7 +1,13 @@
 {
-  "metric_name": "replace_me_baseline",
-  "value": 0.0,
-  "unit": "replace_me_unit",
-  "notes": "Template value. Replace this with your real baseline before the milestone.",
-  "is_template": true
+  "metric_name": "naive_did_pp",
+  "description": "Unadjusted DiD \u2014 2x2 weighted means, no controls, no FE. Treatment = states below NFHS-4 median (PMUY-targeted).",
+  "treatment_pre_pp": 27.42,
+  "treatment_post_pp": 41.99,
+  "treatment_delta_pp": 14.57,
+  "control_pre_pp": 62.96,
+  "control_post_pp": 79.52,
+  "control_delta_pp": 16.56,
+  "value": -2.0,
+  "unit": "percentage points",
+  "threshold": 2.0
 }
